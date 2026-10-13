@@ -284,6 +284,33 @@ export default async function Footer() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 pt-8 pb-5 sm:pt-10 sm:pb-6 sm:px-6 lg:pt-12 lg:pb-6 lg:px-8">
+        {/* Top Highlight Banner */}
+        <div className="mb-8 pb-7 border-b border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <p className="text-sm sm:text-base font-semibold text-white tracking-wide">
+              Ready for your signature salon experience?
+            </p>
+            <p className="text-xs text-stone-400">
+              Book a personalized appointment or consult with our beauty specialists today.
+            </p>
+          </div>
+          <div className="flex items-center gap-3 shrink-0">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-medium text-white shadow-sm hover:bg-[#029e51] transition-all duration-200"
+            >
+              <span>Book Appointment</span>
+              <ArrowRightIcon className="h-3.5 w-3.5" />
+            </Link>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2.5 text-xs font-medium text-stone-300 hover:text-white hover:bg-white/[0.08] hover:border-white/30 transition-all duration-200"
+            >
+              <span>Explore Services</span>
+            </Link>
+          </div>
+        </div>
+
         {/* Main Grid: Responsive 12-column layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5 lg:gap-5 xl:gap-6 items-start">
           {/* COLUMN 1: SALVORA Logo, Description, Social Icons, Slogan */}
@@ -322,83 +349,53 @@ export default async function Footer() {
             {/* Accent divider line */}
             <div className="h-0.5 w-6 rounded-full bg-[#03BF62]" data-customization-role="footerAccent" />
 
-            {/* Social Media Links with Real Brand Logos */}
-            <div className="flex items-center gap-2">
+            {/* Social Media Links - Refined Luxury Monochrome with Emerald Hover */}
+            <div className="flex items-center gap-2 pt-1">
               <a
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora Instagram"
-                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
+                aria-label="Instagram"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:text-white hover:border-[#03BF62]/60 hover:bg-[#03BF62]/10 transition-all duration-200"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-                  <defs>
-                    <radialGradient id="ig-footer-grad" r="150%" cx="30%" cy="107%">
-                      <stop stopColor="#fdf497" offset="0" />
-                      <stop stopColor="#fdf497" offset="0.05" />
-                      <stop stopColor="#fd5949" offset="0.45" />
-                      <stop stopColor="#d6249f" offset="0.6" />
-                      <stop stopColor="#285AEB" offset="0.9" />
-                    </radialGradient>
-                  </defs>
-                  <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig-footer-grad)" />
-                  <rect x="5" y="5" width="14" height="14" rx="4" fill="none" stroke="#FFFFFF" strokeWidth="1.6" />
-                  <circle cx="12" cy="12" r="3.2" fill="none" stroke="#FFFFFF" strokeWidth="1.6" />
-                  <circle cx="16.2" cy="7.8" r="1" fill="#FFFFFF" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                 </svg>
               </a>
               <a
                 href={facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora Facebook"
-                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
+                aria-label="Facebook"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:text-white hover:border-[#03BF62]/60 hover:bg-[#03BF62]/10 transition-all duration-200"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10" fill="#1877F2" />
-                  <path
-                    d="M15.36 15.5l.44-2.89h-2.77v-1.88c0-.79.39-1.56 1.63-1.56h1.26V6.71s-1.14-.2-2.24-.2c-2.28 0-3.77 1.38-3.77 3.89v2.21H7.37v2.89h2.54v6.38a10.08 10.08 0 003.12 0V15.5h2.33z"
-                    fill="#FFFFFF"
-                  />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                 </svg>
               </a>
               <a
                 href={tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora TikTok"
-                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
+                aria-label="TikTok"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:text-white hover:border-[#03BF62]/60 hover:bg-[#03BF62]/10 transition-all duration-200"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-                  <path
-                    d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"
-                    fill="#FE2C55"
-                    transform="translate(0.75, 0.75)"
-                  />
-                  <path
-                    d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"
-                    fill="#25F4EE"
-                    transform="translate(-0.75, -0.75)"
-                  />
-                  <path
-                    d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"
-                    fill="#FFFFFF"
-                  />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
                 </svg>
               </a>
               <a
                 href={youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora YouTube"
-                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
+                aria-label="YouTube"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:text-white hover:border-[#03BF62]/60 hover:bg-[#03BF62]/10 transition-all duration-200"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-                  <path
-                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
-                    fill="#FF0000"
-                  />
-                  <polygon points="9.545 15.568 15.818 12 9.545 8.432" fill="#FFFFFF" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
+                  <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                  <path d="m10 15 5-3-5-3z" />
                 </svg>
               </a>
             </div>
@@ -562,7 +559,7 @@ export default async function Footer() {
                 return (
                   <div
                     key={branch._id}
-                    className="w-full max-w-[400px] rounded-2xl bg-white/[0.025] border border-white/[0.12] p-5 hover:border-[#03BF62]/50 transition-colors"
+                    className="w-full max-w-[400px] rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4.5 hover:border-[#03BF62]/30 transition-all duration-300"
                   >
                     {/* Branch Name & Main Badge */}
                     <div className="flex items-start justify-between gap-2.5 flex-wrap">

@@ -66,7 +66,7 @@ export default function ProductsGridSection({
                 onClick={() => setActiveCategory(tab.id)}
                 className={`rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all duration-150 cursor-pointer ${
                   isActive
-                    ? "bg-[#03BF62] text-white shadow-md shadow-emerald-950/20"
+                    ? "bg-[#03BF62] text-white shadow-sm"
                     : "bg-white text-stone-700 hover:bg-stone-100 border border-stone-200/80"
                 }`}
               >

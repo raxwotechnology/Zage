@@ -88,7 +88,7 @@ export default function PromotionsBottomCTA({
             <button
               type="button"
               onClick={handleContact}
-              className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-7 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-950/40 hover:bg-[#029e51] transition-all cursor-pointer active:scale-[0.98]" data-customization-role="primaryButton"
+              className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-7 py-3 text-sm font-medium text-white shadow-sm hover:bg-[#029e51] transition-all duration-200 cursor-pointer active:scale-[0.98]" data-customization-role="primaryButton"
             >
               <span data-customization-role="buttonText">{custom.has("primaryButtonText") ? custom.text("primaryButtonText", "") : <>See All Offers</>}</span>
               <ArrowRightIcon className="h-4 w-4" />

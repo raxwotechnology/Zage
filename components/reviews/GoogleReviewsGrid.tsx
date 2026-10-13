@@ -217,7 +217,7 @@ export default function GoogleReviewsGrid() {
                     onClick={() => handleSelectBranch(b._id)}
                     className={`inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                       isSelected
-                        ? "bg-[#03BF62] text-white shadow-md shadow-emerald-950/20"
+                        ? "bg-[#03BF62] text-white shadow-sm"
                         : "bg-stone-100 text-stone-700 hover:bg-stone-200"
                     }`}
                   >

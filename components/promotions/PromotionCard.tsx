@@ -151,7 +151,7 @@ export default function PromotionCard({
 
           {/* Floating Pill Badge (Top-Left) */}
           <div className="absolute top-3 left-3">
-            <span className="rounded-full bg-[#03BF62] px-3 py-1 text-xs font-bold text-white shadow-md shadow-[#03BF62]/25">
+            <span className="rounded-full bg-[#03BF62] px-3 py-1 text-xs font-semibold text-white shadow-xs">
               {promotion.badgeText}
             </span>
           </div>

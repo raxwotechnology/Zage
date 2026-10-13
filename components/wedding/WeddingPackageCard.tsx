@@ -64,7 +64,7 @@ export default function WeddingPackageCard({
 
           {pkg.isFeatured && (
             <div className="absolute top-3 left-3 z-10">
-              <span className="inline-flex items-center rounded-full bg-[#03BF62] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-md shadow-emerald-900/30">
+              <span className="inline-flex items-center rounded-full bg-[#03BF62] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-xs">
                 MOST POPULAR
               </span>
             </div>
@@ -157,7 +157,7 @@ export default function WeddingPackageCard({
             }}
             className={`flex w-full items-center justify-center gap-2 rounded-xl py-3 text-xs sm:text-sm font-semibold transition-all active:scale-[0.98] ${
               pkg.isFeatured
-                ? "bg-[#03BF62] text-white hover:bg-[#029e51] shadow-md shadow-emerald-600/30"
+                ? "bg-[#03BF62] text-white hover:bg-[#029e51] shadow-sm"
                 : "bg-stone-900 text-white hover:bg-[#03BF62]"
             }`}
           >

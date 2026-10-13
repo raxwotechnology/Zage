@@ -69,7 +69,7 @@ export default function WeddingHero({ bookingUrl = "" }: WeddingHeroProps) {
                     },
                   });
                 }}
-                className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-7 py-3 text-sm font-semibold text-white shadow-md shadow-emerald-900/30 transition-all hover:bg-[#029e51] hover:gap-3 active:scale-[0.98]" data-customization-role="primaryButton"
+                className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-7 py-3 text-sm font-medium text-white shadow-sm hover:bg-[#029e51] hover:gap-3 transition-all duration-200 active:scale-[0.98]" data-customization-role="primaryButton"
               >
                 <span data-customization-role="buttonText">{custom.has("primaryButtonText") ? custom.text("primaryButtonText", "") : <>Book Your Bridal Consultation</>}</span>
                 <ArrowRightIcon className="h-4 w-4" />
