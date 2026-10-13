@@ -192,7 +192,7 @@ export default function Navbar() {
                   },
                 });
               }}
-              className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-[#029e51] hover:shadow-md hover:shadow-stone-900/20 active:scale-[0.98]" data-customization-role="primaryButton"
+              className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-6 py-2.5 text-sm font-medium text-white shadow-xs transition-all hover:bg-[#029e51] active:scale-[0.98]" data-customization-role="primaryButton"
             >
               <span>Book Appointment</span>
               <ArrowRightIcon className="h-4 w-4" />

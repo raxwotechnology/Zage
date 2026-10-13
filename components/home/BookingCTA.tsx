@@ -2,6 +2,7 @@
 
 import { useSectionCustomization } from "@/components/customization/CustomizationProvider";
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics-client";
@@ -15,53 +16,56 @@ interface BookingCTAProps {
 
 export default function BookingCTA({
   bookingUrl = "",
-  tag = "✦ Book Your Visit",
-  heading = "Ready for Your Next Look?",
+  tag = "BOOK AN APPOINTMENT",
+  heading = "Ready to Look and Feel Your Best?",
   description = "Let our professional team bring out the best version of you.",
 }: BookingCTAProps) {
   const custom = useSectionCustomization("booking-cta");
 
   return (
-    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-20 sm:py-24 lg:py-28" data-customization-section="booking-cta">
-      {/* Background Salon Image - Enhanced Visibility */}
+    <section className="relative overflow-hidden bg-[#FAF7F2] text-stone-900 py-20 sm:py-24 lg:py-28" data-customization-section="booking-cta">
+      {/* Background Salon Image - Soft Warm Blend */}
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/cta-salon.jpg")}
           alt="Salvora Salon appointment styling"
           fill
-          className="object-cover object-center opacity-80 sm:opacity-90" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          className="object-cover object-center opacity-25 sm:opacity-35"
+          data-customization-role="backgroundImage"
+          unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
-        {/* Balanced overlay: deep protective tint on text side, transparent on image side */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14]/95 via-[#0C0A14]/75 to-[#0C0A14]/35" />
+        {/* Balanced warm overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/90 to-[#FAF7F2]/45" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-2xl space-y-5 text-left">
           {/* Tag */}
           <div className="inline-flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#029e51]" data-customization-role="eyebrow">
               {custom.text("eyebrow", tag)}
             </span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight" data-customization-role="heading">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 leading-tight" data-customization-role="heading">
             {custom.has("heading") ? custom.text("heading", "") : <>{heading}</>}
           </h2>
 
           {/* Description */}
-          <p className="text-base sm:text-lg text-stone-200 leading-relaxed font-normal max-w-xl" data-customization-role="description">
-            {custom.text("description", description)}
+          <p className="text-base text-stone-600 leading-relaxed font-normal" data-customization-role="description">
+            {custom.has("description") ? custom.text("description", "") : <>{description}</>}
           </p>
 
-          {/* Action Button */}
-          <div className="pt-3">
+          {/* Action Buttons */}
+          <div className="pt-2 flex flex-wrap items-center gap-4">
             {bookingUrl ? (
               <a
                 href={bookingUrl}
                 onClick={() => {
                   trackEvent({
                     eventType: "BOOKING_CLICK",
+                    page: "/",
                     metadata: {
                       source: "booking-cta",
                     },
@@ -77,12 +81,19 @@ export default function BookingCTA({
                 type="button"
                 disabled
                 title="Online booking link not yet configured"
-                className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62]/60 px-9 py-4 text-sm font-semibold text-white/80 cursor-not-allowed shadow-none" data-customization-role="primaryButton"
+                className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62]/50 px-9 py-4 text-sm font-medium text-white/90 cursor-not-allowed shadow-none" data-customization-role="primaryButton"
               >
                 <span data-customization-role="buttonText">{custom.has("primaryButtonText") ? custom.text("primaryButtonText", "") : <>Book Appointment</>}</span>
                 <ArrowRightIcon className="h-4 w-4" />
               </button>
             )}
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full border border-stone-300 bg-white/90 px-8 py-4 text-sm font-medium text-stone-800 shadow-xs transition-all hover:bg-stone-50 hover:border-stone-400 active:scale-[0.98]" data-customization-role="secondaryButton"
+            >
+              <span data-customization-role="buttonText">{custom.has("secondaryButtonText") ? custom.text("secondaryButtonText", "") : <>Find a Branch</>}</span>
+            </Link>
           </div>
         </div>
       </div>

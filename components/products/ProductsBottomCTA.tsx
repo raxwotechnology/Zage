@@ -50,7 +50,7 @@ export default function ProductsBottomCTA({
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0A0812] text-white py-20 sm:py-24 border-t border-white/10" data-customization-section="bottom-cta">
+    <section className="relative overflow-hidden bg-[#FAF7F2] text-stone-900 py-20 sm:py-24 border-t border-stone-200/80" data-customization-section="bottom-cta">
       {/* Background Graphic */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -58,28 +58,28 @@ export default function ProductsBottomCTA({
           alt={`${salonName} Personalized Product Routine Consultation`}
           fill
           sizes="100vw"
-          className="object-cover object-right sm:object-right opacity-80 sm:opacity-90" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          className="object-cover object-right sm:object-right opacity-40 sm:opacity-50" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
-        {/* Controlled gradient overlay for crisp text readability while showcasing the product routine atmosphere */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0812] via-[#0A0812]/85 to-[#0A0812]/20 sm:via-[#0A0812]/75 sm:to-transparent" />
+        {/* Controlled warm gradient overlay for crisp text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/90 to-[#FAF7F2]/40 sm:via-[#FAF7F2]/85 sm:to-transparent" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl space-y-4">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#03BF62]">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#029E51]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#03BF62]" />
             <span data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>Beauty Essentials</>}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-stone-900 leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
             Find the Right Product <br />
             for{" "}</>}
-            <span className="bg-gradient-to-r from-[#03BF62] to-[#21C81E] bg-clip-text text-transparent" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>
+            <span className="bg-gradient-to-r from-[#029E51] via-[#03BF62] to-[#029E51] bg-clip-text text-transparent" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>
               Your Routine
             </>}</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-stone-300 leading-relaxed" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
+          <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
             Get personalized product recommendations from our professional {salonName} team
             and discover what works best for you.
           </>}</p>

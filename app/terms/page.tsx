@@ -51,27 +51,24 @@ export default async function TermsPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-[#0C0A14] text-white py-14 sm:py-16 lg:py-20 border-b border-white/10" data-customization-section="hero">
-        {/* Ambient subtle glow for luxury aesthetic */}
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(3,191,98,0.22),rgba(255,255,255,0))]" />
-
+      <section className="relative overflow-hidden bg-[#FAF7F2] text-stone-900 py-14 sm:py-16 lg:py-20 border-b border-stone-200/80" data-customization-section="hero">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-3.5 text-left">
             {/* Small Label */}
             <div className="inline-flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#03BF62]" />
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow"><CustomizationText sectionKey="hero" field="eyebrow">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#029E51]" data-customization-role="eyebrow"><CustomizationText sectionKey="hero" field="eyebrow">
                 LEGAL
               </CustomizationText></span>
             </div>
 
             {/* Heading */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight" data-customization-role="heading"><CustomizationText sectionKey="hero" field="heading">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 leading-tight" data-customization-role="heading"><CustomizationText sectionKey="hero" field="heading">
               Terms & Conditions
             </CustomizationText></h1>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-stone-300 leading-relaxed font-normal max-w-2xl" data-customization-role="description"><CustomizationText sectionKey="hero" field="description">
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed font-normal max-w-2xl" data-customization-role="description"><CustomizationText sectionKey="hero" field="description">
               Please read these terms carefully before using the SALVORA website and its services.
             </CustomizationText></p>
 
@@ -79,12 +76,12 @@ export default async function TermsPage() {
             <nav aria-label="Breadcrumb" className="pt-2 flex items-center gap-2 text-xs font-medium">
               <Link
                 href="/"
-                className="text-stone-400 hover:text-white transition-colors"
+                className="text-stone-500 hover:text-stone-900 transition-colors"
               >
                 Home
               </Link>
-              <span className="text-stone-600">/</span>
-              <span className="text-[#03BF62] font-semibold">Terms & Conditions</span>
+              <span className="text-stone-400">/</span>
+              <span className="text-[#029E51] font-semibold">Terms & Conditions</span>
             </nav>
           </div>
         </div>
