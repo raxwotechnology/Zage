@@ -28,6 +28,9 @@ export const metadata: Metadata = {
       "Special beauty offers, seasonal savings, and exclusive salon deals designed for you.",
     type: "website",
   },
+  alternates: {
+    canonical: "/promotions",
+  },
 };
 
 export default async function PromotionsPage() {

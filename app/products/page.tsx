@@ -32,6 +32,9 @@ export const metadata: Metadata = {
       "Handpicked professional salon and beauty retail products recommended by beauty experts.",
     type: "website",
   },
+  alternates: {
+    canonical: "/products",
+  },
 };
 
 export default async function ProductsPage() {

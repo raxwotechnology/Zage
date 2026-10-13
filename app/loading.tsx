@@ -1,6 +1,6 @@
 import React from "react";
-import ScissorsLoader from "@/components/ui/ScissorsLoader";
+import LuxuryPreloader from "@/components/ui/LuxuryPreloader";
 
 export default function RootLoading() {
-  return <ScissorsLoader fullScreen />;
+  return <LuxuryPreloader fullScreen />;
 }

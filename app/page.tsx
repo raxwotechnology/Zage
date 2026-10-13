@@ -29,7 +29,18 @@ import RetailProduct from "@/models/RetailProduct";
 import Promotion from "@/models/Promotion";
 import { normalizeWhatsAppNumber } from "@/lib/phone";
 
+import type { Metadata } from "next";
+
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "SALVORA | Look Beautiful. Feel Confident. - Luxury Salon in Sri Lanka",
+  description:
+    "Welcome to SALVORA Salon. Discover premium haircuts, hair treatments, skincare, and luxury bridal dressing designed for modern elegance and radiant confidence.",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default async function HomePage() {
   let bookingUrl = "";

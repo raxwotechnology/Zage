@@ -21,9 +21,12 @@ import { ServiceCardData } from "@/components/ui/ServiceCard";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Our Services | salvora",
+  title: "Professional Salon Services | Hair, Skin & Beauty Care",
   description:
-    "Explore professional salon treatments created to help you look and feel your best at salvora.",
+    "Explore our full range of salon services: designer haircuts, creative coloring, keratin smoothing, luxury facials, nail care, and restorative hair therapies at SALVORA.",
+  alternates: {
+    canonical: "/services",
+  },
 };
 
 async function getServices(): Promise<ServiceCardData[]> {
