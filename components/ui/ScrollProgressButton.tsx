@@ -105,8 +105,8 @@ export default function ScrollProgressButton({ className = "" }: ScrollProgressB
         title="Back to top"
         className={`group relative flex items-center justify-center rounded-full bg-[#0A0A0A]/85 backdrop-blur-md transition-all duration-300 cursor-pointer select-none focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#03BF62] focus-visible:ring-offset-2 focus-visible:ring-offset-black hover:scale-105 active:scale-95 w-[46px] h-[46px] sm:w-[52px] sm:h-[52px] ${
           isCompleted
-            ? "shadow-md border border-[#03BF62]/50 shadow-black/40"
-            : "shadow-md hover:shadow-lg shadow-black/40 border border-white/10"
+            ? "shadow-[0_0_12px_rgba(3,191,98,0.7),0_0_24px_rgba(3,191,98,0.35)]"
+            : "hover:shadow-[0_0_15px_rgba(3,191,98,0.35)] shadow-lg shadow-black/40"
         }`}
       >
         {/* SVG Circular Progress Ring */}

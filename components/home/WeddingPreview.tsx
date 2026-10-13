@@ -59,7 +59,7 @@ export default function WeddingPreview() {
             <div className="pt-2">
               <Link
                 href="/wedding"
-                className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-[#029e51] hover:gap-3 transition-all duration-200 active:scale-[0.98]" data-customization-role="primaryButton"
+                className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-[#03BF62]/25 transition-all hover:bg-[#029e51] hover:shadow-[#03BF62]/40 hover:gap-3 active:scale-[0.98]" data-customization-role="primaryButton"
               >
                 <span data-customization-role="buttonText">{custom.has("primaryButtonText") ? custom.text("primaryButtonText", "") : <>Explore Wedding Services</>}</span>
                 <ArrowRightIcon className="h-4 w-4" />

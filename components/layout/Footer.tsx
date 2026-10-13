@@ -278,39 +278,12 @@ export default async function Footer() {
   }
 
   return (
-    <footer className="relative overflow-hidden bg-[#FAF7F2] text-stone-600 border-t border-stone-200/90" data-customization-footer="public">
+    <footer className="relative overflow-hidden bg-black text-stone-300 border-t border-white/10" data-customization-footer="public">
       <div className="absolute inset-0 pointer-events-none z-0">
         <FooterBackground />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 pt-8 pb-5 sm:pt-10 sm:pb-6 sm:px-6 lg:pt-12 lg:pb-6 lg:px-8">
-        {/* Top Highlight Banner */}
-        <div className="mb-8 pb-7 border-b border-stone-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <p className="text-sm sm:text-base font-semibold text-stone-900 tracking-wide">
-              Ready for your signature salon experience?
-            </p>
-            <p className="text-xs text-stone-500">
-              Book a personalized appointment or consult with our beauty specialists today.
-            </p>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-medium text-white shadow-sm hover:bg-[#029e51] transition-all duration-200"
-            >
-              <span>Book Appointment</span>
-              <ArrowRightIcon className="h-3.5 w-3.5" />
-            </Link>
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 bg-white px-4 py-2.5 text-xs font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-50 hover:border-stone-400 shadow-2xs transition-all duration-200"
-            >
-              <span>Explore Services</span>
-            </Link>
-          </div>
-        </div>
-
         {/* Main Grid: Responsive 12-column layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5 lg:gap-5 xl:gap-6 items-start">
           {/* COLUMN 1: SALVORA Logo, Description, Social Icons, Slogan */}
@@ -335,13 +308,13 @@ export default async function Footer() {
                 />
               ) : (
                 <SalvoraLogo
-                  theme="light"
+                  theme="dark"
                   className="h-9 sm:h-10 lg:h-10 w-auto max-w-[200px] object-contain"
                 />
               )}
             </Link>
 
-            <p className="text-xs leading-relaxed text-stone-600 max-w-xs" data-customization-role="footerText">
+            <p className="text-xs leading-relaxed text-stone-300 max-w-xs" data-customization-role="footerText">
               Professional beauty care, modern treatments, and a relaxing salon
               environment at Salvora.
             </p>
@@ -349,68 +322,98 @@ export default async function Footer() {
             {/* Accent divider line */}
             <div className="h-0.5 w-6 rounded-full bg-[#03BF62]" data-customization-role="footerAccent" />
 
-            {/* Social Media Links - Refined Luxury Light Monochrome with Emerald Hover */}
-            <div className="flex items-center gap-2 pt-1">
+            {/* Social Media Links with Real Brand Logos */}
+            <div className="flex items-center gap-2">
               <a
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-200/70 border border-stone-300/80 text-stone-600 hover:text-white hover:border-[#03BF62] hover:bg-[#03BF62] transition-all duration-200 shadow-2xs"
+                aria-label="Salvora Instagram"
+                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                  <defs>
+                    <radialGradient id="ig-footer-grad" r="150%" cx="30%" cy="107%">
+                      <stop stopColor="#fdf497" offset="0" />
+                      <stop stopColor="#fdf497" offset="0.05" />
+                      <stop stopColor="#fd5949" offset="0.45" />
+                      <stop stopColor="#d6249f" offset="0.6" />
+                      <stop stopColor="#285AEB" offset="0.9" />
+                    </radialGradient>
+                  </defs>
+                  <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig-footer-grad)" />
+                  <rect x="5" y="5" width="14" height="14" rx="4" fill="none" stroke="#FFFFFF" strokeWidth="1.6" />
+                  <circle cx="12" cy="12" r="3.2" fill="none" stroke="#FFFFFF" strokeWidth="1.6" />
+                  <circle cx="16.2" cy="7.8" r="1" fill="#FFFFFF" />
                 </svg>
               </a>
               <a
                 href={facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-200/70 border border-stone-300/80 text-stone-600 hover:text-white hover:border-[#03BF62] hover:bg-[#03BF62] transition-all duration-200 shadow-2xs"
+                aria-label="Salvora Facebook"
+                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="#1877F2" />
+                  <path
+                    d="M15.36 15.5l.44-2.89h-2.77v-1.88c0-.79.39-1.56 1.63-1.56h1.26V6.71s-1.14-.2-2.24-.2c-2.28 0-3.77 1.38-3.77 3.89v2.21H7.37v2.89h2.54v6.38a10.08 10.08 0 003.12 0V15.5h2.33z"
+                    fill="#FFFFFF"
+                  />
                 </svg>
               </a>
               <a
                 href={tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="TikTok"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-200/70 border border-stone-300/80 text-stone-600 hover:text-white hover:border-[#03BF62] hover:bg-[#03BF62] transition-all duration-200 shadow-2xs"
+                aria-label="Salvora TikTok"
+                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
-                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                  <path
+                    d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"
+                    fill="#FE2C55"
+                    transform="translate(0.75, 0.75)"
+                  />
+                  <path
+                    d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"
+                    fill="#25F4EE"
+                    transform="translate(-0.75, -0.75)"
+                  />
+                  <path
+                    d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"
+                    fill="#FFFFFF"
+                  />
                 </svg>
               </a>
               <a
                 href={youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="YouTube"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-200/70 border border-stone-300/80 text-stone-600 hover:text-white hover:border-[#03BF62] hover:bg-[#03BF62] transition-all duration-200 shadow-2xs"
+                aria-label="Salvora YouTube"
+                className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
-                  <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
-                  <path d="m10 15 5-3-5-3z" />
+                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                  <path
+                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+                    fill="#FF0000"
+                  />
+                  <polygon points="9.545 15.568 15.818 12 9.545 8.432" fill="#FFFFFF" />
                 </svg>
               </a>
             </div>
 
             {/* Slogan */}
-            <div className="pt-0.5 text-[10px] tracking-[0.18em] font-semibold text-[#029E51] uppercase leading-tight">
+            <div className="pt-0.5 text-[10px] tracking-[0.18em] font-semibold text-[#03BF62] uppercase leading-tight">
               <p data-customization-role="footerText">BEAUTY • CARE • CONFIDENCE</p>
-              <p className="text-emerald-700 text-[9px] tracking-[0.22em]" data-customization-role="footerText">ALL IN ONE PLACE</p>
+              <p className="text-emerald-400/90 text-[9px] tracking-[0.22em]" data-customization-role="footerText">ALL IN ONE PLACE</p>
             </div>
           </div>
 
           {/* COLUMN 2: Wedding */}
           {weddingItems.length > 0 && (
             <div className="sm:col-span-1 lg:col-span-2 xl:col-span-2 min-w-0 self-start">
-              <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-stone-900" data-customization-role="footerHeading">
+              <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-white" data-customization-role="footerHeading">
                 Wedding
               </h4>
               <div className="h-0.5 w-6 rounded-full bg-[#03BF62] mt-1 mb-2.5" data-customization-role="footerAccent" />
@@ -419,23 +422,23 @@ export default async function Footer() {
                   <li key={idx}>
                     <Link
                       href={item.href}
-                      className="group flex items-start justify-between gap-2 text-stone-600 hover:text-stone-900 transition-colors py-0.5"
+                      className="group flex items-start justify-between gap-2 text-stone-300 hover:text-white transition-colors py-0.5"
                       data-customization-role="footerLink"
                     >
                       <span
-                        className="flex-1 whitespace-normal break-words leading-snug group-hover:text-stone-900 transition-colors"
+                        className="flex-1 whitespace-normal break-words leading-snug group-hover:text-white transition-colors"
                         data-customization-role="footerText"
                       >
                         {item.name}
                       </span>
-                      <ChevronRightIcon className="h-3 w-3 mt-0.5 text-stone-400 group-hover:text-[#03BF62] transition-colors shrink-0" />
+                      <ChevronRightIcon className="h-3 w-3 mt-0.5 text-stone-500 group-hover:text-[#03BF62] transition-colors shrink-0" />
                     </Link>
                   </li>
                 ))}
                 <li className="pt-1">
                   <Link
                     href="/wedding"
-                    className="text-[#029E51] hover:text-[#028243] transition-colors font-semibold text-xs inline-flex items-center gap-1"
+                    className="text-[#03BF62] hover:text-white transition-colors font-semibold text-xs inline-flex items-center gap-1"
                     data-customization-role="footerLink"
                   >
                     <span data-customization-role="footerText">View Wedding</span>
@@ -453,7 +456,7 @@ export default async function Footer() {
                 weddingItems.length > 0 ? "lg:col-span-2 xl:col-span-2" : "lg:col-span-3 xl:col-span-3"
               } min-w-0 self-start`}
             >
-              <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-stone-900" data-customization-role="footerHeading">
+              <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-white" data-customization-role="footerHeading">
                 Our Services
               </h4>
               <div className="h-0.5 w-6 rounded-full bg-[#03BF62] mt-1 mb-2.5" data-customization-role="footerAccent" />
@@ -462,23 +465,23 @@ export default async function Footer() {
                   <li key={idx}>
                     <Link
                       href={service.href}
-                      className="group flex items-start justify-between gap-2 text-stone-600 hover:text-stone-900 transition-colors py-0.5"
+                      className="group flex items-start justify-between gap-2 text-stone-300 hover:text-white transition-colors py-0.5"
                       data-customization-role="footerLink"
                     >
                       <span
-                        className="flex-1 whitespace-normal break-words leading-snug group-hover:text-stone-900 transition-colors"
+                        className="flex-1 whitespace-normal break-words leading-snug group-hover:text-white transition-colors"
                         data-customization-role="footerText"
                       >
                         {service.name}
                       </span>
-                      <ChevronRightIcon className="h-3 w-3 mt-0.5 text-stone-400 group-hover:text-[#03BF62] transition-colors shrink-0" />
+                      <ChevronRightIcon className="h-3 w-3 mt-0.5 text-stone-500 group-hover:text-[#03BF62] transition-colors shrink-0" />
                     </Link>
                   </li>
                 ))}
                 <li className="pt-1">
                   <Link
                     href="/services"
-                    className="text-[#029E51] hover:text-[#028243] transition-colors font-semibold text-xs inline-flex items-center gap-1"
+                    className="text-[#03BF62] hover:text-white transition-colors font-semibold text-xs inline-flex items-center gap-1"
                     data-customization-role="footerLink"
                   >
                     <span data-customization-role="footerText">View Services</span>
@@ -492,7 +495,7 @@ export default async function Footer() {
           {/* COLUMN 4: Our Products */}
           {productCategoryLinks.length > 0 && (
             <div className="sm:col-span-1 lg:col-span-2 xl:col-span-2 min-w-0 self-start">
-              <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-stone-900" data-customization-role="footerHeading">
+              <h4 className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-white" data-customization-role="footerHeading">
                 Our Products
               </h4>
               <div className="h-0.5 w-6 rounded-full bg-[#03BF62] mt-1 mb-2.5" data-customization-role="footerAccent" />
@@ -501,23 +504,23 @@ export default async function Footer() {
                   <li key={idx}>
                     <Link
                       href={product.href}
-                      className="group flex items-start justify-between gap-2 text-stone-600 hover:text-stone-900 transition-colors py-0.5"
+                      className="group flex items-start justify-between gap-2 text-stone-300 hover:text-white transition-colors py-0.5"
                       data-customization-role="footerLink"
                     >
                       <span
-                        className="flex-1 whitespace-normal break-words leading-snug group-hover:text-stone-900 transition-colors"
+                        className="flex-1 whitespace-normal break-words leading-snug group-hover:text-white transition-colors"
                         data-customization-role="footerText"
                       >
                         {product.name}
                       </span>
-                      <ChevronRightIcon className="h-3 w-3 mt-0.5 text-stone-400 group-hover:text-[#03BF62] transition-colors shrink-0" />
+                      <ChevronRightIcon className="h-3 w-3 mt-0.5 text-stone-500 group-hover:text-[#03BF62] transition-colors shrink-0" />
                     </Link>
                   </li>
                 ))}
                 <li className="pt-1">
                   <Link
                     href="/products"
-                    className="text-[#029E51] hover:text-[#028243] transition-colors font-semibold text-xs inline-flex items-center gap-1"
+                    className="text-[#03BF62] hover:text-white transition-colors font-semibold text-xs inline-flex items-center gap-1"
                     data-customization-role="footerLink"
                   >
                     <span data-customization-role="footerText">View Products</span>
@@ -541,7 +544,7 @@ export default async function Footer() {
             >
               <div>
                 <h4
-                  className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-stone-900"
+                  className="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-white"
                   data-customization-role="footerHeading"
                 >
                   Our Branches
@@ -559,18 +562,18 @@ export default async function Footer() {
                 return (
                   <div
                     key={branch._id}
-                    className="w-full max-w-[400px] rounded-2xl bg-white border border-stone-200/90 shadow-2xs p-4.5 hover:border-[#03BF62]/40 transition-all duration-300"
+                    className="w-full max-w-[400px] rounded-2xl bg-white/[0.025] border border-white/[0.12] p-5 hover:border-[#03BF62]/50 transition-colors"
                   >
                     {/* Branch Name & Main Badge */}
                     <div className="flex items-start justify-between gap-2.5 flex-wrap">
                       <div className="flex items-start gap-2 flex-1 min-w-0">
                         <MapPinIcon className="h-4 w-4 text-[#03BF62] shrink-0 mt-0.5" />
-                        <p className="font-bold text-stone-900 text-sm sm:text-base leading-snug whitespace-normal break-words flex-1">
+                        <p className="font-bold text-white text-sm sm:text-base leading-snug whitespace-normal break-words flex-1">
                           {branch.name}
                         </p>
                       </div>
                       {branch.isMain && (
-                        <span className="shrink-0 text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-[#029E51]/10 text-[#029E51] border border-[#029E51]/30">
+                        <span className="shrink-0 text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-[#03BF62]/[0.12] text-[#03BF62] border border-[#03BF62]/[0.35]">
                           MAIN
                         </span>
                       )}
@@ -578,7 +581,7 @@ export default async function Footer() {
 
                     {/* Address */}
                     {branch.address && (
-                      <p className="text-xs sm:text-[13px] text-stone-600 whitespace-normal break-words leading-relaxed pl-6 mt-3">
+                      <p className="text-xs sm:text-[13px] text-stone-300 whitespace-normal break-words leading-relaxed pl-6 mt-3">
                         {branch.address}
                       </p>
                     )}
@@ -588,7 +591,7 @@ export default async function Footer() {
                       {branch.phone && (
                         <a
                           href={`tel:${branch.phone.replace(/\s+/g, "")}`}
-                          className="text-xs sm:text-[13px] text-stone-600 hover:text-stone-900 transition-colors flex items-center gap-2.5"
+                          className="text-xs sm:text-[13px] text-stone-300 hover:text-white transition-colors flex items-center gap-2.5"
                         >
                           <PhoneIcon className="h-3.5 w-3.5 text-[#03BF62] shrink-0" />
                           <span className="whitespace-normal break-words">{branch.phone}</span>
@@ -598,7 +601,7 @@ export default async function Footer() {
                       {branch.email && (
                         <a
                           href={`mailto:${branch.email}`}
-                          className="text-xs sm:text-[13px] text-stone-600 hover:text-stone-900 transition-colors flex items-center gap-2.5 [overflow-wrap:anywhere]"
+                          className="text-xs sm:text-[13px] text-stone-300 hover:text-white transition-colors flex items-center gap-2.5 [overflow-wrap:anywhere]"
                         >
                           <svg
                             viewBox="0 0 24 24"
@@ -620,8 +623,8 @@ export default async function Footer() {
 
                     {/* Opening Hours */}
                     {branchHours && branchHours.length > 0 && (
-                      <div className="pt-3.5 mt-4 border-t border-stone-200/90">
-                        <div className="flex items-center gap-2 text-xs font-semibold text-stone-800 mb-2.5">
+                      <div className="pt-3.5 mt-4 border-t border-white/[0.12]">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-stone-200 mb-2.5">
                           <ClockIcon className="h-3.5 w-3.5 text-[#03BF62] shrink-0" />
                           <span>Opening Hours</span>
                         </div>
@@ -631,12 +634,12 @@ export default async function Footer() {
                               key={i}
                               className="flex items-center justify-between gap-4 text-xs"
                             >
-                              <span className="text-stone-500 shrink-0">{h.label}</span>
+                              <span className="text-stone-400 shrink-0">{h.label}</span>
                               <span
                                 className={
                                   h.time === "Closed"
-                                    ? "text-amber-600 font-medium"
-                                    : "text-stone-800 font-medium text-right"
+                                    ? "text-amber-400 font-medium"
+                                    : "text-stone-200 font-medium text-right"
                                 }
                               >
                                 {h.time}
@@ -654,7 +657,7 @@ export default async function Footer() {
               <div className="mt-4.5 pt-0.5 flex items-center justify-between gap-3 flex-wrap max-w-[400px]">
                 <Link
                   href="/contact"
-                  className="text-[#029E51] hover:text-[#028243] transition-colors font-semibold text-xs inline-flex items-center gap-1.5"
+                  className="text-[#03BF62] hover:text-white transition-colors font-semibold text-xs inline-flex items-center gap-1.5"
                   data-customization-role="footerLink"
                 >
                   <span data-customization-role="footerText">View All Branches</span>
@@ -682,24 +685,24 @@ export default async function Footer() {
         </div>
 
         {/* Bottom Bar - Ultra Compact */}
-        <div className="mt-6 pt-4 border-t border-stone-200/90 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-[11px] text-stone-500">
+        <div className="mt-5 sm:mt-6 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-[11px] text-stone-500">
           <p data-customization-role="footerText">
             © {currentYear} Salvora. A Product of{" "}
             <a
               href="https://raxwo.net/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-stone-700 font-semibold hover:text-[#029E51] hover:underline transition-colors" data-customization-role="footerLink"
+              className="text-stone-300 font-medium hover:text-[#03BF62] hover:underline transition-colors" data-customization-role="footerLink"
             >
               Raxwo (Pvt) Ltd
             </a>
             . All rights reserved.
           </p>
           <div className="flex items-center gap-5">
-            <Link href="/privacy" className="hover:text-stone-800 transition-colors" data-customization-role="footerLink">
+            <Link href="/privacy" className="hover:text-stone-300 transition-colors" data-customization-role="footerLink">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-stone-800 transition-colors" data-customization-role="footerLink">
+            <Link href="/terms" className="hover:text-stone-300 transition-colors" data-customization-role="footerLink">
               Terms & Conditions
             </Link>
           </div>

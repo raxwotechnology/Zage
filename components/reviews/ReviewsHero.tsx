@@ -9,7 +9,7 @@ export default function ReviewsHero() {
   const custom = useSectionCustomization("hero");
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF7F2] text-stone-900 py-16 sm:py-20 lg:py-24 border-b border-stone-200/80" data-customization-section="hero">
+    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-16 sm:py-20 lg:py-24" data-customization-section="hero">
       {/* Background Salon Client Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -18,10 +18,10 @@ export default function ReviewsHero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center opacity-40 sm:opacity-50" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          className="object-cover object-center opacity-70 sm:opacity-85" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
-        {/* Controlled warm gradient overlay for crisp text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/90 to-[#FAF7F2]/40" />
+        {/* Controlled gradient overlay for crisp text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/90 to-[#0C0A14]/35" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -29,21 +29,21 @@ export default function ReviewsHero() {
           {/* Label / Pill */}
           <div className="inline-flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-[#03BF62]" />
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#029E51]" data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>
               CLIENT REVIEWS
             </>}</span>
           </div>
 
           {/* Heading */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
             What Our Clients{" "}</>}
-            <span className="block bg-gradient-to-r from-[#029E51] via-[#03BF62] to-[#029E51] bg-clip-text text-transparent" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>
+            <span className="block bg-gradient-to-r from-[#03BF62] via-[#21C81E] to-[#03BF62] bg-clip-text text-transparent" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>
               Say About Salvora
             </>}</span>
           </h1>
 
           {/* Short Description */}
-          <p className="text-sm sm:text-base text-stone-600 leading-relaxed font-normal max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
+          <p className="text-sm sm:text-base text-stone-200 leading-relaxed font-normal max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
             Read real feedback from clients who have experienced our salon services.
           </>}</p>
 
@@ -51,12 +51,12 @@ export default function ReviewsHero() {
           <nav aria-label="Breadcrumb" className="pt-2 flex items-center gap-2 text-xs font-medium">
             <Link
               href="/"
-              className="text-stone-500 hover:text-stone-900 transition-colors"
+              className="text-stone-400 hover:text-white transition-colors"
             >
               Home
             </Link>
-            <span className="text-stone-400">/</span>
-            <span className="text-[#029E51] font-semibold">Reviews</span>
+            <span className="text-stone-600">/</span>
+            <span className="text-[#03BF62] font-semibold">Reviews</span>
           </nav>
         </div>
       </div>

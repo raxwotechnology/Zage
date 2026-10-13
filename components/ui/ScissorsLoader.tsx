@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useId } from "react";
-import LuxuryPreloader from "@/components/ui/LuxuryPreloader";
 
 export interface ScissorsLoaderProps {
   /**
@@ -230,11 +229,36 @@ export default function ScissorsLoader({
 
   // Full Screen Mode
   if (fullScreen) {
+    const themeBg =
+      theme === "light"
+        ? "bg-white/95 text-stone-900"
+        : theme === "dark"
+        ? "bg-[#0A0A0A]/95 text-stone-100"
+        : "bg-white/95 dark:bg-[#0A0A0A]/95 text-stone-900 dark:text-stone-100";
+
     return (
-      <LuxuryPreloader
-        label={displayLabel || "Loading..."}
-        fullScreen={true}
-      />
+      <div
+        role="status"
+        aria-live="polite"
+        className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center p-6 ${themeBg} backdrop-blur-md transition-colors ${className}`}
+      >
+        {/* Soft Ambient Backdrop Glow */}
+        <div className="absolute h-64 w-64 rounded-full bg-[#03BF62]/10 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col items-center">
+          {loaderGraphic}
+
+          {displayLabel && (
+            <div className="mt-6 flex flex-col items-center text-center">
+              <p className="text-sm font-semibold tracking-wider text-stone-800 dark:text-stone-200">
+                {displayLabel}
+              </p>
+            </div>
+          )}
+        </div>
+
+        <span className="sr-only">{displayLabel || "Loading..."}</span>
+      </div>
     );
   }
 

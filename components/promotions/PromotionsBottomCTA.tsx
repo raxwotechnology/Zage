@@ -50,7 +50,7 @@ export default function PromotionsBottomCTA({
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF7F2] text-stone-900 py-20 sm:py-24 border-t border-stone-200/80" data-customization-section="bottom-cta">
+    <section className="relative overflow-hidden bg-[#0A0812] text-white py-20 sm:py-24 border-t border-white/10" data-customization-section="bottom-cta">
       {/* Background Graphic */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -58,28 +58,28 @@ export default function PromotionsBottomCTA({
           alt={`${salonName} Exclusive Salon Deals`}
           fill
           sizes="100vw"
-          className="object-cover object-right sm:object-right opacity-40 sm:opacity-50" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          className="object-cover object-right sm:object-right opacity-80 sm:opacity-90" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
-        {/* Controlled warm gradient overlay for crisp text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/90 to-[#FAF7F2]/40 sm:via-[#FAF7F2]/85 sm:to-transparent" />
+        {/* Controlled gradient overlay for crisp text readability while showing the warm spa ambiance */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0812] via-[#0A0812]/85 to-[#0A0812]/20 sm:via-[#0A0812]/75 sm:to-transparent" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl space-y-4">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#029E51]">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#03BF62]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#03BF62]" />
             <span data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>Limited Time</>}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-stone-900 leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
             Don&apos;t Miss Your <br />
             Next{" "}</>}
-            <span className="bg-gradient-to-r from-[#029E51] via-[#03BF62] to-[#029E51] bg-clip-text text-transparent" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>
+            <span className="bg-gradient-to-r from-[#03BF62] to-[#21C81E] bg-clip-text text-transparent" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>
               Beauty Deal
             </>}</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
+          <p className="text-sm sm:text-base text-stone-300 leading-relaxed" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
             Book your preferred offer or contact our {salonName} team to find the best
             promotion for your needs.
           </>}</p>
@@ -88,7 +88,7 @@ export default function PromotionsBottomCTA({
             <button
               type="button"
               onClick={handleContact}
-              className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-7 py-3 text-sm font-medium text-white shadow-sm hover:bg-[#029e51] transition-all duration-200 cursor-pointer active:scale-[0.98]" data-customization-role="primaryButton"
+              className="inline-flex items-center gap-2.5 rounded-full bg-[#03BF62] px-7 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-950/40 hover:bg-[#029e51] transition-all cursor-pointer active:scale-[0.98]" data-customization-role="primaryButton"
             >
               <span data-customization-role="buttonText">{custom.has("primaryButtonText") ? custom.text("primaryButtonText", "") : <>See All Offers</>}</span>
               <ArrowRightIcon className="h-4 w-4" />
