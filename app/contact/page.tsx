@@ -19,12 +19,9 @@ import SalonSettings from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Contact SALVORA Salon | Branch Locations, Phone & Appointments",
+  title: "Contact Us | SALVORA",
   description:
-    "Get in touch with SALVORA salon in Sri Lanka. Find branch locations, phone numbers, opening hours, directions, and instant booking via WhatsApp or phone.",
-  alternates: {
-    canonical: "/contact",
-  },
+    "Get in touch with SALVORA salon locations for inquiries, guidance, and beauty appointments.",
 };
 
 async function getContactData(): Promise<{

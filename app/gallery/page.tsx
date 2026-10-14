@@ -14,12 +14,9 @@ import SalonSettings, { normalizePageVisibility } from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Hair & Beauty Portfolio Gallery | Real Transformations",
+  title: "Gallery | salvora",
   description:
-    "Explore our gallery of real salon moments, haircuts, artistic styling, hair color transformations, and bridal makeovers at SALVORA.",
-  alternates: {
-    canonical: "/gallery",
-  },
+    "Explore our gallery of real salon moments, treatments, styling and client transformations at salvora.",
 };
 
 async function getGalleryData(): Promise<{

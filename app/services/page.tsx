@@ -21,12 +21,9 @@ import { ServiceCardData } from "@/components/ui/ServiceCard";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Professional Salon Services | Hair, Skin & Beauty Care",
+  title: "Our Services | salvora",
   description:
-    "Explore our full range of salon services: designer haircuts, creative coloring, keratin smoothing, luxury facials, nail care, and restorative hair therapies at SALVORA.",
-  alternates: {
-    canonical: "/services",
-  },
+    "Explore professional salon treatments created to help you look and feel your best at salvora.",
 };
 
 async function getServices(): Promise<ServiceCardData[]> {
@@ -43,6 +40,7 @@ async function getServices(): Promise<ServiceCardData[]> {
       price: s.price || 0,
       duration: s.duration || 0,
       image: s.image || "",
+      audience: s.audience || "unisex",
     }));
   } catch (error) {
     console.error("Failed to load services for public page:", error);

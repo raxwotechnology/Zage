@@ -32,9 +32,6 @@ export const metadata: Metadata = {
       "Handpicked professional salon and beauty retail products recommended by beauty experts.",
     type: "website",
   },
-  alternates: {
-    canonical: "/products",
-  },
 };
 
 export default async function ProductsPage() {
@@ -125,6 +122,7 @@ export default async function ProductsPage() {
           isMostPopular: Boolean(p.isMostPopular),
           isFastMoving: Boolean(p.isFastMoving),
           isDiscountProduct: Boolean(p.isDiscountProduct),
+          audience: p.audience || "unisex",
           branchWhatsapp: productBranchWhatsapp || undefined,
         };
       });

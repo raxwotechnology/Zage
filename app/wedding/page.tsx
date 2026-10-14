@@ -18,12 +18,9 @@ import { WeddingPackageCardData } from "@/components/wedding/WeddingPackageCard"
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Bridal Dressing & Luxury Wedding Packages in Sri Lanka",
+  title: "Wedding Beauty Services | salvora",
   description:
-    "Make your dream wedding day unforgettable with SALVORA's bespoke bridal dressing, hairstyle creation, bridal makeup, pre-wedding skin therapies, and complete bridal party packages in Sri Lanka.",
-  alternates: {
-    canonical: "/wedding",
-  },
+    "Bridal makeup, hair styling, nail care, facials, and complete wedding packages designed to make you look and feel your best for your special day.",
 };
 
 export default async function WeddingPage() {
@@ -57,6 +54,7 @@ export default async function WeddingPage() {
         price: s.price || 0,
         duration: s.duration || 0,
         image: s.image || "",
+        audience: s.audience || "unisex",
       }));
     }
 

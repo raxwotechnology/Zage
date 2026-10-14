@@ -18,12 +18,9 @@ import SalonSettings from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "About SALVORA Salon | Our Story, Team & Vision",
+  title: "About Us | SALVORA",
   description:
-    "Discover the story behind SALVORA. Learn about our passion for modern beauty, expert certified stylists, premium brand partners, and warm salon ambiance across Sri Lanka.",
-  alternates: {
-    canonical: "/about",
-  },
+    "Learn about SALVORA, our story, values, modern space, and our dedicated beauty experts across Sri Lanka.",
 };
 
 async function getAboutData(): Promise<{

@@ -13,12 +13,9 @@ import SalonSettings from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Client Reviews & Testimonials | 5-Star Salon Experience",
+  title: "Client Reviews | SALVORA",
   description:
-    "Read verified client reviews and testimonials from guests who have experienced our professional haircuts, luxury hair coloring, and relaxing treatments at SALVORA.",
-  alternates: {
-    canonical: "/reviews",
-  },
+    "Read real Google client reviews and feedback from guests who have experienced salon services at SALVORA.",
 };
 
 async function getBookingUrl(): Promise<string> {
