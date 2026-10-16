@@ -231,6 +231,19 @@ svg[data-icon-color="white"],
   background-color: #03BF62 !important;
 }
 
+/* Card CTA button arrow hover color - hardcoded #FFFFFF on button hover or focus */
+.card-cta-btn:hover svg,
+.card-cta-btn:hover svg *,
+.card-cta-btn:hover .card-cta-arrow,
+.card-cta-btn:hover .card-cta-arrow *,
+.card-cta-btn:focus-visible svg,
+.card-cta-btn:focus-visible svg *,
+.card-cta-btn:focus-visible .card-cta-arrow,
+.card-cta-btn:focus-visible .card-cta-arrow * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
 /* Contact Page Selected Branch Tab Icon - Hardcoded white, immune to admin customization */
 #branch-contact-salvora [data-selected="true"] svg,
 #branch-contact-salvora [data-selected="true"] svg *,
@@ -304,6 +317,26 @@ svg[data-icon-color="white"],
 .admin-auth-input:focus {
   border-color: var(--auth-focus-color, var(--admin-theme, #03BF62)) !important;
   box-shadow: 0 0 0 3px var(--auth-focus-ring, rgba(3, 191, 98, 0.2)) !important;
+}
+
+/* Admin Portal Instant Theme Styles */
+[data-customization-scope="admin"] [data-customization-sidebar] [data-customization-active="true"] {
+  background-color: var(--admin-sidebar-active-bg, #03BF62) !important;
+  color: var(--admin-sidebar-active-text, #ffffff) !important;
+}
+
+[data-customization-scope="admin"] [data-customization-sidebar] [data-customization-active="true"] svg {
+  color: var(--admin-sidebar-active-icon, #ffffff) !important;
+}
+
+[data-customization-scope="admin"] [data-customization-admin-primary="true"] {
+  background-color: var(--admin-button-bg, #03BF62) !important;
+  color: var(--admin-button-text, #ffffff) !important;
+  border-color: var(--admin-button-border, var(--admin-button-bg, #03BF62)) !important;
+}
+
+[data-customization-scope="admin"] [data-customization-admin-primary="true"]:hover {
+  background-color: var(--admin-primary-hover, #02994e) !important;
 }
 
 

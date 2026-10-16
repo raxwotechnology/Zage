@@ -140,14 +140,14 @@ function HomeWeddingPackageCard({ pkg }: { pkg: HomeWeddingPackageData }) {
         <Link
           href="/wedding"
           onClick={handleCardClick}
-          className={`flex w-full items-center justify-center gap-2 rounded-xl py-3 text-xs sm:text-sm font-semibold transition-all active:scale-[0.98] ${
+          className={`card-cta-btn group/btn flex w-full items-center justify-center gap-2 rounded-xl py-3 text-xs sm:text-sm font-semibold transition-all active:scale-[0.98] ${
             pkg.isFeatured
               ? "bg-[#03BF62] text-white hover:bg-[#029e51] shadow-md shadow-[#03BF62]/25"
               : "bg-stone-900 text-white hover:bg-[#03BF62]"
           }`}
         >
           <span>View Package</span>
-          <ArrowRightIcon className="h-4 w-4" />
+          <ArrowRightIcon className="card-cta-arrow h-4 w-4 transition-colors group-hover/btn:text-white" />
         </Link>
       </div>
     </div>

@@ -245,7 +245,7 @@ export default function AiAssistantPage() {
             </h1>
           </div>
           <p data-customization-role="description" data-customization-admin-body className="mt-1 text-xs sm:text-sm text-stone-500 max-w-2xl">
-            {customization.text("description", "Use SALVORA's real website analytics and content data to understand performance, identify issues, and discover opportunities for improvement.")}
+            {customization.text("description", "Use Salon Zage's real website analytics and content data to understand performance, identify issues, and discover opportunities for improvement.")}
           </p>
         </div>
 
@@ -324,7 +324,7 @@ export default function AiAssistantPage() {
                 AI Assistant Not Configured
               </h2>
               <p className="text-xs text-amber-700 mt-0.5">
-                Add your AI provider API key (e.g. <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-[11px]">OPENAI_API_KEY</code> in your environment variables) to enable automated SALVORA website insights.
+                Add your AI provider API key (e.g. <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-[11px]">OPENAI_API_KEY</code> in your environment variables) to enable automated Salon Zage website insights.
               </p>
             </div>
           </div>
@@ -346,7 +346,7 @@ export default function AiAssistantPage() {
       )}
 
       {/* ========================================================== */}
-      {/* 2. ASK SALVORA AI INTERACTIVE CARD                         */}
+      {/* 2. ASK SALON ZAGE AI INTERACTIVE CARD                      */}
       {/* ========================================================== */}
       <div className="rounded-2xl border border-purple-200/90 bg-white p-5 sm:p-6 shadow-xs">
         <div className="flex items-center justify-between pb-3 border-b border-stone-100">
@@ -354,7 +354,7 @@ export default function AiAssistantPage() {
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-50 text-[#7C3AED]">
               <SearchIcon className="h-4 w-4" />
             </div>
-            <h2 data-customization-role="sectionHeading" className="text-base font-bold text-stone-900">Ask SALVORA AI</h2>
+            <h2 data-customization-role="sectionHeading" className="text-base font-bold text-stone-900">Ask Salon Zage AI</h2>
           </div>
           <span className="text-[11px] text-stone-400 font-medium">
             Answers strictly from real MongoDB data
@@ -934,7 +934,7 @@ export default function AiAssistantPage() {
 
                 <div className="mt-4 space-y-3 text-xs text-stone-700 leading-relaxed">
                   <p>
-                    SALVORA AI is designed strictly as a <strong>read-only analytical advisor</strong>.
+                    Salon Zage AI is designed strictly as a <strong>read-only analytical advisor</strong>.
                   </p>
                   <div className="rounded-xl bg-purple-50/50 border border-purple-100 p-3.5 text-purple-900 text-xs">
                     <p className="font-semibold mb-1">Runtime Code Safety:</p>

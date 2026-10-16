@@ -61,7 +61,7 @@ export default function AdminBackupPage() {
 
       // Extract filename from header or use fallback
       const disposition = res.headers.get("content-disposition");
-      let filename = "salvora-backup.json";
+      let filename = "salon-zage-backup.json";
       if (disposition) {
         const match = disposition.match(/filename="?([^"]+)"?/);
         if (match && match[1]) {
@@ -223,7 +223,7 @@ export default function AdminBackupPage() {
           </h1>
         </div>
         <p data-customization-role="description" data-customization-admin-body className="mt-1 text-xs sm:text-sm text-stone-500 max-w-2xl">
-          {customization.text("description", "Protect SALVORA website content by downloading backups and safely restoring previous data.")}
+          {customization.text("description", "Protect Salon Zage website content by downloading backups and safely restoring previous data.")}
         </p>
       </div>
 
@@ -235,7 +235,7 @@ export default function AdminBackupPage() {
           <div>
             <h2 data-customization-role="sectionHeading" className="text-lg font-bold text-stone-900">Create Website Backup</h2>
             <p className="text-xs text-stone-500 mt-0.5">
-              Download a copy of SALVORA website content and configuration.
+              Download a copy of Salon Zage website content and configuration.
             </p>
           </div>
           <button
@@ -307,7 +307,7 @@ export default function AdminBackupPage() {
         <div className="border-b border-stone-100 pb-4">
           <h2 data-customization-role="sectionHeading" className="text-lg font-bold text-stone-900">Restore Website Backup</h2>
           <p className="text-xs text-stone-500 mt-0.5">
-            Select a verified SALVORA backup JSON file to inspect and restore website content.
+            Select a verified Salon Zage backup JSON file to inspect and restore website content.
           </p>
         </div>
 
@@ -513,7 +513,7 @@ export default function AdminBackupPage() {
               ) : (
                 <div className="rounded-xl bg-red-50/70 p-4 border border-red-200 space-y-2.5">
                   <p className="text-xs text-red-900 font-semibold leading-relaxed">
-                    ⚠️ This will replace current SALVORA website content in the supported collections. Admin accounts, analytics, and environment secrets will not be changed.
+                    ⚠️ This will replace current Salon Zage website content in the supported collections. Admin accounts, analytics, and environment secrets will not be changed.
                   </p>
                   <div>
                     <label className="block text-[11px] font-bold text-red-800 mb-1">

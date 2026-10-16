@@ -87,7 +87,7 @@ interface ProductFormState {
 const emptyForm: ProductFormState = {
   name: "",
   category: "hair_care",
-  brand: "Salvora",
+  brand: "Salon Zage",
   image: "",
   imagePublicId: "",
   description: "",
@@ -325,7 +325,7 @@ export default function AdminRetailProductsPage() {
     setForm({
       name: item.name,
       category: item.category,
-      brand: item.brand || "Salvora",
+      brand: item.brand || "Salon Zage",
       image: item.image,
       imagePublicId: item.imagePublicId,
       description: item.description || "",
@@ -401,7 +401,7 @@ export default function AdminRetailProductsPage() {
       const payload = {
         name: form.name.trim(),
         category: form.category,
-        brand: form.brand.trim() || "Salvora",
+        brand: form.brand.trim() || "Salon Zage",
         image: form.image,
         imagePublicId: form.imagePublicId,
         description: form.description.trim(),
@@ -1154,7 +1154,7 @@ export default function AdminRetailProductsPage() {
                     type="text"
                     value={form.brand}
                     onChange={(e) => setForm((prev) => ({ ...prev, brand: e.target.value }))}
-                    placeholder="Salvora"
+                    placeholder="Salon Zage"
                     className="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 focus:border-[#7C3AED] focus:outline-none focus:ring-1 focus:ring-[#7C3AED]"
                   />
                 </div>

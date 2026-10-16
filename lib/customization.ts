@@ -64,6 +64,36 @@ export const getPageCustomizations = cache(async (scope: CustomizationScope, pag
   }
 });
 
+/** Fetch customizations for all admin pages together so client navigation never flashes defaults. */
+export const getAllAdminPageCustomizations = cache(async (): Promise<Record<string, PageOverrides>> => {
+  try {
+    await connectDB();
+    const documents = await PageSectionCustomization.find({ scope: "admin" })
+      .select("pageKey sectionKey content style media -_id")
+      .lean();
+    const result: Record<string, PageOverrides> = {};
+    for (const document of documents) {
+      try {
+        const raw: SectionOverride = {};
+        if (document.content !== undefined && document.content !== null) raw.content = document.content;
+        if (document.style !== undefined && document.style !== null) raw.style = document.style;
+        if (document.media !== undefined && document.media !== null) raw.media = document.media;
+        const override = validatePageSectionOverride("admin", document.pageKey, document.sectionKey, raw);
+        if (!isEmptyCustomization(override)) {
+          if (!result[document.pageKey]) result[document.pageKey] = {};
+          result[document.pageKey][document.sectionKey] = override;
+        }
+      } catch (err) {
+        console.warn(`[customization] Failed to validate section override for admin/${document.pageKey}/${document.sectionKey}:`, err);
+      }
+    }
+    return result;
+  } catch (error) {
+    console.error("Unable to load all admin page customizations; using default styles:", error);
+    return {};
+  }
+});
+
 export async function getSectionCustomization(scope: CustomizationScope, pageKey: string, sectionKey: string): Promise<SectionOverride> {
   return (await getPageCustomizations(scope, pageKey))[sectionKey] ?? {};
 }

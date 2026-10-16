@@ -186,7 +186,7 @@ export async function buildWebsiteContext(rangeParam: string = "30d"): Promise<W
       recentActivityCount: summary.recentActivity.length,
     },
     content: {
-      salonName: settings?.salonName || "SALVORA",
+      salonName: settings?.salonName || "Salon Zage",
       hasBookingUrl: Boolean(settings?.externalSystem?.bookingUrl && settings.externalSystem.bookingUrl.trim()),
       activeBranches: branchesSummary,
       counts: {

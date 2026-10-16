@@ -527,11 +527,11 @@ function AdminBranchesPageContent() {
   return (
     <div className="space-y-6 pb-12">
       {/* ========================================================== */}
-      {/* 1. HEADER (MATCHES SALVORA ADMIN DESIGN)                   */}
+      {/* 1. HEADER (MATCHES SALON ZAGE ADMIN DESIGN)                */}
       {/* ========================================================== */}
       <AdminPageHeader
         title="Branches"
-        description="Manage SALVORA salon locations and contact details."
+        description="Manage Salon Zage salon locations and contact details."
         breadcrumbs={[{ label: "Branches" }]}
         action={
           <AdminButton
@@ -724,7 +724,7 @@ function AdminBranchesPageContent() {
           description={
             searchQuery
               ? `No branches match your search "${searchQuery}". Try a different search term or clear filters.`
-              : "Create your first SALVORA salon branch location to display on the contact page."
+              : "Create your first Salon Zage salon branch location to display on the contact page."
           }
           actionText={searchQuery ? undefined : "Add Branch"}
           onAction={searchQuery ? undefined : handleOpenAdd}
@@ -949,7 +949,7 @@ function AdminBranchesPageContent() {
                     {editingId ? "Edit Branch" : "Add New Branch"}
                   </h2>
                   <p className="text-xs text-stone-500">
-                    {editingId ? "Update salon branch details and opening hours" : "Add a new SALVORA location to your salon network"}
+                    {editingId ? "Update salon branch details and opening hours" : "Add a new Salon Zage location to your salon network"}
                   </p>
                 </div>
               </div>
@@ -1000,7 +1000,7 @@ function AdminBranchesPageContent() {
                         setForm({ ...form, name: e.target.value });
                         if (formErrors.name) setFormErrors({ ...formErrors, name: "" });
                       }}
-                      placeholder="e.g. SALVORA Malabe or Colombo 07"
+                      placeholder="e.g. Salon Zage Malabe or Colombo 07"
                       className={`w-full rounded-xl border px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all ${
                         formErrors.name
                           ? "border-red-400 focus:ring-2 focus:ring-red-200"
@@ -1063,7 +1063,7 @@ function AdminBranchesPageContent() {
                         setForm({ ...form, email: e.target.value });
                         if (formErrors.email) setFormErrors({ ...formErrors, email: "" });
                       }}
-                      placeholder="e.g. malabe@salvora.lk"
+                      placeholder="e.g. malabe@salonzage.lk"
                       className={`w-full rounded-xl border px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all ${
                         formErrors.email
                           ? "border-red-400 focus:ring-2 focus:ring-red-200"

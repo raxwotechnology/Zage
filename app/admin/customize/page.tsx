@@ -223,7 +223,7 @@ export default function WebsiteCustomizerPage() {
     const sectionTitle = tab === "global" ? registration.label : `${selectedPage.label} ${registration.label}`;
     setResetModal({
       isOpen: true,
-      title: "Reset to the original SALVORA design?",
+      title: "Reset to the original Salon Zage design?",
       message: `Reset ${sectionTitle} to its original defaults? This removes only customization overrides for this selection.`,
       confirmText: "Reset to Default",
       action: () => save(true),
@@ -662,7 +662,7 @@ export default function WebsiteCustomizerPage() {
 
   return (
     <div className="space-y-6 pb-16">
-      <AdminPageHeader title="Website Customizer" description="Customize SALVORA website content, typography, colors, backgrounds and buttons without changing application structure." breadcrumbs={[{ label: "Website Customizer" }]} />
+      <AdminPageHeader title="Website Customizer" description="Customize Salon Zage website content, typography, colors, backgrounds and buttons without changing application structure." breadcrumbs={[{ label: "Website Customizer" }]} />
       <div role="tablist" aria-label="Customization area" className="flex flex-wrap gap-2 rounded-2xl border border-stone-200 bg-white p-2">
         {([ ["global", "Global Design"], ["public", "Public Pages"], ["admin", "Admin Portal"] ] as const).map(([key, label]) => <button key={key} type="button" role="tab" aria-selected={tab === key} onClick={() => navigate(() => { setTab(key); if (key !== "global") { const nextPages = key === "admin" ? adminPages : publicPages; setPageKey(nextPages[0].key); setSectionKey(nextPages[0].sections[0].key); } })} className={`rounded-xl px-4 py-2.5 text-xs font-semibold sm:text-sm ${tab === key ? "bg-purple-600 text-white shadow-sm" : "text-stone-600 hover:bg-stone-50"}`}>{label}</button>)}
       </div>
@@ -673,7 +673,7 @@ export default function WebsiteCustomizerPage() {
             <label className="block space-y-2 text-xs font-semibold text-stone-700 xl:hidden">Section<select value={registration.key} onChange={(event) => navigate(() => setSectionKey(event.target.value))} className={fieldClass}>{selectedPage.sections.map((section) => <option key={section.key} value={section.key}>{section.label}</option>)}</select></label>
             <nav aria-label="Page sections" className="hidden space-y-1 xl:block">{selectedPage.sections.map((section) => <button key={section.key} type="button" onClick={() => navigate(() => setSectionKey(section.key))} className={`w-full rounded-lg px-3 py-2 text-left text-xs font-semibold ${registration.key === section.key ? "bg-purple-50 text-purple-700" : "text-stone-600 hover:bg-stone-50"}`}>{section.label}</button>)}</nav>
           </>}
-          <p className="text-xs leading-relaxed text-stone-500">Only enabled overrides are saved. Resetting a field restores its original SALVORA design.</p>
+          <p className="text-xs leading-relaxed text-stone-500">Only enabled overrides are saved. Resetting a field restores its original Salon Zage design.</p>
           <a href={currentPageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex text-xs font-semibold text-purple-700 hover:underline">Open current page ↗</a>
         </aside>
 

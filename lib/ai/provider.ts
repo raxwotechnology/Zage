@@ -92,7 +92,7 @@ export async function generateAiChatCompletion(
 
   if (!apiKey) {
     throw new AiProviderError(
-      "AI Assistant is not configured. Add your AI provider API key to enable SALVORA website insights.",
+      "AI Assistant is not configured. Add your AI provider API key to enable Salon Zage website insights.",
       "NOT_CONFIGURED"
     );
   }

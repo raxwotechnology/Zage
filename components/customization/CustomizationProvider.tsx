@@ -12,13 +12,54 @@ interface CustomizationContextValue {
 }
 const Context = createContext<CustomizationContextValue>({scope: "public", pageKey: "home", global: {}, sections: {}});
 
-export function CustomizationProvider({ scope, pageKey = "home", global = {}, sections = {}, children }: Partial<CustomizationContextValue> & {scope: CustomizationScope; children: ReactNode}) {
-  const value = useMemo(() => ({scope, pageKey, global, sections}), [scope, pageKey, global, sections]);
-  const css = useMemo(() => buildCustomizationCss(scope, pageKey, global, sections), [scope, pageKey, global, sections]);
-  return <Context.Provider value={value}>
-    {css ? <style data-customization-styles={`${scope}-${pageKey}`}>{css}</style> : null}
-    <div data-customization-scope={scope} data-customization-page={pageKey} style={{display: "contents"}}>{children}</div>
-  </Context.Provider>;
+interface CustomizationProviderProps {
+  scope: CustomizationScope;
+  pageKey?: string;
+  global?: GlobalOverrides;
+  sections?: PageOverrides;
+  allSections?: Record<string, PageOverrides>;
+  initialCustomization?: GlobalOverrides;
+  initialSections?: PageOverrides;
+  children: ReactNode;
+}
+
+export function CustomizationProvider({
+  scope,
+  pageKey = "home",
+  global,
+  sections,
+  allSections,
+  initialCustomization,
+  initialSections,
+  children,
+}: CustomizationProviderProps) {
+  const resolvedGlobal = useMemo(
+    () => global ?? initialCustomization ?? {},
+    [global, initialCustomization]
+  );
+  const resolvedSections = useMemo(() => {
+    if (sections && Object.keys(sections).length > 0) return sections;
+    if (allSections && allSections[pageKey]) return allSections[pageKey];
+    return initialSections ?? sections ?? {};
+  }, [sections, allSections, pageKey, initialSections]);
+
+  const value = useMemo(
+    () => ({ scope, pageKey, global: resolvedGlobal, sections: resolvedSections }),
+    [scope, pageKey, resolvedGlobal, resolvedSections]
+  );
+  const css = useMemo(
+    () => buildCustomizationCss(scope, pageKey, resolvedGlobal, resolvedSections),
+    [scope, pageKey, resolvedGlobal, resolvedSections]
+  );
+
+  return (
+    <Context.Provider value={value}>
+      {css ? <style data-customization-styles={`${scope}-${pageKey}`}>{css}</style> : null}
+      <div data-customization-scope={scope} data-customization-page={pageKey} style={{ display: "contents" }}>
+        {children}
+      </div>
+    </Context.Provider>
+  );
 }
 
 export function useGlobalCustomization() { return useContext(Context).global; }

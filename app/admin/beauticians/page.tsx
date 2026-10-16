@@ -510,7 +510,7 @@ export default function AdminBeauticiansPage() {
       {/* ========================================================== */}
       <AdminPageHeader
         title="Beauticians"
-        description="Manage the beauty professionals displayed on the SALVORA website."
+        description="Manage the beauty professionals displayed on the Salon Zage website."
         breadcrumbs={[{ label: "Beauticians" }]}
         action={
           <button

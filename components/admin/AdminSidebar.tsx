@@ -161,7 +161,7 @@ export default function AdminSidebar({
 
   const sidebarContent = (
     <div data-customization-sidebar className="flex h-full flex-col justify-between bg-[#12101C] text-stone-300 select-none">
-      {/* Top Branding Section (Hardcoded Salvora Salon Management Suite Logo) */}
+      {/* Top Branding Section (Hardcoded Salon Zage Management Suite Logo) */}
       <div className="relative flex h-24 shrink-0 items-center justify-center px-4 border-b border-white/5">
         <Link
           href="/admin"
@@ -170,7 +170,7 @@ export default function AdminSidebar({
         >
           <Image
             src="/images/salvora-suite-logo.png"
-            alt="Salvora Salon Management Suite"
+            alt="Salon Zage Management Suite"
             width={220}
             height={88}
             priority

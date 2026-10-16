@@ -32,6 +32,9 @@ export async function PATCH(request: Request, context: Context) {
     const pagePath = customizationPagePath(scope, pageKey);
     revalidatePath(pagePath, "page");
     revalidatePath(pagePath, "layout");
+    if (scope === "admin") {
+      revalidatePath("/admin", "layout");
+    }
     if (pageKey === "home") {
       revalidatePath("/", "page");
       revalidatePath("/", "layout");
@@ -51,6 +54,9 @@ export async function DELETE(_request: Request, context: Context) {
     const pagePath = customizationPagePath(scope, pageKey);
     revalidatePath(pagePath, "page");
     revalidatePath(pagePath, "layout");
+    if (scope === "admin") {
+      revalidatePath("/admin", "layout");
+    }
     if (pageKey === "home") {
       revalidatePath("/", "page");
       revalidatePath("/", "layout");

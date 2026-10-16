@@ -225,7 +225,7 @@ export default function AdminDashboardPage() {
         <div>
           <div className="flex items-center gap-2.5">
             <h1 data-customization-role="heading" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-stone-900">
-              {customization.text("heading", "SALVORA Salon Dashboard")}
+              {customization.text("heading", "Salon Zage Dashboard")}
             </h1>
             <span
               className="rounded-full px-2.5 py-0.5 text-xs font-bold border"
@@ -992,7 +992,7 @@ export default function AdminDashboardPage() {
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-stone-900 tracking-tight">
-                  SALVORA AI Assistant
+                  Salon Zage AI Assistant
                 </h3>
                 <p className="text-xs font-semibold" style={{ color: themeColor }}>
                   Powered by real salon analytics
@@ -1001,7 +1001,7 @@ export default function AdminDashboardPage() {
             </div>
 
             <p className="mt-3 text-xs text-stone-600 leading-relaxed">
-              SALVORA AI continuously monitors your website analytics, customer inquiry channels, and branch performance to deliver executive intelligence.
+              Salon Zage AI continuously monitors your website analytics, customer inquiry channels, and branch performance to deliver executive intelligence.
             </p>
 
             {/* Feature Highlights */}

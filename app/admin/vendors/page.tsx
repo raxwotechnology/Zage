@@ -483,7 +483,7 @@ export default function AdminVendorsPage() {
       {/* 1. Header */}
       <AdminPageHeader
         title="Vendors"
-        description="Manage trusted vendors and wedding service partners displayed on the SALVORA website."
+        description="Manage trusted vendors and wedding service partners displayed on the Salon Zage website."
         action={
           <button
             type="button"

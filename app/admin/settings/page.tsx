@@ -1293,7 +1293,7 @@ export default function AdminSettingsPage() {
                       onChange={(e) =>
                         setGlobalData({ ...globalData, salonName: e.target.value })
                       }
-                      placeholder="e.g. SALVORA Salon"
+                      placeholder="e.g. Salon Zage"
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20"
                     />
                   </div>
@@ -1546,7 +1546,7 @@ export default function AdminSettingsPage() {
                           socialMedia: { ...globalData.socialMedia, facebook: e.target.value },
                         })
                       }
-                      placeholder="https://facebook.com/salvora"
+                      placeholder="https://facebook.com/salonzage"
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 pl-10 pr-3.5 py-2.5 text-xs text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     />
                   </div>
@@ -1567,7 +1567,7 @@ export default function AdminSettingsPage() {
                           socialMedia: { ...globalData.socialMedia, instagram: e.target.value },
                         })
                       }
-                      placeholder="https://instagram.com/salvora"
+                      placeholder="https://instagram.com/salonzage"
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 pl-10 pr-3.5 py-2.5 text-xs text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     />
                   </div>
@@ -1588,7 +1588,7 @@ export default function AdminSettingsPage() {
                           socialMedia: { ...globalData.socialMedia, tiktok: e.target.value },
                         })
                       }
-                      placeholder="https://tiktok.com/@salvora"
+                      placeholder="https://tiktok.com/@salonzage"
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 pl-10 pr-3.5 py-2.5 text-xs text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     />
                   </div>
@@ -1609,7 +1609,7 @@ export default function AdminSettingsPage() {
                           socialMedia: { ...globalData.socialMedia, youtube: e.target.value },
                         })
                       }
-                      placeholder="https://youtube.com/@salvora"
+                      placeholder="https://youtube.com/@salonzage"
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 pl-10 pr-3.5 py-2.5 text-xs text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     />
                   </div>
@@ -1671,7 +1671,7 @@ export default function AdminSettingsPage() {
                         externalSystem: { ...globalData.externalSystem, loginUrl: e.target.value },
                       })
                     }
-                    placeholder="https://booking.salvora.lk/login"
+                    placeholder="https://booking.salonzage.lk/login"
                     className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                   />
                 </div>
@@ -1689,7 +1689,7 @@ export default function AdminSettingsPage() {
                         externalSystem: { ...globalData.externalSystem, registerUrl: e.target.value },
                       })
                     }
-                    placeholder="https://booking.salvora.lk/register"
+                    placeholder="https://booking.salonzage.lk/register"
                     className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                   />
                 </div>
@@ -1707,7 +1707,7 @@ export default function AdminSettingsPage() {
                         externalSystem: { ...globalData.externalSystem, bookingUrl: e.target.value },
                       })
                     }
-                    placeholder="https://booking.salvora.lk/book"
+                    placeholder="https://booking.salonzage.lk/book"
                     className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                   />
                 </div>
@@ -1729,7 +1729,7 @@ export default function AdminSettingsPage() {
                       Public Page Visibility
                     </h3>
                     <p className="text-xs text-stone-500 mt-0.5">
-                      Choose which optional pages are available on the public SALVORA website.
+                      Choose which optional pages are available on the public Salon Zage website.
                     </p>
                   </div>
                 </div>
@@ -1750,7 +1750,7 @@ export default function AdminSettingsPage() {
                     {
                       key: "products" as const,
                       name: "Products",
-                      description: "Show SALVORA selling products on the public website.",
+                      description: "Show Salon Zage selling products on the public website.",
                       icon: ShoppingBagIcon,
                     },
                     {
@@ -2090,7 +2090,7 @@ export default function AdminSettingsPage() {
                           onChange={(e) =>
                             setMainBranchForm({ ...mainBranchForm, email: e.target.value })
                           }
-                          placeholder="colombo@salvora.lk"
+                          placeholder="colombo@salonzage.lk"
                           className="w-full rounded-xl border border-stone-200 bg-stone-50/60 pl-10 pr-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                         />
                       </div>
@@ -2399,7 +2399,7 @@ export default function AdminSettingsPage() {
                       Cloudinary Image Management
                     </h3>
                     <p className="text-xs text-stone-500">
-                      Configure Cloudinary for signed image uploads used by SALVORA.
+                      Configure Cloudinary for signed image uploads used by Salon Zage.
                     </p>
                   </div>
                 </div>
@@ -2440,7 +2440,7 @@ export default function AdminSettingsPage() {
                       type="text"
                       value={cldCloudName}
                       onChange={(e) => setCldCloudName(e.target.value)}
-                      placeholder="e.g. salvora-cloud"
+                      placeholder="e.g. salon-zage-cloud"
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     />
                   </div>
@@ -2615,7 +2615,7 @@ export default function AdminSettingsPage() {
                     />
                   </div>
                   <p className="mt-1 text-[11px] text-stone-400">
-                    Used strictly server-side by SALVORA to fetch customer reviews. Branch Place IDs and review links are configured separately in Branch Settings.
+                    Used strictly server-side by Salon Zage to fetch customer reviews. Branch Place IDs and review links are configured separately in Branch Settings.
                   </p>
                 </div>
 
@@ -2693,7 +2693,7 @@ export default function AdminSettingsPage() {
                       AI Provider
                     </h3>
                     <p className="text-xs text-stone-500">
-                      Configure your AI provider for the SALVORA AI Website Assistant.
+                      Configure your AI provider for the Salon Zage AI Website Assistant.
                     </p>
                   </div>
                 </div>

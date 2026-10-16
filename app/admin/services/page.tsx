@@ -151,14 +151,8 @@ export default function AdminServicesPage() {
     const total = services.length;
     const active = services.filter((s) => s.isActive).length;
     const hidden = services.filter((s) => !s.isActive).length;
-    const avgPrice =
-      total > 0
-        ? Math.round(
-            services.reduce((acc, curr) => acc + (Number(curr.price) || 0), 0) / total
-          )
-        : 0;
 
-    return { total, active, hidden, avgPrice };
+    return { total, active, hidden };
   }, [services]);
 
   // Dynamic category options for admin filter (defaults + any custom categories present, excluding "Beard & Grooming")
@@ -447,7 +441,7 @@ export default function AdminServicesPage() {
       {/* ========================================================== */}
       <AdminPageHeader
         title="Services"
-        description="Manage services displayed on the SALVORA website."
+        description="Manage services displayed on the Salon Zage website."
         breadcrumbs={[{ label: "Services" }]}
         action={
           <button
@@ -491,7 +485,7 @@ export default function AdminServicesPage() {
       {/* ========================================================== */}
       {/* 2. STATS ROW (MATCHES MOCKUP)                              */}
       {/* ========================================================== */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {/* Total Services */}
         <div className="flex items-center gap-4 rounded-2xl border border-stone-200/90 bg-white p-5 shadow-xs">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-purple-50 text-[#7C3AED] border border-purple-100">
@@ -536,22 +530,6 @@ export default function AdminServicesPage() {
             </p>
             <p className="text-[11px] text-stone-400 mt-0.5">
               Not visible on website
-            </p>
-          </div>
-        </div>
-
-        {/* Average Price */}
-        <div className="flex items-center gap-4 rounded-2xl border border-stone-200/90 bg-white p-5 shadow-xs">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-purple-50 text-[#7C3AED] border border-purple-100">
-            <TagIcon className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-stone-500">Average Price</p>
-            <p className="text-xl sm:text-2xl font-extrabold text-stone-900 mt-0.5">
-              {loading ? "..." : `LKR ${stats.avgPrice.toLocaleString()}`}
-            </p>
-            <p className="text-[11px] text-stone-400 mt-0.5">
-              Across all services
             </p>
           </div>
         </div>
@@ -690,7 +668,7 @@ export default function AdminServicesPage() {
               <EmptyState
                 icon={ScissorsIcon}
                 title="No services yet"
-                description="Add your first salon service to display it on the SALVORA website."
+                description="Add your first salon service to display it on the Salon Zage website."
                 actionText="Add First Service"
                 onAction={handleOpenAdd}
               />

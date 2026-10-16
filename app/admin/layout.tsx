@@ -3,12 +3,12 @@ import { headers } from "next/headers";
 import { getCurrentUser } from "@/lib/auth";
 import AdminLayoutClient from "@/components/admin/AdminLayoutClient";
 import CustomizationProvider from "@/components/customization/CustomizationProvider";
-import { getGlobalCustomization, getPageCustomizations } from "@/lib/customization";
+import { getGlobalCustomization, getPageCustomizations, getAllAdminPageCustomizations } from "@/lib/customization";
 import { getAdminPageKey } from "@/lib/customization-admin-registry";
 import type { GlobalOverrides } from "@/lib/customization-types";
 
 export const metadata = {
-  title: "Admin Portal | salvora",
+  title: "Admin Portal | Salon Zage",
   description: "Website content administration portal.",
 };
 
@@ -66,10 +66,11 @@ export default async function AdminLayout({
   }
 
   const initialPageKey = getAdminPageKey(currentPath) || "dashboard";
-  const [allGlobal, initialSections] = await Promise.all([
+  const [allGlobal, allAdminSections] = await Promise.all([
     getGlobalCustomization(),
-    getPageCustomizations("admin", initialPageKey),
+    getAllAdminPageCustomizations(),
   ]);
+  const initialSections = allAdminSections[initialPageKey] || await getPageCustomizations("admin", initialPageKey);
   // Keep admin presentation data inside the authenticated portal.
   const customizationGlobal: GlobalOverrides = {};
   for (const group of ["adminHeader", "adminSidebar", "adminWebsite"] as const) {
@@ -82,6 +83,7 @@ export default async function AdminLayout({
       customizationGlobal={customizationGlobal}
       initialPageKey={initialPageKey}
       initialSections={initialSections}
+      allAdminSections={allAdminSections}
       user={{
         name: user.name,
         email: user.email,

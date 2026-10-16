@@ -384,7 +384,7 @@ export default function AdminProductsPage() {
       {/* 1. Header & Actions */}
       <AdminPageHeader
         title="Products & Brands"
-        description="Manage the professional product lines and beauty brands showcased on the SALVORA website."
+        description="Manage the professional product lines and beauty brands showcased on the Salon Zage website."
         breadcrumbs={[{ label: "Products" }]}
         action={
           <button
@@ -575,7 +575,7 @@ export default function AdminProductsPage() {
             description={
               searchQuery || statusFilter !== "all" || branchFilter !== "all"
                 ? "Try clearing your search query or reset your filters."
-                : "Add product and beauty brands used at SALVORA to feature them on the website."
+                : "Add product and beauty brands used at Salon Zage to feature them on the website."
             }
             actionText={
               searchQuery || statusFilter !== "all" || branchFilter !== "all"
@@ -753,7 +753,7 @@ export default function AdminProductsPage() {
                 <p className="mt-0.5 text-xs text-stone-500">
                   {editingId
                     ? "Update brand details and logo displayed on the website."
-                    : "Add a new brand or product line used at SALVORA."}
+                    : "Add a new brand or product line used at Salon Zage."}
                 </p>
               </div>
               <button
