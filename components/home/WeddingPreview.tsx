@@ -52,21 +52,21 @@ export default function WeddingPreview() {
                 <SparklesIcon className="h-3.5 w-3.5" />
               </div>
               <span className="text-xs font-bold uppercase tracking-widest text-[#03BF62]" data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>
-                SPECIAL OCCASIONS
+                WEDDING SERVICES
               </>}</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-stone-900 leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
-              Wedding Beauty
+              Wedding Beauty & Grooming
             </>}</h2>
 
             <p className="text-base sm:text-lg font-medium text-stone-800" data-customization-role="subheading">{custom.has("subheading") ? custom.text("subheading", "") : <>
-              Your special day deserves a look made just for you.
+              Your special day deserves a look designed just for you.
             </>}</p>
 
             <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-              Explore bridal makeup, hair styling, nail care, and complete
-              wedding packages curated to make you look and feel your most radiant.
+              Explore professional hair styling, makeup, grooming, nail care, and complete
+              wedding packages for brides, grooms, and wedding parties.
             </>}</p>
 
             <div className="pt-2">

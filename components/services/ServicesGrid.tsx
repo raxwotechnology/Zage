@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import ServiceCard, { ServiceCardData } from "@/components/ui/ServiceCard";
 import { ScissorsIcon, ArrowRightIcon } from "@/components/ui/icons";
@@ -54,20 +54,19 @@ export default function ServicesGrid({
     return [...ordered, ...customCategories];
   }, [audienceServices]);
 
-  // Reset category filter if selected category is not available for new audience
-  useEffect(() => {
-    if (selectedCategory !== "all" && !availableCategories.includes(selectedCategory)) {
-      setSelectedCategory("all");
-    }
-  }, [selectedCategory, availableCategories]);
+  // If the selected category is no longer available for the current audience, fall back to "all"
+  const activeCategory =
+    selectedCategory !== "all" && !availableCategories.includes(selectedCategory)
+      ? "all"
+      : selectedCategory;
 
   // Final filtered list: audience + category
   const filteredServices = useMemo(() => {
-    if (selectedCategory === "all") {
+    if (activeCategory === "all") {
       return audienceServices;
     }
-    return audienceServices.filter((s) => s.category?.trim() === selectedCategory);
-  }, [audienceServices, selectedCategory]);
+    return audienceServices.filter((s) => s.category?.trim() === activeCategory);
+  }, [audienceServices, activeCategory]);
 
   // Adaptive grid layout based on the number of real active services
   const getGridClass = (count: number) => {
@@ -114,7 +113,7 @@ export default function ServicesGrid({
               type="button"
               onClick={() => setSelectedCategory("all")}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
-                selectedCategory === "all"
+                activeCategory === "all"
                   ? "bg-stone-900 text-white border-stone-900 shadow-xs font-bold"
                   : "bg-white text-stone-600 border-stone-200/90 hover:border-stone-300 hover:text-stone-900 hover:bg-stone-50"
               }`}
@@ -127,7 +126,7 @@ export default function ServicesGrid({
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
-                  selectedCategory === cat
+                  activeCategory === cat
                     ? "bg-stone-900 text-white border-stone-900 shadow-xs font-bold"
                     : "bg-white text-stone-600 border-stone-200/90 hover:border-stone-300 hover:text-stone-900 hover:bg-stone-50"
                 }`}

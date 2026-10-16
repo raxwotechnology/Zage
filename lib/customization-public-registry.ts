@@ -79,10 +79,10 @@ export const publicPages: PageRegistration[] = [
         "key": "wedding-beauty",
         "label": "Wedding Beauty",
         "content": {
-          "heading": "Wedding Beauty",
-          "eyebrow": "SPECIAL OCCASIONS",
-          "subheading": "Your special day deserves a look made just for you.",
-          "description": "Explore bridal makeup, hair styling, nail care, and complete wedding packages curated to make you look and feel your most radiant.",
+          "heading": "Wedding Beauty & Grooming",
+          "eyebrow": "WEDDING SERVICES",
+          "subheading": "Your special day deserves a look designed just for you.",
+          "description": "Explore professional hair styling, makeup, grooming, nail care, and complete wedding packages for brides, grooms, and wedding parties.",
           "primaryButtonText": "Explore Wedding Services"
         },
         "styles": [
