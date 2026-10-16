@@ -126,6 +126,31 @@ export async function PATCH(
       }
     }
 
+    if (body.category !== undefined) {
+      if (
+        body.category === null ||
+        body.category === "" ||
+        body.category === "all" ||
+        body.category === "All Services"
+      ) {
+        body.category = null;
+      } else if (typeof body.category === "string") {
+        const trimmedCategory = body.category.trim();
+        if (trimmedCategory.length > 80) {
+          return NextResponse.json(
+            {
+              success: false,
+              message: "Category cannot exceed 80 characters",
+            },
+            { status: 400 }
+          );
+        }
+        body.category = trimmedCategory || null;
+      } else {
+        body.category = null;
+      }
+    }
+
     const existingService = await Service.findById(id);
     if (!existingService) {
       return NextResponse.json(

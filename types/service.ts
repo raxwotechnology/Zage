@@ -9,6 +9,7 @@ export interface ServiceItem {
   isActive: boolean;
   audience?: "male" | "female" | "unisex";
   displayOrder?: number;
+  category?: string | null;
   createdAt?: string;
   updatedAt?: string;
 }

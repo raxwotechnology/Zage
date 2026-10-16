@@ -10,6 +10,7 @@ export interface IService extends Document {
   isActive: boolean;
   displayOrder: number;
   audience: "male" | "female" | "unisex";
+  category?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -68,6 +69,13 @@ const ServiceSchema = new Schema<IService>(
       type: String,
       enum: ["male", "female", "unisex"],
       default: "unisex",
+      index: true,
+    },
+
+    category: {
+      type: String,
+      trim: true,
+      default: null,
       index: true,
     },
   },

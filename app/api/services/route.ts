@@ -14,6 +14,7 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const audience = searchParams.get("audience");
+    const category = searchParams.get("category");
 
     const query: Record<string, unknown> = {
       isActive: true,
@@ -31,6 +32,10 @@ export async function GET(request: Request) {
         { audience: { $in: [null, ""] } },
         { audience: { $exists: false } },
       ];
+    }
+
+    if (category && category.trim() && category !== "all" && category !== "All Services") {
+      query.category = category.trim();
     }
 
     const services = await Service.find(query)
@@ -100,6 +105,7 @@ export async function POST(request: Request) {
       imagePublicId,
       isActive,
       audience,
+      category,
     } = body;
 
     if (!name || !description || price === undefined || !duration) {
@@ -158,6 +164,29 @@ export async function POST(request: Request) {
       }
     }
 
+    let parsedCategory: string | null = null;
+    if (category !== undefined && category !== null) {
+      if (typeof category === "string") {
+        const trimmedCategory = category.trim();
+        if (trimmedCategory.length > 80) {
+          return NextResponse.json(
+            {
+              success: false,
+              message: "Category cannot exceed 80 characters",
+            },
+            { status: 400 }
+          );
+        }
+        if (
+          trimmedCategory !== "" &&
+          trimmedCategory.toLowerCase() !== "all" &&
+          trimmedCategory.toLowerCase() !== "all services"
+        ) {
+          parsedCategory = trimmedCategory;
+        }
+      }
+    }
+
     const parsedDisplayOrder =
       displayOrder !== undefined && displayOrder !== null && displayOrder !== ""
         ? Number(displayOrder)
@@ -169,6 +198,7 @@ export async function POST(request: Request) {
       price: Number(price),
       duration: Number(duration),
       displayOrder: parsedDisplayOrder,
+      category: parsedCategory,
       image: image?.trim() || "",
       imagePublicId: imagePublicId?.trim() || undefined,
       isActive: isActive ?? true,

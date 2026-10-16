@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import ServiceCard, { ServiceCardData } from "@/components/ui/ServiceCard";
 import { ScissorsIcon, ArrowRightIcon } from "@/components/ui/icons";
+import { DEFAULT_SERVICE_CATEGORIES } from "@/lib/service-constants";
 
 interface ServicesGridProps {
   services: ServiceCardData[];
@@ -15,8 +16,9 @@ export default function ServicesGrid({
   bookingUrl = "",
 }: ServicesGridProps) {
   const [selectedAudience, setSelectedAudience] = useState<"all" | "female" | "male">("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const filteredServices = useMemo(() => {
+  const audienceServices = useMemo(() => {
     if (selectedAudience === "all") return services;
     if (selectedAudience === "female") {
       return services.filter(
@@ -30,6 +32,42 @@ export default function ServicesGrid({
     }
     return services;
   }, [services, selectedAudience]);
+
+  // Compute available categories for the currently selected audience
+  const availableCategories = useMemo(() => {
+    const presentCategories = new Set<string>();
+    audienceServices.forEach((s) => {
+      if (s.category && s.category.trim() && s.category.trim() !== "Beard & Grooming") {
+        presentCategories.add(s.category.trim());
+      }
+    });
+
+    const ordered: string[] = [];
+    DEFAULT_SERVICE_CATEGORIES.forEach((cat) => {
+      if (presentCategories.has(cat)) {
+        ordered.push(cat);
+        presentCategories.delete(cat);
+      }
+    });
+
+    const customCategories = Array.from(presentCategories).sort((a, b) => a.localeCompare(b));
+    return [...ordered, ...customCategories];
+  }, [audienceServices]);
+
+  // Reset category filter if selected category is not available for new audience
+  useEffect(() => {
+    if (selectedCategory !== "all" && !availableCategories.includes(selectedCategory)) {
+      setSelectedCategory("all");
+    }
+  }, [selectedCategory, availableCategories]);
+
+  // Final filtered list: audience + category
+  const filteredServices = useMemo(() => {
+    if (selectedCategory === "all") {
+      return audienceServices;
+    }
+    return audienceServices.filter((s) => s.category?.trim() === selectedCategory);
+  }, [audienceServices, selectedCategory]);
 
   // Adaptive grid layout based on the number of real active services
   const getGridClass = (count: number) => {
@@ -45,7 +83,7 @@ export default function ServicesGrid({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Audience Selector Tabs */}
         {services.length > 0 && (
-          <div className="flex justify-center mb-10 sm:mb-12">
+          <div className="flex justify-center mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-stone-100 border border-stone-200/80 shadow-2xs">
               {[
                 { id: "all", label: "All" },
@@ -66,6 +104,37 @@ export default function ServicesGrid({
                 </button>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Category Filter Pills (Directly Under Audience Tabs) */}
+        {services.length > 0 && availableCategories.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-10 sm:mb-12">
+            <button
+              type="button"
+              onClick={() => setSelectedCategory("all")}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
+                selectedCategory === "all"
+                  ? "bg-stone-900 text-white border-stone-900 shadow-xs font-bold"
+                  : "bg-white text-stone-600 border-stone-200/90 hover:border-stone-300 hover:text-stone-900 hover:bg-stone-50"
+              }`}
+            >
+              All Services
+            </button>
+            {availableCategories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
+                  selectedCategory === cat
+                    ? "bg-stone-900 text-white border-stone-900 shadow-xs font-bold"
+                    : "bg-white text-stone-600 border-stone-200/90 hover:border-stone-300 hover:text-stone-900 hover:bg-stone-50"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         )}
 
@@ -95,14 +164,17 @@ export default function ServicesGrid({
               <ScissorsIcon className="h-7 w-7" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-stone-900">
-              No services are currently available in this category.
+              No services are currently available for this selection.
             </h3>
             <p className="mt-2 text-xs sm:text-sm text-stone-500 leading-relaxed">
-              Try selecting another audience filter to browse our full range of salon treatments.
+              Try selecting another category or audience filter to browse our full range of salon treatments.
             </p>
             <button
               type="button"
-              onClick={() => setSelectedAudience("all")}
+              onClick={() => {
+                setSelectedAudience("all");
+                setSelectedCategory("all");
+              }}
               className="mt-5 inline-flex items-center gap-2 rounded-full bg-stone-900 px-6 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-[#03BF62] active:scale-[0.98] cursor-pointer"
             >
               <span>View All Services</span>

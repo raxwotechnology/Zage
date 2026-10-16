@@ -14,6 +14,7 @@ export interface ServiceCardData {
   image?: string;
   audience?: "male" | "female" | "unisex";
   displayOrder?: number;
+  category?: string | null;
   createdAt?: Date | string;
 }
 

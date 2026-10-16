@@ -7,6 +7,7 @@ import EmptyState from "@/components/admin/EmptyState";
 import StatusBadge from "@/components/admin/StatusBadge";
 import ImageUpload from "@/components/ui/ImageUpload";
 import { CLOUDINARY_FOLDERS } from "@/lib/cloudinary-constants";
+import { DEFAULT_SERVICE_CATEGORIES } from "@/lib/service-constants";
 import {
   ScissorsIcon,
   TagIcon,
@@ -33,6 +34,7 @@ interface Service {
   isActive: boolean;
   audience?: "male" | "female" | "unisex";
   displayOrder?: number;
+  category?: string | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -47,6 +49,8 @@ interface ServiceFormState {
   imagePublicId: string;
   isActive: boolean;
   audience: "male" | "female" | "unisex";
+  categoryChoice: string;
+  customCategory: string;
 }
 
 const emptyForm: ServiceFormState = {
@@ -59,6 +63,8 @@ const emptyForm: ServiceFormState = {
   imagePublicId: "",
   isActive: true,
   audience: "unisex",
+  categoryChoice: "",
+  customCategory: "",
 };
 
 export default function AdminServicesPage() {
@@ -73,6 +79,7 @@ export default function AdminServicesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "active" | "hidden">("all");
   const [audienceFilter, setAudienceFilter] = useState<"all" | "female" | "male" | "unisex">("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<
     "order" | "newest" | "oldest" | "price-asc" | "price-desc" | "duration"
   >("order");
@@ -154,6 +161,18 @@ export default function AdminServicesPage() {
     return { total, active, hidden, avgPrice };
   }, [services]);
 
+  // Dynamic category options for admin filter (defaults + any custom categories present, excluding "Beard & Grooming")
+  const adminCategoryOptions = useMemo(() => {
+    const categoriesSet = new Set<string>();
+    DEFAULT_SERVICE_CATEGORIES.forEach((c) => categoriesSet.add(c));
+    services.forEach((s) => {
+      if (s.category && s.category.trim() && s.category.trim() !== "Beard & Grooming") {
+        categoriesSet.add(s.category.trim());
+      }
+    });
+    return Array.from(categoriesSet);
+  }, [services]);
+
   // Filtered and sorted services
   const filteredServices = useMemo(() => {
     return services
@@ -166,6 +185,15 @@ export default function AdminServicesPage() {
         if (audienceFilter !== "all") {
           const sAudience = service.audience ?? "unisex";
           if (sAudience !== audienceFilter) return false;
+        }
+
+        // Category filter
+        if (categoryFilter !== "all") {
+          if (categoryFilter === "uncategorized") {
+            if (service.category && service.category.trim()) return false;
+          } else {
+            if ((service.category || "").trim() !== categoryFilter) return false;
+          }
         }
 
         // Search query
@@ -203,7 +231,7 @@ export default function AdminServicesPage() {
           new Date(a.createdAt || 0).getTime()
         );
       });
-  }, [services, searchQuery, statusFilter, audienceFilter, sortBy]);
+  }, [services, searchQuery, statusFilter, audienceFilter, categoryFilter, sortBy]);
 
   // Open add modal/drawer
   const handleOpenAdd = () => {
@@ -215,12 +243,27 @@ export default function AdminServicesPage() {
   // Open edit modal/drawer
   const handleOpenEdit = (service: Service) => {
     setEditingId(service._id);
+    const currentCategory = service.category ? service.category.trim() : "";
+    let categoryChoice = "";
+    let customCategory = "";
+
+    if (currentCategory) {
+      if ((DEFAULT_SERVICE_CATEGORIES as readonly string[]).includes(currentCategory)) {
+        categoryChoice = currentCategory;
+      } else {
+        categoryChoice = "Other";
+        customCategory = currentCategory;
+      }
+    }
+
     setForm({
       name: service.name,
       description: service.description,
       price: service.price.toString(),
       duration: service.duration.toString(),
       displayOrder: (service.displayOrder ?? 0).toString(),
+      categoryChoice,
+      customCategory,
       image: service.image || "",
       imagePublicId: service.imagePublicId || "",
       isActive: service.isActive,
@@ -259,6 +302,22 @@ export default function AdminServicesPage() {
       }
     }
 
+    let finalCategory: string | null = null;
+    if (form.categoryChoice === "Other") {
+      const trimmedCustom = form.customCategory.trim();
+      if (!trimmedCustom) {
+        showNotification("error", "Enter a custom category or select another category.");
+        return;
+      }
+      if (trimmedCustom.length > 80) {
+        showNotification("error", "Category cannot exceed 80 characters.");
+        return;
+      }
+      finalCategory = trimmedCustom;
+    } else if (form.categoryChoice) {
+      finalCategory = form.categoryChoice.trim();
+    }
+
     setFormLoading(true);
 
     try {
@@ -277,6 +336,7 @@ export default function AdminServicesPage() {
             form.displayOrder.trim() !== ""
               ? Number(form.displayOrder)
               : 0,
+          category: finalCategory,
           image: form.image,
           imagePublicId: form.imagePublicId,
           isActive: form.isActive,
@@ -552,6 +612,26 @@ export default function AdminServicesPage() {
             </select>
           </div>
 
+          {/* Category Dropdown */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold text-stone-500 hidden md:inline">
+              Category
+            </span>
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="rounded-xl border border-stone-200 bg-stone-50/70 px-3.5 py-2 text-xs sm:text-sm font-medium text-stone-700 outline-none transition-all focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20 cursor-pointer"
+            >
+              <option value="all">All Categories</option>
+              <option value="uncategorized">Uncategorized</option>
+              {adminCategoryOptions.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Sort By Dropdown */}
           <div className="flex items-center gap-2">
             <span className="text-xs font-semibold text-stone-500 hidden md:inline">
@@ -625,6 +705,7 @@ export default function AdminServicesPage() {
                     setSearchQuery("");
                     setStatusFilter("all");
                     setAudienceFilter("all");
+                    setCategoryFilter("all");
                   }}
                   className="mt-3 text-xs font-semibold text-[#7C3AED] hover:underline"
                 >
@@ -689,6 +770,13 @@ export default function AdminServicesPage() {
 
                     {/* Card Body */}
                     <div className="p-4 sm:p-5">
+                      {service.category && (
+                        <div className="mb-2">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-purple-50 text-[#7C3AED] border border-purple-100">
+                            {service.category}
+                          </span>
+                        </div>
+                      )}
                       <h3 className="text-sm sm:text-base font-bold text-stone-900 tracking-tight line-clamp-1">
                         {service.name}
                       </h3>
@@ -890,6 +978,56 @@ export default function AdminServicesPage() {
                     ))}
                   </div>
                 </div>
+
+                {/* Service Category (Optional) */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                    Service Category (Optional)
+                  </label>
+                  <select
+                    value={form.categoryChoice}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        categoryChoice: e.target.value,
+                      }))
+                    }
+                    className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none transition-all focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20 cursor-pointer"
+                  >
+                    <option value="">Select Category</option>
+                    {DEFAULT_SERVICE_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                {/* Custom Category input if "Other" is selected */}
+                {form.categoryChoice === "Other" && (
+                  <div className="animate-fadeIn">
+                    <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                      Custom Category <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.customCategory}
+                      onChange={(e) =>
+                        setForm((prev) => ({
+                          ...prev,
+                          customCategory: e.target.value,
+                        }))
+                      }
+                      placeholder="e.g. Bridal Dressing"
+                      className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20"
+                    />
+                    <p className="mt-1 text-[11px] text-stone-500 leading-normal">
+                      Enter a custom category name for this service.
+                    </p>
+                  </div>
+                )}
 
                 {/* Price and Duration in 2 Columns */}
                 <div className="grid grid-cols-2 gap-3">

@@ -35,6 +35,7 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const audience = searchParams.get("audience");
+    const category = searchParams.get("category");
 
     const query: Record<string, unknown> = {};
     if (audience && audience !== "all") {
@@ -42,6 +43,14 @@ export async function GET(request: Request) {
         query.audience = audience;
       } else if (audience === "unisex" || audience === "both") {
         query.$or = [{ audience: "unisex" }, { audience: null }, { audience: "" }, { audience: { $exists: false } }];
+      }
+    }
+
+    if (category && category.trim() && category !== "all" && category !== "All Categories") {
+      if (category === "uncategorized") {
+        query.$or = [{ category: null }, { category: "" }, { category: { $exists: false } }];
+      } else {
+        query.category = category.trim();
       }
     }
 

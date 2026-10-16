@@ -43,6 +43,7 @@ async function getServices(): Promise<ServiceCardData[]> {
         image: s.image || "",
         audience: s.audience || "unisex",
         displayOrder: typeof s.displayOrder === "number" ? s.displayOrder : 0,
+        category: s.category ? s.category.trim() : null,
         createdAt: s.createdAt,
       }))
       .sort((a, b) => {
