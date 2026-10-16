@@ -7,6 +7,8 @@ export interface ServiceItem {
   image?: string;
   imagePublicId?: string;
   isActive: boolean;
+  audience?: "male" | "female" | "unisex";
+  displayOrder?: number;
   createdAt?: string;
   updatedAt?: string;
 }

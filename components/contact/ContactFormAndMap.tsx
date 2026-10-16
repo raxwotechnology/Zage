@@ -292,11 +292,13 @@ export default function ContactFormAndMap({
           <div className="md:col-span-6 flex flex-col">
             <div className="relative w-full h-full min-h-[300px] sm:min-h-[380px] md:min-h-full rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm bg-stone-100">
               <Image
-                src="/images/contact/contact-message-salon.webp"
+                src={custom.sectionImage("/images/contact/contact-message-salon.webp")}
                 alt={`${salonName} Modern Salon Interior`}
                 fill
                 sizes="(max-width: 767px) 100vw, 50vw"
                 className="object-cover object-center"
+                unoptimized={Boolean(custom.media?.sectionImage?.url)}
+                data-customization-role="sectionImage"
               />
             </div>
           </div>

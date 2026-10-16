@@ -38,7 +38,8 @@ export const publicPages: PageRegistration[] = [
           "primaryButton",
           "secondaryButton"
         ],
-        "defaultImage": "/images/hero-salon.jpg"
+        "defaultImage": "/images/hero-salon.jpg",
+        "isHeroOrCta": true
       },
       {
         "key": "about-preview",
@@ -55,7 +56,9 @@ export const publicPages: PageRegistration[] = [
           "heading",
           "description",
           "primaryButton"
-        ]
+        ],
+        "media": ["sectionImage"],
+        "defaultSectionImage": "/images/about-salon.jpg"
       },
       {
         "key": "services-preview",
@@ -89,7 +92,9 @@ export const publicPages: PageRegistration[] = [
           "description",
           "primaryButton",
           "sectionHeading"
-        ]
+        ],
+        "media": ["sectionImage"],
+        "defaultSectionImage": "/images/wedding-hero.jpg"
       },
       {
         "key": "wedding-packages",
@@ -217,7 +222,8 @@ export const publicPages: PageRegistration[] = [
           "primaryButton",
           "description"
         ],
-        "defaultImage": "/images/cta-salon.jpg"
+        "defaultImage": "/images/cta-salon.jpg",
+        "isHeroOrCta": true
       },
       {
         "key": "branches",
@@ -272,7 +278,9 @@ export const publicPages: PageRegistration[] = [
           "description",
           "primaryButton",
           "sectionHeading"
-        ]
+        ],
+        "media": ["sectionImage"],
+        "defaultSectionImage": "/images/about-sunlit-salon.png"
       },
       {
         "key": "our-story",
@@ -289,7 +297,9 @@ export const publicPages: PageRegistration[] = [
           "heading",
           "description",
           "primaryButton"
-        ]
+        ],
+        "media": ["sectionImage"],
+        "defaultSectionImage": "/images/about-salon.jpg"
       },
       {
         "key": "our-values",
@@ -319,7 +329,9 @@ export const publicPages: PageRegistration[] = [
           "heading",
           "description",
           "primaryButton"
-        ]
+        ],
+        "media": ["sectionImage"],
+        "defaultSectionImage": "/images/salon-experience.jpg"
       },
       {
         "key": "beauticians",
@@ -368,7 +380,8 @@ export const publicPages: PageRegistration[] = [
           "primaryButton",
           "description"
         ],
-        "defaultImage": "/images/cta-salon.jpg"
+        "defaultImage": "/images/cta-salon.jpg",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -404,7 +417,8 @@ export const publicPages: PageRegistration[] = [
           "highlightedText",
           "description"
         ],
-        "defaultImage": "/images/services-hero.jpg"
+        "defaultImage": "/images/services-hero.jpg",
+        "isHeroOrCta": true
       },
       {
         "key": "intro",
@@ -459,7 +473,8 @@ export const publicPages: PageRegistration[] = [
           "primaryButton",
           "description"
         ],
-        "defaultImage": "/images/cta-salon.jpg"
+        "defaultImage": "/images/cta-salon.jpg",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -495,7 +510,8 @@ export const publicPages: PageRegistration[] = [
           "highlightedText",
           "description"
         ],
-        "defaultImage": "/images/products-hero.png"
+        "defaultImage": "/images/products-hero.png",
+        "isHeroOrCta": true
       },
       {
         "key": "products-grid",
@@ -544,7 +560,8 @@ export const publicPages: PageRegistration[] = [
           "description",
           "primaryButton"
         ],
-        "defaultImage": "/images/products-bottom-cta.png"
+        "defaultImage": "/images/products-bottom-cta.png",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -580,7 +597,8 @@ export const publicPages: PageRegistration[] = [
           "highlightedText",
           "description"
         ],
-        "defaultImage": "/images/promotions-hero.png"
+        "defaultImage": "/images/promotions-hero.png",
+        "isHeroOrCta": true
       },
       {
         "key": "promotions-grid",
@@ -629,7 +647,8 @@ export const publicPages: PageRegistration[] = [
           "description",
           "primaryButton"
         ],
-        "defaultImage": "/images/promotions-bottom-cta.png"
+        "defaultImage": "/images/promotions-bottom-cta.png",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -667,7 +686,8 @@ export const publicPages: PageRegistration[] = [
           "description",
           "primaryButton"
         ],
-        "defaultImage": "/images/wedding-hero.jpg"
+        "defaultImage": "/images/wedding-hero.jpg",
+        "isHeroOrCta": true
       },
       {
         "key": "wedding-services",
@@ -731,7 +751,8 @@ export const publicPages: PageRegistration[] = [
           "description",
           "primaryButton"
         ],
-        "defaultImage": "/images/wedding-consultation-cta.png"
+        "defaultImage": "/images/wedding-consultation-cta.png",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -767,7 +788,8 @@ export const publicPages: PageRegistration[] = [
           "highlightedText",
           "description"
         ],
-        "defaultImage": "/images/vendors/vendors-hero.webp"
+        "defaultImage": "/images/vendors/vendors-hero.webp",
+        "isHeroOrCta": true
       },
       {
         "key": "vendors-grid",
@@ -803,7 +825,8 @@ export const publicPages: PageRegistration[] = [
           "description",
           "primaryButton"
         ],
-        "defaultImage": "/images/vendors/vendors-cta.webp"
+        "defaultImage": "/images/vendors/vendors-cta.webp",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -839,7 +862,8 @@ export const publicPages: PageRegistration[] = [
           "highlightedText",
           "description"
         ],
-        "defaultImage": "/images/gallery-hero.jpg"
+        "defaultImage": "/images/gallery-hero.jpg",
+        "isHeroOrCta": true
       },
       {
         "key": "gallery-heading",
@@ -873,7 +897,8 @@ export const publicPages: PageRegistration[] = [
           "primaryButton",
           "description"
         ],
-        "defaultImage": "/images/cta-salon.jpg"
+        "defaultImage": "/images/cta-salon.jpg",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -909,7 +934,8 @@ export const publicPages: PageRegistration[] = [
           "highlightedText",
           "description"
         ],
-        "defaultImage": "/images/reviews-hero.jpg"
+        "defaultImage": "/images/reviews-hero.jpg",
+        "isHeroOrCta": true
       },
       {
         "key": "reviews",
@@ -962,7 +988,8 @@ export const publicPages: PageRegistration[] = [
           "primaryButton",
           "description"
         ],
-        "defaultImage": "/images/cta-salon.jpg"
+        "defaultImage": "/images/cta-salon.jpg",
+        "isHeroOrCta": true
       }
     ]
   },
@@ -996,7 +1023,8 @@ export const publicPages: PageRegistration[] = [
           "heading",
           "description"
         ],
-        "defaultImage": "/images/contact-hero.jpg"
+        "defaultImage": "/images/contact-hero.jpg",
+        "isHeroOrCta": true
       },
       {
         "key": "branch-contact",
@@ -1034,7 +1062,9 @@ export const publicPages: PageRegistration[] = [
           "alignment",
           "heading",
           "description"
-        ]
+        ],
+        "media": ["sectionImage"],
+        "defaultSectionImage": "/images/contact/contact-message-salon.webp"
       },
       {
         "key": "quick-information",
@@ -1049,7 +1079,9 @@ export const publicPages: PageRegistration[] = [
           "alignment",
           "heading",
           "description"
-        ]
+        ],
+        "media": ["sectionImage"],
+        "defaultSectionImage": "/images/contact-faq.jpg"
       },
       {
         "key": "booking-cta",
@@ -1068,7 +1100,8 @@ export const publicPages: PageRegistration[] = [
           "primaryButton",
           "description"
         ],
-        "defaultImage": "/images/cta-salon.jpg"
+        "defaultImage": "/images/cta-salon.jpg",
+        "isHeroOrCta": true
       }
     ]
   },

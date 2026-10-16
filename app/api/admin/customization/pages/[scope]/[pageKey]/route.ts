@@ -3,6 +3,9 @@ import { getPageCustomizations } from "@/lib/customization";
 import { requireCustomizationAdmin, customizationApiError } from "@/lib/customization-api";
 import { getPageRegistration, isCustomizationScope } from "@/lib/customization-registry";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(_request: Request, context: { params: Promise<{ scope: string; pageKey: string }> }) {
   try {
     const denied = await requireCustomizationAdmin();

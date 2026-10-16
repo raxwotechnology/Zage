@@ -33,11 +33,20 @@ export async function GET(request: Request) {
       ];
     }
 
-    const services = await Service.find(query).sort({ createdAt: -1 });
+    const services = await Service.find(query)
+      .sort({ displayOrder: 1, createdAt: 1 })
+      .lean();
+
+    const sortedServices = services.sort((a, b) => {
+      const orderA = a.displayOrder ?? 0;
+      const orderB = b.displayOrder ?? 0;
+      if (orderA !== orderB) return orderA - orderB;
+      return new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
+    });
 
     return NextResponse.json({
       success: true,
-      services,
+      services: sortedServices,
     });
   } catch (error) {
     console.error("Get services error:", error);
@@ -86,6 +95,7 @@ export async function POST(request: Request) {
       description,
       price,
       duration,
+      displayOrder,
       image,
       imagePublicId,
       isActive,
@@ -123,6 +133,19 @@ export async function POST(request: Request) {
       );
     }
 
+    if (displayOrder !== undefined && displayOrder !== null && displayOrder !== "") {
+      const orderNum = Number(displayOrder);
+      if (isNaN(orderNum) || !Number.isInteger(orderNum) || orderNum < 0) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Display order must be a non-negative integer (0 or greater)",
+          },
+          { status: 400 }
+        );
+      }
+    }
+
     if (audience !== undefined && audience !== null && audience !== "") {
       if (!["male", "female", "unisex"].includes(audience)) {
         return NextResponse.json(
@@ -135,11 +158,17 @@ export async function POST(request: Request) {
       }
     }
 
+    const parsedDisplayOrder =
+      displayOrder !== undefined && displayOrder !== null && displayOrder !== ""
+        ? Number(displayOrder)
+        : 0;
+
     const service = await Service.create({
       name: name.trim(),
       description: description.trim(),
       price: Number(price),
       duration: Number(duration),
+      displayOrder: parsedDisplayOrder,
       image: image?.trim() || "",
       imagePublicId: imagePublicId?.trim() || undefined,
       isActive: isActive ?? true,

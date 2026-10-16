@@ -31,9 +31,31 @@ export interface ButtonStyle {
   borderRadius?: number;
   borderColor?: string;
 }
+
+export interface BackgroundImageStyle {
+  url?: string;
+  publicId?: string;
+  position?: "left" | "center" | "right";
+  mobilePosition?: "left" | "center" | "right";
+  size?: "cover" | "contain";
+  overlayDarkness?: number; // 0 to 80 in increments of 10
+  overlayColor?: string; // HEX
+}
+
+export type MediaField = "sectionImage";
+
+export interface SectionMediaImage {
+  url: string;
+  publicId?: string;
+}
+
+export interface SectionMedia {
+  sectionImage?: SectionMediaImage;
+}
+
 export interface SectionStyle {
   backgroundColor?: string;
-  backgroundImage?: { url: string; publicId?: string };
+  backgroundImage?: BackgroundImageStyle;
   alignment?: "left" | "center" | "right";
   heading?: HeadingStyle;
   highlightedText?: { color?: string };
@@ -59,6 +81,7 @@ export type StyleField = keyof SectionStyle;
 export interface SectionOverride {
   content?: Partial<Record<ContentField, string>>;
   style?: SectionStyle;
+  media?: SectionMedia;
 }
 export type PageOverrides = Record<string, SectionOverride>;
 export type GlobalOverrides = Partial<Record<GlobalGroupKey, SectionOverride>>;
@@ -67,7 +90,10 @@ export interface SectionRegistration {
   label: string;
   content?: Partial<Record<ContentField, string>>;
   styles: StyleField[];
+  media?: MediaField[];
   defaultImage?: string;
+  defaultSectionImage?: string;
+  isHeroOrCta?: boolean;
 }
 export interface PageRegistration {
   key: string;

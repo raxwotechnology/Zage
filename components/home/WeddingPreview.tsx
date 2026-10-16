@@ -8,6 +8,17 @@ import { ArrowRightIcon, SparklesIcon } from "@/components/ui/icons";
 
 export default function WeddingPreview() {
   const custom = useSectionCustomization("wedding-beauty");
+  const DEFAULT_WEDDING_BEAUTY_IMAGE = "/images/wedding-hero.jpg";
+  const customImageUrl =
+    custom.media?.sectionImage?.url ||
+    custom.sectionImage("") ||
+    custom.style?.backgroundImage?.url ||
+    custom.image("");
+  const weddingImage =
+    customImageUrl && typeof customImageUrl === "string" && customImageUrl.trim()
+      ? customImageUrl.trim()
+      : DEFAULT_WEDDING_BEAUTY_IMAGE;
+  const isCustom = weddingImage !== DEFAULT_WEDDING_BEAUTY_IMAGE;
 
   return (
     <section className="relative overflow-hidden bg-[#F9FAF8] py-14 sm:py-16 border-y border-stone-200/80" data-customization-section="wedding-beauty">
@@ -17,11 +28,13 @@ export default function WeddingPreview() {
           <div className="lg:col-span-5">
             <div className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl bg-emerald-50 shadow-md group">
               <Image
-                src="/images/wedding-hero.jpg"
+                src={weddingImage}
                 alt="Bridal Beauty at Salon Zage"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                unoptimized={isCustom}
+                data-customization-role="sectionImage"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">

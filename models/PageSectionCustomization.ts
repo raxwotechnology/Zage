@@ -15,6 +15,7 @@ const PageSectionCustomizationSchema = new Schema<IPageSectionCustomization>({
   sectionKey: { type: String, required: true, match: /^[a-z0-9-]+$/ },
   content: { type: Schema.Types.Mixed },
   style: { type: Schema.Types.Mixed },
+  media: { type: Schema.Types.Mixed },
 }, { timestamps: true, minimize: true, strict: true });
 
 PageSectionCustomizationSchema.index({ scope: 1, pageKey: 1, sectionKey: 1 }, { unique: true });

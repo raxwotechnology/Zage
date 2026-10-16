@@ -17,11 +17,13 @@ export default function SalonExperience() {
           <div className="lg:col-span-6">
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-stone-100 shadow-md group">
               <Image
-                src="/images/salon-experience.jpg"
+                src={custom.sectionImage("/images/salon-experience.jpg")}
                 alt="Salon Zage modern treatment products and serene space"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
+                unoptimized={Boolean(custom.media?.sectionImage?.url)}
+                data-customization-role="sectionImage"
               />
               <div className="absolute inset-0 bg-black/5" />
             </div>

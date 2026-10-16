@@ -30,11 +30,13 @@ export default function AboutPreview() {
           <div className="lg:col-span-6 relative">
             <div className="relative aspect-[16/11] w-full overflow-hidden rounded-3xl bg-stone-200 shadow-md shadow-stone-900/5 group">
               <Image
-                src="/images/about-salon.jpg"
+                src={custom.sectionImage("/images/about-salon.jpg")}
                 alt="Salon modern interior and styling stations"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
+                unoptimized={Boolean(custom.media?.sectionImage?.url)}
+                data-customization-role="sectionImage"
               />
             </div>
           </div>

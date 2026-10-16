@@ -24,13 +24,23 @@ export function CustomizationProvider({ scope, pageKey = "home", global = {}, se
 export function useGlobalCustomization() { return useContext(Context).global; }
 export function useSectionCustomization(sectionKey: string) {
   const { sections } = useContext(Context);
-  const override = sections[sectionKey];
+  let override = sections[sectionKey];
+  if (!override) {
+    if (sectionKey === "wedding-beauty") {
+      override = sections["weddingBeauty"] || sections["weddingPreview"] || sections["wedding"];
+    } else if (sectionKey === "weddingBeauty") {
+      override = sections["wedding-beauty"] || sections["weddingPreview"] || sections["wedding"];
+    }
+  }
   return {
     content: override?.content || {},
     style: override?.style || {},
+    media: override?.media || {},
     has: (field: ContentField) => typeof override?.content?.[field] === "string",
     text: (field: ContentField, fallback: string) => override?.content?.[field] ?? fallback,
     image: (fallback: string) => override?.style?.backgroundImage?.url ?? fallback,
+    sectionImage: (fallback: string) => override?.media?.sectionImage?.url ?? fallback,
+    bgSettings: override?.style?.backgroundImage,
   };
 }
 

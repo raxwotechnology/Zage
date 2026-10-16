@@ -36,16 +36,26 @@ export const getPageCustomizations = cache(async (scope: CustomizationScope, pag
   if (!getPageRegistration(scope, pageKey)) return {};
   try {
     await connectDB();
-    const documents = await PageSectionCustomization.find({ scope, pageKey }).select("sectionKey content style -_id").lean();
+    const documents = await PageSectionCustomization.find({ scope, pageKey }).select("sectionKey content style media -_id").lean();
     const result: PageOverrides = {};
     for (const document of documents) {
       try {
         const raw: SectionOverride = {};
-        if (document.content !== undefined) raw.content = document.content;
-        if (document.style !== undefined) raw.style = document.style;
+        if (document.content !== undefined && document.content !== null) raw.content = document.content;
+        if (document.style !== undefined && document.style !== null) raw.style = document.style;
+        if (document.media !== undefined && document.media !== null) raw.media = document.media;
         const override = validatePageSectionOverride(scope, pageKey, document.sectionKey, raw);
-        if (!isEmptyCustomization(override)) result[document.sectionKey] = override;
-      } catch { /* Invalid or no longer registered sections resolve to their source defaults. */ }
+        if (!isEmptyCustomization(override)) {
+          result[document.sectionKey] = override;
+          if (document.sectionKey === "weddingBeauty" || document.sectionKey === "wedding" || document.sectionKey === "weddingPreview") {
+            result["wedding-beauty"] = override;
+          } else if (document.sectionKey === "wedding-beauty") {
+            result["weddingBeauty"] = override;
+          }
+        }
+      } catch (err) {
+        console.warn(`[customization] Failed to validate section override for ${scope}/${pageKey}/${document.sectionKey}:`, err);
+      }
     }
     return result;
   } catch (error) {

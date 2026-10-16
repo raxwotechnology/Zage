@@ -30,18 +30,27 @@ async function getServices(): Promise<ServiceCardData[]> {
   try {
     await connectDB();
     const services = await Service.find({ isActive: true })
-      .sort({ createdAt: -1 })
+      .sort({ displayOrder: 1, createdAt: 1 })
       .lean();
 
-    return services.map((s) => ({
-      _id: s._id.toString(),
-      name: s.name,
-      description: s.description || "",
-      price: s.price || 0,
-      duration: s.duration || 0,
-      image: s.image || "",
-      audience: s.audience || "unisex",
-    }));
+    return services
+      .map((s) => ({
+        _id: s._id.toString(),
+        name: s.name,
+        description: s.description || "",
+        price: s.price || 0,
+        duration: s.duration || 0,
+        image: s.image || "",
+        audience: s.audience || "unisex",
+        displayOrder: typeof s.displayOrder === "number" ? s.displayOrder : 0,
+        createdAt: s.createdAt,
+      }))
+      .sort((a, b) => {
+        const orderA = a.displayOrder ?? 0;
+        const orderB = b.displayOrder ?? 0;
+        if (orderA !== orderB) return orderA - orderB;
+        return new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
+      });
   } catch (error) {
     console.error("Failed to load services for public page:", error);
     return [];

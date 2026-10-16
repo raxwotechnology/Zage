@@ -108,6 +108,24 @@ export async function PATCH(
       }
     }
 
+    if (body.displayOrder !== undefined) {
+      if (body.displayOrder === null || body.displayOrder === "") {
+        body.displayOrder = 0;
+      } else {
+        const orderNum = Number(body.displayOrder);
+        if (isNaN(orderNum) || !Number.isInteger(orderNum) || orderNum < 0) {
+          return NextResponse.json(
+            {
+              success: false,
+              message: "Display order must be a non-negative integer (0 or greater)",
+            },
+            { status: 400 }
+          );
+        }
+        body.displayOrder = orderNum;
+      }
+    }
+
     const existingService = await Service.findById(id);
     if (!existingService) {
       return NextResponse.json(
@@ -242,3 +260,5 @@ export async function DELETE(
     );
   }
 }
+
+export { PATCH as PUT };

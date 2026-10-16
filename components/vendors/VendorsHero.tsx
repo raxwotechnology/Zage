@@ -27,6 +27,11 @@ export default function VendorsHero({ salonName = "Salon Zage" }: VendorsHeroPro
         />
         {/* Controlled gradient overlay: stronger on left for crystal-clear readability, lighter on right to reveal the bride & stylist scene */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A0812] via-[#0A0812]/90 to-[#0A0812]/40 sm:via-[#0A0812]/75 sm:to-transparent" />
+        <div
+          data-customization-role="imageOverlay"
+          className="absolute inset-0 pointer-events-none"
+          style={custom.bgSettings?.overlayDarkness !== undefined ? { backgroundColor: custom.bgSettings.overlayColor || "#000000", opacity: custom.bgSettings.overlayDarkness / 100 } : { display: "none" }}
+        />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

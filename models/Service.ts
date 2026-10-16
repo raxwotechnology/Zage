@@ -8,6 +8,7 @@ export interface IService extends Document {
   image: string;
   imagePublicId?: string;
   isActive: boolean;
+  displayOrder: number;
   audience: "male" | "female" | "unisex";
   createdAt: Date;
   updatedAt: Date;
@@ -54,6 +55,13 @@ const ServiceSchema = new Schema<IService>(
     isActive: {
       type: Boolean,
       default: true,
+    },
+
+    displayOrder: {
+      type: Number,
+      default: 0,
+      min: 0,
+      index: true,
     },
 
     audience: {

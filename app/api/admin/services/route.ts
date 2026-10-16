@@ -45,13 +45,23 @@ export async function GET(request: Request) {
       }
     }
 
-    const services = await Service.find(query).sort({
-      createdAt: -1,
+    const services = await Service.find(query)
+      .sort({
+        displayOrder: 1,
+        createdAt: 1,
+      })
+      .lean();
+
+    const sortedServices = services.sort((a, b) => {
+      const orderA = a.displayOrder ?? 0;
+      const orderB = b.displayOrder ?? 0;
+      if (orderA !== orderB) return orderA - orderB;
+      return new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
     });
 
     return NextResponse.json({
       success: true,
-      services,
+      services: sortedServices,
     });
   } catch (error) {
     console.error("Admin services error:", error);

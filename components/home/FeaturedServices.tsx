@@ -62,8 +62,14 @@ export default function FeaturedServices({ bookingUrl: propBookingUrl }: Feature
       .then((data) => {
         if (!isMounted) return;
         if (data?.success && Array.isArray(data.services)) {
-          // Real active services only from MongoDB (up to 4)
-          const activeServices = data.services
+          // Real active services only from MongoDB (up to 4) sorted by displayOrder ASC
+          const sorted = [...data.services].sort((a: ServiceItem, b: ServiceItem) => {
+            const orderA = a.displayOrder ?? 0;
+            const orderB = b.displayOrder ?? 0;
+            if (orderA !== orderB) return orderA - orderB;
+            return new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
+          });
+          const activeServices = sorted
             .filter((s: ServiceItem) => s.isActive !== false)
             .slice(0, 4);
           setServices(activeServices);

@@ -32,10 +32,12 @@ const buttonRules = (selector: string, style?: ButtonStyle) => {
 };
 function backgroundRules(selector: string, style?: SectionStyle) {
   if (!style) return "";
-  // Images use a fixed URL grammar as well as server validation.
-  const url = style.backgroundImage?.url;
+  const bg = style.backgroundImage;
+  const url = bg?.url;
   const image = url && (/^https:\/\/[^\s"'<>\\]+$/i.test(url) || /^\/(?!\/)[^\s"'<>\\]+$/.test(url)) ? `url(${JSON.stringify(url)})` : undefined;
-  return rule(selector, { "background-color": color(style.backgroundColor), "background-image": image ?? (color(style.backgroundColor) ? "none" : undefined), "background-size": image ? "cover" : undefined, "background-position": image ? "center" : undefined });
+  const size = bg?.size ? bg.size : (image ? "cover" : undefined);
+  const pos = bg?.position ? bg.position : (image ? "center" : undefined);
+  return rule(selector, { "background-color": color(style.backgroundColor), "background-image": image ?? (color(style.backgroundColor) ? "none" : undefined), "background-size": size, "background-position": pos });
 }
 
 export function buildCustomizationCss(scope: CustomizationScope, pageKey: string, global: GlobalOverrides = {}, sections: PageOverrides = {}) {
@@ -72,6 +74,25 @@ export function buildCustomizationCss(scope: CustomizationScope, pageKey: string
     const s = override.style;
     if (!s) continue;
     css += backgroundRules(section, s);
+    const bg = s.backgroundImage;
+    if (bg) {
+      if (bg.size) {
+        css += rule(target("backgroundImage"), { "object-fit": bg.size });
+      }
+      if (bg.mobilePosition && bg.position) {
+        css += `@media(max-width:767px){${rule(target("backgroundImage"), { "object-position": bg.mobilePosition })}}`;
+        css += `@media(min-width:768px){${rule(target("backgroundImage"), { "object-position": bg.position })}}`;
+      } else if (bg.position) {
+        css += rule(target("backgroundImage"), { "object-position": bg.position });
+      } else if (bg.mobilePosition) {
+        css += rule(target("backgroundImage"), { "object-position": bg.mobilePosition });
+      }
+      if (bg.overlayDarkness !== undefined) {
+        const overlayCol = color(bg.overlayColor) ?? "#000000";
+        const opacity = (bg.overlayDarkness / 100).toFixed(2);
+        css += rule(target("imageOverlay"), { "background-color": overlayCol, opacity, display: "block" });
+      }
+    }
     if (color(s.backgroundColor) && !s.backgroundImage?.url) css += rule(`${target("backgroundImage")},${target("backgroundImage")} ~ div`, {opacity: "0.2"});
     css += rule(section, {"text-align": ["left", "center", "right"].includes(s.alignment || "") ? s.alignment : undefined});
     if (s.alignment) css += rule(["heading", "description", "eyebrow", "subheading"].map(target).join(","), {"text-align": ["left", "center", "right"].includes(s.alignment) ? s.alignment : undefined});

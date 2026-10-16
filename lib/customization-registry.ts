@@ -31,7 +31,13 @@ export function getPageRegistration(scope: string, pageKey: string) {
 }
 
 export function getSectionRegistration(scope: string, pageKey: string, sectionKey: string) {
-  return getPageRegistration(scope, pageKey)?.sections.find((section) => section.key === sectionKey);
+  const page = getPageRegistration(scope, pageKey);
+  if (!page) return undefined;
+  return page.sections.find((section) =>
+    section.key === sectionKey ||
+    (section.key === "wedding-beauty" && (sectionKey === "weddingBeauty" || sectionKey === "wedding" || sectionKey === "weddingPreview")) ||
+    (section.key === "weddingBeauty" && sectionKey === "wedding-beauty")
+  );
 }
 
 export function getGlobalRegistration(group: string) {
@@ -39,15 +45,17 @@ export function getGlobalRegistration(group: string) {
 }
 
 export function getCustomizationFolder(scope: CustomizationScope, pageKey: string, sectionKey: string): CloudinaryFolder {
-  if (!getSectionRegistration(scope, pageKey, sectionKey)) throw new Error("Unknown customization section");
-  return `salon-management/customization/${scope}/${pageKey}/${sectionKey}`;
+  const reg = getSectionRegistration(scope, pageKey, sectionKey);
+  if (!reg) throw new Error("Unknown customization section");
+  return `salon-management/customization/${scope}/${pageKey}/${reg.key}`;
 }
 
 export function isCustomizationFolder(folder: string): boolean {
   if (folder === "salon-management/customization/global") return true;
   const match = /^salon-management\/customization\/(public|admin)\/([a-z0-9-]+)\/([a-z0-9-]+)$/.exec(folder);
   if (!match) return false;
-  return Boolean(getSectionRegistration(match[1], match[2], match[3])?.styles.includes("backgroundImage"));
+  const section = getSectionRegistration(match[1], match[2], match[3]);
+  return Boolean(section?.styles.includes("backgroundImage") || section?.media?.includes("sectionImage"));
 }
 
 export function customizationPagePath(scope: CustomizationScope, pageKey: string) {

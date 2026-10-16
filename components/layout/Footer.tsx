@@ -135,9 +135,9 @@ export default async function Footer() {
         .select("name address phone email isMain openingHours")
         .lean(),
       Service.find({ isActive: { $ne: false } })
-        .sort({ displayOrder: 1, createdAt: -1 })
+        .sort({ displayOrder: 1, createdAt: 1 })
         .limit(6)
-        .select("name")
+        .select("name displayOrder createdAt")
         .lean(),
       WeddingService.find({ isActive: true })
         .sort({ displayOrder: 1, createdAt: -1 })
@@ -186,7 +186,16 @@ export default async function Footer() {
 
     // 1. Services (up to 6 active, keeping "View Services" within range of "View All Branches")
     if (Array.isArray(serviceDocs)) {
-      serviceLinks = serviceDocs.slice(0, 6).map((s) => ({
+      const sortedServiceDocs = [...serviceDocs].sort((a, b) => {
+        const orderA = (a as unknown as { displayOrder?: number }).displayOrder ?? 0;
+        const orderB = (b as unknown as { displayOrder?: number }).displayOrder ?? 0;
+        if (orderA !== orderB) return orderA - orderB;
+        return (
+          new Date((a as unknown as { createdAt?: Date | string }).createdAt || 0).getTime() -
+          new Date((b as unknown as { createdAt?: Date | string }).createdAt || 0).getTime()
+        );
+      });
+      serviceLinks = sortedServiceDocs.slice(0, 6).map((s) => ({
         name: s.name,
         href: "/services",
       }));

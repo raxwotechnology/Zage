@@ -32,6 +32,7 @@ interface Service {
   imagePublicId?: string;
   isActive: boolean;
   audience?: "male" | "female" | "unisex";
+  displayOrder?: number;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -41,6 +42,7 @@ interface ServiceFormState {
   description: string;
   price: string;
   duration: string;
+  displayOrder: string;
   image: string;
   imagePublicId: string;
   isActive: boolean;
@@ -52,6 +54,7 @@ const emptyForm: ServiceFormState = {
   description: "",
   price: "",
   duration: "",
+  displayOrder: "",
   image: "",
   imagePublicId: "",
   isActive: true,
@@ -70,7 +73,9 @@ export default function AdminServicesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "active" | "hidden">("all");
   const [audienceFilter, setAudienceFilter] = useState<"all" | "female" | "male" | "unisex">("all");
-  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "price-asc" | "price-desc" | "duration">("newest");
+  const [sortBy, setSortBy] = useState<
+    "order" | "newest" | "oldest" | "price-asc" | "price-desc" | "duration"
+  >("order");
 
   // Notification feedback
   const [notification, setNotification] = useState<{
@@ -174,6 +179,15 @@ export default function AdminServicesPage() {
         return true;
       })
       .sort((a, b) => {
+        if (sortBy === "order") {
+          const orderA = a.displayOrder ?? 0;
+          const orderB = b.displayOrder ?? 0;
+          if (orderA !== orderB) return orderA - orderB;
+          return (
+            new Date(a.createdAt || 0).getTime() -
+            new Date(b.createdAt || 0).getTime()
+          );
+        }
         if (sortBy === "price-asc") return (a.price || 0) - (b.price || 0);
         if (sortBy === "price-desc") return (b.price || 0) - (a.price || 0);
         if (sortBy === "duration") return (a.duration || 0) - (b.duration || 0);
@@ -206,6 +220,7 @@ export default function AdminServicesPage() {
       description: service.description,
       price: service.price.toString(),
       duration: service.duration.toString(),
+      displayOrder: (service.displayOrder ?? 0).toString(),
       image: service.image || "",
       imagePublicId: service.imagePublicId || "",
       isActive: service.isActive,
@@ -236,6 +251,13 @@ export default function AdminServicesPage() {
       showNotification("error", "Please provide a valid duration in minutes.");
       return;
     }
+    if (form.displayOrder.trim() !== "") {
+      const orderNum = Number(form.displayOrder);
+      if (isNaN(orderNum) || !Number.isInteger(orderNum) || orderNum < 0) {
+        showNotification("error", "Display order must be an integer greater than or equal to 0.");
+        return;
+      }
+    }
 
     setFormLoading(true);
 
@@ -251,6 +273,10 @@ export default function AdminServicesPage() {
           description: form.description.trim(),
           price: Number(form.price),
           duration: Number(form.duration),
+          displayOrder:
+            form.displayOrder.trim() !== ""
+              ? Number(form.displayOrder)
+              : 0,
           image: form.image,
           imagePublicId: form.imagePublicId,
           isActive: form.isActive,
@@ -536,6 +562,7 @@ export default function AdminServicesPage() {
               onChange={(e) =>
                 setSortBy(
                   e.target.value as
+                    | "order"
                     | "newest"
                     | "oldest"
                     | "price-asc"
@@ -545,6 +572,7 @@ export default function AdminServicesPage() {
               }
               className="rounded-xl border border-stone-200 bg-stone-50/70 px-3.5 py-2 text-xs sm:text-sm font-medium text-stone-700 outline-none transition-all focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20 cursor-pointer"
             >
+              <option value="order">Display Order</option>
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
               <option value="price-asc">Price: Low to High</option>
@@ -628,8 +656,8 @@ export default function AdminServicesPage() {
                         </div>
                       )}
 
-                      {/* Floating Audience Badge on top-left */}
-                      <div className="absolute top-3 left-3 z-10 shadow-xs">
+                      {/* Floating Audience & Order Badges on top-left */}
+                      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1 items-start shadow-xs">
                         <span
                           className={`inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold border ${
                             (service.audience ?? "unisex") === "male"
@@ -644,6 +672,9 @@ export default function AdminServicesPage() {
                             : (service.audience ?? "unisex") === "female"
                             ? "Female"
                             : "Both"}
+                        </span>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold bg-black/60 backdrop-blur-xs text-white border border-white/20">
+                          Order #{service.displayOrder ?? 0}
                         </span>
                       </div>
 
@@ -895,6 +926,28 @@ export default function AdminServicesPage() {
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20"
                     />
                   </div>
+                </div>
+
+                {/* Display Order */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                    Display Order <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    min="0"
+                    step="1"
+                    value={form.displayOrder}
+                    onChange={(e) =>
+                      setForm({ ...form, displayOrder: e.target.value })
+                    }
+                    placeholder="e.g. 1"
+                    className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20"
+                  />
+                  <p className="mt-1 text-[11px] text-stone-500 leading-normal">
+                    Lower numbers are displayed first on the public Services page. (1 = first, 2 = second, 3 = third)
+                  </p>
                 </div>
 
                 {/* Active Toggle Switch */}

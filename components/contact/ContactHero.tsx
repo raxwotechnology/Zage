@@ -22,6 +22,11 @@ export default function ContactHero() {
         />
         {/* Controlled gradient overlay for crisp text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/90 to-[#0C0A14]/35" />
+        <div
+          data-customization-role="imageOverlay"
+          className="absolute inset-0 pointer-events-none"
+          style={custom.bgSettings?.overlayDarkness !== undefined ? { backgroundColor: custom.bgSettings.overlayColor || "#000000", opacity: custom.bgSettings.overlayDarkness / 100 } : { display: "none" }}
+        />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">

@@ -36,6 +36,11 @@ export default function HeroSection({
         {/* Controlled Gradient Overlay: strong text contrast on left, bright salon image on right */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/75 lg:via-[#0C0A14]/45 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A14]/90 via-transparent to-transparent/20" />
+        <div
+          data-customization-role="imageOverlay"
+          className="absolute inset-0 pointer-events-none"
+          style={custom.bgSettings?.overlayDarkness !== undefined ? { backgroundColor: custom.bgSettings.overlayColor || "#000000", opacity: custom.bgSettings.overlayDarkness / 100 } : { display: "none" }}
+        />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">

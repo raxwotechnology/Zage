@@ -58,12 +58,14 @@ export default function AboutHero() {
         <div className={styles.salonImage}>
           <div className={styles.imageMask}>
             <Image
-              src="/images/about-sunlit-salon.png"
+              src={custom.sectionImage("/images/about-sunlit-salon.png")}
               alt="Sunlit salon with arched mirrors, cream styling chairs, and warm gold details"
               fill
               preload
               sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1188px) 82vw, 944px"
               className={styles.image}
+              unoptimized={Boolean(custom.media?.sectionImage?.url)}
+              data-customization-role="sectionImage"
             />
           </div>
         </div>

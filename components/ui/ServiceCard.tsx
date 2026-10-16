@@ -13,6 +13,8 @@ export interface ServiceCardData {
   duration: number;
   image?: string;
   audience?: "male" | "female" | "unisex";
+  displayOrder?: number;
+  createdAt?: Date | string;
 }
 
 interface ServiceCardProps {

@@ -6,6 +6,9 @@ import { getSectionRegistration, isCustomizationScope, customizationPagePath } f
 import { isEmptyCustomization, validatePageSectionOverride } from "@/lib/customization-validation";
 import PageSectionCustomization from "@/models/PageSectionCustomization";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type Context = { params: Promise<{ scope: string; pageKey: string; sectionKey: string }> };
 
 export async function PATCH(request: Request, context: Context) {
@@ -23,9 +26,16 @@ export async function PATCH(request: Request, context: Context) {
       const unset: Record<string, 1> = {};
       if (!override.content) unset.content = 1;
       if (!override.style) unset.style = 1;
+      if (!override.media) unset.media = 1;
       await PageSectionCustomization.updateOne(filter, { $set: { ...filter, ...override }, ...(Object.keys(unset).length ? { $unset: unset } : {}) }, { upsert: true, runValidators: true });
     }
-    revalidatePath(customizationPagePath(scope, pageKey));
+    const pagePath = customizationPagePath(scope, pageKey);
+    revalidatePath(pagePath, "page");
+    revalidatePath(pagePath, "layout");
+    if (pageKey === "home") {
+      revalidatePath("/", "page");
+      revalidatePath("/", "layout");
+    }
     return NextResponse.json({ success: true, message: isEmptyCustomization(override) ? "Original section restored" : "Section customization saved", override });
   } catch (error) { return customizationApiError(error, "section save"); }
 }
@@ -38,7 +48,13 @@ export async function DELETE(_request: Request, context: Context) {
     if (!isCustomizationScope(scope) || !getSectionRegistration(scope, pageKey, sectionKey)) return NextResponse.json({ success: false, message: "Unknown customization section" }, { status: 404 });
     await connectDB();
     await PageSectionCustomization.deleteOne({ scope, pageKey, sectionKey });
-    revalidatePath(customizationPagePath(scope, pageKey));
+    const pagePath = customizationPagePath(scope, pageKey);
+    revalidatePath(pagePath, "page");
+    revalidatePath(pagePath, "layout");
+    if (pageKey === "home") {
+      revalidatePath("/", "page");
+      revalidatePath("/", "layout");
+    }
     return NextResponse.json({ success: true, message: "Original section restored", override: {} });
   } catch (error) { return customizationApiError(error, "section reset"); }
 }
