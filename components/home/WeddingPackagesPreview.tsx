@@ -183,7 +183,7 @@ export default function WeddingPackagesPreview({
               Find Your Perfect Bridal Package
             </>}</h2>
             <p className="mt-3 text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-              Explore selected SALVORA wedding packages designed for your special day.
+              Explore selected Salon Zage wedding packages designed for your special day.
             </>}</p>
           </div>
 

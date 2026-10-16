@@ -40,7 +40,7 @@ export default function PromotionCard({
   promotion,
   whatsappNumber = "",
   bookingUrl,
-  salonName = "Salvora",
+  salonName = "Salon Zage",
 }: PromotionCardProps) {
   const router = useRouter();
   const { selectedBranchWhatsapp } = useBranchContext();

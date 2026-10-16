@@ -41,6 +41,21 @@ export default function OurValues() {
 
   return (
     <section id="values" className="bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 border-b border-stone-200/60" data-customization-section="our-values">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #values .group:hover svg,
+            #values .group:hover svg *,
+            #values .our-values-icon-box:hover svg,
+            #values .our-values-icon-box:hover svg *,
+            #values svg:hover,
+            #values svg:hover * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="text-left mb-12">
@@ -66,8 +81,8 @@ export default function OurValues() {
               >
                 <div>
                   {/* Icon Badge */}
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 shadow-2xs mb-5 transition-colors duration-300 group-hover:bg-[#03BF62] group-hover:text-white group-hover:border-[#03BF62]">
-                    <Icon className="h-6 w-6" />
+                  <div className="our-values-icon-box flex h-12 w-12 items-center justify-center rounded-xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 shadow-2xs mb-5 transition-all duration-300 group-hover:bg-[#03BF62] group-hover:!text-white group-hover:border-[#03BF62] hover:bg-[#03BF62] hover:!text-white hover:border-[#03BF62] group-hover:[&_svg]:!text-white group-hover:[&_svg]:!stroke-white hover:[&_svg]:!text-white hover:[&_svg]:!stroke-white">
+                    <Icon className="h-6 w-6 transition-colors duration-300 group-hover:!text-white group-hover:!stroke-white hover:!text-white hover:!stroke-white" />
                   </div>
 
                   {/* Title */}

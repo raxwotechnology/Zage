@@ -14,7 +14,7 @@ export default function ServicesHero() {
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/services-hero.jpg")}
-          alt="Salvora Salon Professional Treatments"
+          alt="Salon Zage Professional Treatments"
           fill
           priority
           sizes="100vw"

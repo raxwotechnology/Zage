@@ -27,7 +27,7 @@ export default function BookingCTA({
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/cta-salon.jpg")}
-          alt="Salvora Salon appointment styling"
+          alt="Salon Zage appointment styling"
           fill
           className="object-cover object-center opacity-80 sm:opacity-90" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />

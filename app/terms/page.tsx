@@ -16,9 +16,9 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | SALVORA",
+  title: "Terms & Conditions | Salon Zage",
   description:
-    "Read the terms and conditions for using the SALVORA salon website and services.",
+    "Read the terms and conditions for using the Salon Zage website and services operated by Zage Pvt Ltd.",
 };
 
 async function getSalonContact() {
@@ -26,14 +26,14 @@ async function getSalonContact() {
     await connectDB();
     const settings = await SalonSettings.findOne().lean();
     return {
-      salonName: settings?.salonName || "SALVORA",
+      salonName: settings?.salonName || "Salon Zage",
       email: settings?.email || "info@salvora.lk",
       phone: settings?.phone || "+94 11 234 5678",
       address: settings?.address || "Salon Diyora, Welivita, New Kandy Rd, Malabe",
     };
   } catch {
     return {
-      salonName: "SALVORA",
+      salonName: "Salon Zage",
       email: "info@salvora.lk",
       phone: "+94 11 234 5678",
       address: "Salon Diyora, Welivita, New Kandy Rd, Malabe",
@@ -72,7 +72,7 @@ export default async function TermsPage() {
 
             {/* Description */}
             <p className="text-sm sm:text-base text-stone-300 leading-relaxed font-normal max-w-2xl" data-customization-role="description"><CustomizationText sectionKey="hero" field="description">
-              Please read these terms carefully before using the SALVORA website and its services.
+              Please read these terms carefully before using the Salon Zage website and its services.
             </CustomizationText></p>
 
             {/* Breadcrumb Navigation */}
@@ -113,7 +113,7 @@ export default async function TermsPage() {
                 <span>Introduction</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                These Terms & Conditions apply to all visitors and users of the SALVORA website. By visiting, browsing, or accessing any part of this website, you acknowledge that you have read, understood, and agreed to be bound by these terms. If you do not agree with any part of these Terms & Conditions, please discontinue using the website.
+                These Terms govern your use of the Salon Zage website and services operated by Zage Pvt Ltd. By visiting, browsing, or accessing any part of this website, you acknowledge that you have read, understood, and agreed to be bound by these terms. If you do not agree with any part of these Terms & Conditions, please discontinue using the website.
               </p>
             </section>
 
@@ -128,7 +128,7 @@ export default async function TermsPage() {
                 <span>Use of the Website</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                You agree to use the SALVORA website solely for lawful purposes and in accordance with these Terms. You must not misuse, damage, disable, overburden, impair, or interfere with the proper working of the website or its underlying networks and servers. Any attempt to gain unauthorized access to any accounts, computer systems, or networks connected to the SALVORA website is strictly prohibited.
+                You agree to use the Salon Zage website solely for lawful purposes and in accordance with these Terms. You must not misuse, damage, disable, overburden, impair, or interfere with the proper working of the website or its underlying networks and servers. Any attempt to gain unauthorized access to any accounts, computer systems, or networks connected to the Salon Zage website is strictly prohibited.
               </p>
             </section>
 
@@ -143,7 +143,7 @@ export default async function TermsPage() {
                 <span>Salon Services</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                Descriptions of salon services, estimated durations, pricing, and availability displayed on this website are provided for informational guidance. While we strive to maintain accurate information, service offerings, prices, and treatment availability may be updated or modified at any time without prior notice. Final service availability and pricing may be confirmed directly by SALVORA.
+                Descriptions of salon services, estimated durations, pricing, and availability displayed on this website are provided for informational guidance. While we strive to maintain accurate information, service offerings, prices, and treatment availability may be updated or modified at any time without prior notice. Final service availability and pricing may be confirmed directly by Salon Zage.
               </p>
             </section>
 
@@ -158,7 +158,7 @@ export default async function TermsPage() {
                 <span>Appointments & External Booking System</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                SALVORA does not manage appointments directly on this website. Customer login, client registration, and appointment booking buttons redirect users to an external Salon Management System. Any appointments, reservations, client profiles, or interactions created through that external system may be subject to its own independent terms, conditions, and operational policies.
+                Salon Zage does not manage appointments directly on this website. Customer login, client registration, and appointment booking buttons redirect users to an external Salon Management System. Any appointments, reservations, client profiles, or interactions created through that external system may be subject to its own independent terms, conditions, and operational policies.
               </p>
             </section>
 
@@ -173,7 +173,7 @@ export default async function TermsPage() {
                 <span>Wedding Services & Packages</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                Wedding beauty services and bridal package details shown on this website may vary depending on individual consultations, stylist availability, selected beauty treatments, and customer requirements. Package inclusions, schedules, and pricing may be updated by SALVORA based on customized arrangements.
+                Wedding beauty services and bridal package details shown on this website may vary depending on individual consultations, stylist availability, selected beauty treatments, and customer requirements. Package inclusions, schedules, and pricing may be updated by Salon Zage based on customized arrangements.
               </p>
             </section>
 
@@ -188,7 +188,7 @@ export default async function TermsPage() {
                 <span>Cancellations & Rescheduling</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                Appointment cancellations, rescheduling requests, deposit requirements, and refund conditions are not defined directly on this informational website. All cancellation, rescheduling, deposit, and refund policies will be provided directly by SALVORA or through the connected external booking system at the time of scheduling.
+                Appointment cancellations, rescheduling requests, deposit requirements, and refund conditions are not defined directly on this informational website. All cancellation, rescheduling, deposit, and refund policies will be provided directly by Salon Zage or through the connected external booking system at the time of scheduling.
               </p>
             </section>
 
@@ -203,7 +203,7 @@ export default async function TermsPage() {
                 <span>Website Content</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                All text, branding, graphics, logos, images, iconography, page layouts, and digital materials on the SALVORA website are the property of SALVORA or used under authorized license. Website content may not be copied, reproduced, republished, distributed, or commercially reused without prior written permission from SALVORA, except for third-party content governed by its own respective license.
+                All text, branding, graphics, logos, images, iconography, page layouts, and digital materials on the Salon Zage website are the property of Zage Pvt Ltd or used under authorized license. Website content may not be copied, reproduced, republished, distributed, or commercially reused without prior written permission from Zage Pvt Ltd, except for third-party content governed by its own respective license.
               </p>
             </section>
 
@@ -233,7 +233,7 @@ export default async function TermsPage() {
                 <span>Third-Party Links</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                For client convenience, the SALVORA website may include links to external services and third-party websites, including:
+                For client convenience, the Salon Zage website may include links to external services and third-party websites, including:
               </p>
               <ul className="list-disc list-inside space-y-1.5 text-sm sm:text-base text-stone-600 pl-2">
                 <li>External Salon Management / Booking System</li>
@@ -244,7 +244,7 @@ export default async function TermsPage() {
                 <li>Other third-party resources and websites</li>
               </ul>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed pt-1" data-customization-role="description">
-                SALVORA does not own or control these external platforms and is not responsible for the content, privacy practices, terms, or availability of third-party services.
+                Salon Zage does not own or control these external platforms and is not responsible for the content, privacy practices, terms, or availability of third-party services.
               </p>
             </section>
 
@@ -259,7 +259,7 @@ export default async function TermsPage() {
                 <span>Google Reviews</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                Where Google Reviews or client feedback ratings are displayed on this website, they are sourced from Google and represent the authentic opinions, experiences, and statements of their respective individual authors. SALVORA does not alter or modify the original meaning of those reviews.
+                Where Google Reviews or client feedback ratings are displayed on this website, they are sourced from Google and represent the authentic opinions, experiences, and statements of their respective individual authors. Salon Zage does not alter or modify the original meaning of those reviews.
               </p>
             </section>
 
@@ -274,7 +274,7 @@ export default async function TermsPage() {
                 <span>Limitation of Liability</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                SALVORA makes reasonable efforts to keep website information accurate, up to date, and available. However, we cannot guarantee uninterrupted access, continuous availability, or complete accuracy of all published information at all times. To the fullest extent permitted by applicable law, SALVORA shall not be held liable for any damages or losses arising from your access to, use of, or inability to access or use this website.
+                Zage Pvt Ltd makes reasonable efforts to keep website information accurate, up to date, and available. However, we cannot guarantee uninterrupted access, continuous availability, or complete accuracy of all published information at all times. To the fullest extent permitted by applicable law, Zage Pvt Ltd shall not be held liable for any damages or losses arising from your access to, use of, or inability to access or use this website.
               </p>
             </section>
 
@@ -311,7 +311,7 @@ export default async function TermsPage() {
                 <span>Changes to These Terms</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                SALVORA may update or revise these Terms & Conditions from time to time to reflect modifications in our salon services, operational practices, technologies, or applicable policies. Any updates take effect immediately upon being posted on this page. Your continued use of the website following any posted modifications indicates your acceptance of the updated terms.
+                Zage Pvt Ltd may update or revise these Terms & Conditions from time to time to reflect modifications in our salon services, operational practices, technologies, or applicable policies. Any updates take effect immediately upon being posted on this page. Your continued use of the website following any posted modifications indicates your acceptance of the updated terms.
               </p>
             </section>
 
@@ -326,7 +326,7 @@ export default async function TermsPage() {
                 <span>Contact Us</span>
               </h2>
               <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                If you have any questions, clarifications, or inquiries regarding these Terms & Conditions, please contact SALVORA using the information below:
+                If you have any questions, clarifications, or inquiries regarding these Terms & Conditions, please contact Salon Zage using the information below:
               </p>
 
               {/* Dynamic Contact Information Card */}

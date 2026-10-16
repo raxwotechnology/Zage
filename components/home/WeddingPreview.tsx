@@ -18,7 +18,7 @@ export default function WeddingPreview() {
             <div className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl bg-emerald-50 shadow-md group">
               <Image
                 src="/images/wedding-hero.jpg"
-                alt="Bridal Beauty at Salvora"
+                alt="Bridal Beauty at Salon Zage"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover object-top transition-transform duration-700 group-hover:scale-105"

@@ -19,9 +19,9 @@ import SalonSettings from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Contact Us | SALVORA",
+  title: "Contact Us | Salon Zage",
   description:
-    "Get in touch with SALVORA salon locations for inquiries, guidance, and beauty appointments.",
+    "Get in touch with Salon Zage salon locations for inquiries, guidance, and beauty appointments.",
 };
 
 async function getContactData(): Promise<{
@@ -65,7 +65,7 @@ async function getContactData(): Promise<{
       : [];
 
     const fallbackSettings: FallbackSettingsData = {
-      salonName: settingsDoc?.salonName || "SALVORA Luxury Salon",
+      salonName: settingsDoc?.salonName || "Salon Zage",
       phone: settingsDoc?.phone || "",
       whatsapp: settingsDoc?.whatsapp || settingsDoc?.phone || "",
       email: settingsDoc?.email || "",
@@ -91,7 +91,7 @@ async function getContactData(): Promise<{
     return {
       branches: [],
       fallbackSettings: {
-        salonName: "SALVORA Luxury Salon",
+        salonName: "Salon Zage",
         phone: "",
         email: "",
         address: "",

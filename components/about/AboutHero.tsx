@@ -28,7 +28,7 @@ export default function AboutHero() {
       <div className={styles.header}>
         <p className={styles.headerBadge} data-customization-role="eyebrow">
           <SparklesIcon className={styles.badgeIcon} />{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>
-          ABOUT SALVORA
+          ABOUT SALON ZAGE
         </>}</p>
         <h1
           id="about-hero-title"

@@ -40,7 +40,26 @@ export default function TrustSection() {
   ];
 
   return (
-    <section className="bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 border-b border-stone-200/60" data-customization-section="trust">
+    <section
+      id="trust-section-salon-zage"
+      className="bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 border-b border-stone-200/60"
+      data-customization-section="trust"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #trust-section-salon-zage .group:hover svg,
+            #trust-section-salon-zage .group:hover svg *,
+            #trust-section-salon-zage .trust-icon-box:hover svg,
+            #trust-section-salon-zage .trust-icon-box:hover svg *,
+            #trust-section-salon-zage svg:hover,
+            #trust-section-salon-zage svg:hover * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-14">
@@ -70,8 +89,8 @@ export default function TrustSection() {
               >
                 <div>
                   {/* Icon Badge */}
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 shadow-2xs mb-5 transition-colors duration-300 group-hover:bg-[#03BF62] group-hover:text-white group-hover:border-[#03BF62]">
-                    <Icon className="h-6 w-6" />
+                  <div className="trust-icon-box flex h-12 w-12 items-center justify-center rounded-xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 shadow-2xs mb-5 transition-all duration-300 group-hover:bg-[#03BF62] group-hover:!text-white group-hover:border-[#03BF62] hover:bg-[#03BF62] hover:!text-white hover:border-[#03BF62] group-hover:[&_svg]:!text-white group-hover:[&_svg]:!stroke-white hover:[&_svg]:!text-white hover:[&_svg]:!stroke-white">
+                    <Icon className="h-6 w-6 transition-colors duration-300 group-hover:!text-white group-hover:!stroke-white hover:!text-white hover:!stroke-white" />
                   </div>
 
                   {/* Title */}

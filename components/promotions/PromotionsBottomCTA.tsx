@@ -18,7 +18,7 @@ interface PromotionsBottomCTAProps {
 
 export default function PromotionsBottomCTA({
   whatsappNumber = "",
-  salonName = "Salvora",
+  salonName = "Salon Zage",
 }: PromotionsBottomCTAProps) {
   const custom = useSectionCustomization("bottom-cta");
 

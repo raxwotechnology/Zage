@@ -19,7 +19,7 @@ export default function PromotionsPreview({
   promotions,
   whatsappNumber = "",
   bookingUrl = "",
-  salonName = "Salvora",
+  salonName = "Salon Zage",
 }: PromotionsPreviewProps) {
   const custom = useSectionCustomization("promotions-preview");
 
@@ -47,7 +47,7 @@ export default function PromotionsPreview({
               Latest Promotions
             </>}</h2>
             <p className="mt-3 text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-              Explore current beauty offers, product deals and wedding specials from SALVORA.
+              Explore current beauty offers, product deals and wedding specials from Salon Zage.
             </>}</p>
           </div>
 

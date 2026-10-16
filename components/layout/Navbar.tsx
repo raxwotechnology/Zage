@@ -31,7 +31,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerLogo, setHeaderLogo] = useState<string>("");
-  const [salonName, setSalonName] = useState<string>("Salvora");
+  const [salonName, setSalonName] = useState<string>("Salon Zage");
   const [externalSystem, setExternalSystem] = useState<ExternalSystemLinks>({
     loginUrl: "",
     registerUrl: "",
@@ -96,12 +96,12 @@ export default function Navbar() {
   const allNavLinks = [
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
+    { name: "Wedding", href: "/wedding", visibilityKey: "wedding" as const },
     { name: "Products", href: "/products", visibilityKey: "products" as const },
     { name: "Promotions", href: "/promotions", visibilityKey: "promotions" as const },
-    { name: "About", href: "/about" },
-    { name: "Wedding", href: "/wedding", visibilityKey: "wedding" as const },
-    { name: "Vendors", href: "/vendors", visibilityKey: "vendors" as const },
     { name: "Gallery", href: "/gallery", visibilityKey: "gallery" as const },
+    { name: "Vendors", href: "/vendors", visibilityKey: "vendors" as const },
+    { name: "About", href: "/about" },
     { name: "Reviews", href: "/reviews" },
     { name: "Contact", href: "/contact" },
   ];
@@ -119,7 +119,7 @@ export default function Navbar() {
       }`} data-customization-header="public"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-20">
-        {/* SALVORA Brand Logo */}
+        {/* Salon Zage Brand Logo */}
         <Link
           href="/"
           className="group flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#03BF62] rounded-lg transition-transform hover:opacity-90"

@@ -18,9 +18,9 @@ import SalonSettings, { normalizePageVisibility } from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Trusted Vendors & Wedding Partners | SALVORA",
+  title: "Trusted Vendors & Wedding Partners | Salon Zage",
   description:
-    "Explore service providers featured by SALVORA. Discover trusted wedding cars, venues, photographers, florists, and event specialists.",
+    "Explore service providers featured by Salon Zage. Discover trusted wedding cars, venues, photographers, florists, and event specialists.",
 };
 
 async function getVendorsData(): Promise<{

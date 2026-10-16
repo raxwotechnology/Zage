@@ -10,7 +10,7 @@ interface ProductsHeroProps {
   salonName?: string;
 }
 
-export default function ProductsHero({ salonName = "Salvora" }: ProductsHeroProps) {
+export default function ProductsHero({ salonName = "Salon Zage" }: ProductsHeroProps) {
   const custom = useSectionCustomization("hero");
 
   return (

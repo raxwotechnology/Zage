@@ -28,7 +28,7 @@ export default function HeroSection({
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/hero-salon.jpg")}
-          alt="Salvora Salon professional styling and beauty care"
+          alt="Salon Zage professional styling and beauty care"
           fill
           priority
           className="object-cover object-right-top opacity-90 sm:opacity-95 lg:opacity-100" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
@@ -51,7 +51,7 @@ export default function HeroSection({
           {/* Subtitle */}
           <p className="text-base sm:text-lg text-stone-200 leading-relaxed max-w-xl font-normal drop-shadow-sm" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
             Experience professional care, modern treatments and a relaxing salon
-            environment at Salvora.
+            environment at Salon Zage.
           </>}</p>
 
           {/* Action Buttons */}

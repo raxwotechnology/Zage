@@ -19,11 +19,11 @@ import { normalizeWhatsAppNumber } from "@/lib/phone";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Promotions Crafted For You | SALVORA Salon Offers & Deals",
+  title: "Promotions Crafted For You | Salon Zage Offers & Deals",
   description:
-    "Explore our latest seasonal beauty offers, discounts, bridal bonuses, and exclusive package savings at Salvora. Book limited-time salon promotions today.",
+    "Explore our latest seasonal beauty offers, discounts, bridal bonuses, and exclusive package savings at Salon Zage. Book limited-time salon promotions today.",
   openGraph: {
-    title: "Promotions Crafted For You | SALVORA Offers",
+    title: "Promotions Crafted For You | Salon Zage Offers",
     description:
       "Special beauty offers, seasonal savings, and exclusive salon deals designed for you.",
     type: "website",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 export default async function PromotionsPage() {
   let promotions: PublicPromotion[] = [];
-  let salonName = "Salvora";
+  let salonName = "Salon Zage";
   let whatsappNumber = "";
   let bookingUrl = "";
   let isVisible = true;

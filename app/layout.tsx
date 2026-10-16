@@ -19,7 +19,7 @@ import ScrollProgressButton from "@/components/ui/ScrollProgressButton";
 import PageViewTracker from "@/components/analytics/PageViewTracker";
 
 export const metadata: Metadata = {
-  title: "SALVORA | Look Beautiful. Feel Confident.",
+  title: "Salon Zage | Look Beautiful. Feel Confident.",
   description:
     "Experience professional beauty and hair care services designed to help you look and feel your best. Premium styling, treatments, and bridal care.",
 };

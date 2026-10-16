@@ -12,7 +12,7 @@ interface VendorsBottomCTAProps {
 }
 
 export default function VendorsBottomCTA({
-  salonName = "SALVORA",
+  salonName = "Salon Zage",
 }: VendorsBottomCTAProps) {
   const custom = useSectionCustomization("bottom-cta");
 

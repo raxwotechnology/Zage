@@ -59,7 +59,7 @@ function getBadgeLocation(address?: string): string {
 
 export default function ContactPreview({ initialSettings }: ContactPreviewProps = {}) {
   const [settings, setSettings] = useState<SalonSettingsData>(() => ({
-    salonName: initialSettings?.salonName || "Salvora",
+    salonName: initialSettings?.salonName || "Salon Zage",
     phone: initialSettings?.phone || "+94 76 123 4567",
     email: initialSettings?.email || "info@salvora.lk",
     address: initialSettings?.address || "123 Beauty Street, Colombo 07, Sri Lanka",
@@ -154,7 +154,7 @@ export default function ContactPreview({ initialSettings }: ContactPreviewProps 
 
   const currentAddress =
     settings.address?.trim() || "123 Beauty Street, Colombo 07, Sri Lanka";
-  const salonName = settings.salonName?.trim() || "Salvora";
+  const salonName = settings.salonName?.trim() || "Salon Zage";
   const badgeLocation = getBadgeLocation(currentAddress);
 
   // Dynamic Google Maps Embed URL generated from the configured address (or custom embed URL)

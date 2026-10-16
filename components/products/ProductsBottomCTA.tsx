@@ -18,7 +18,7 @@ interface ProductsBottomCTAProps {
 
 export default function ProductsBottomCTA({
   whatsappNumber = "",
-  salonName = "Salvora",
+  salonName = "Salon Zage",
 }: ProductsBottomCTAProps) {
   const custom = useSectionCustomization("bottom-cta");
 

@@ -39,7 +39,7 @@ export default async function HomePage() {
   let promotions: PublicPromotion[] = [];
   let homeBranches: HomeBranchCardData[] = [];
   let whatsappNumber = "";
-  let salonName = "Salvora";
+  let salonName = "Salon Zage";
   let pageVisibility = normalizePageVisibility(null);
 
   try {
@@ -241,7 +241,7 @@ export default async function HomePage() {
           />
         )}
 
-        {/* 6. Why Choose Salvora */}
+        {/* 6. Why Choose Salon Zage */}
         <WhyChooseUs />
 
         {/* 6. Meet Our Beauty Experts */}

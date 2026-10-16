@@ -57,7 +57,7 @@ export default function OurStory() {
 
             {/* Paragraph */}
             <p className="text-base text-stone-600 leading-relaxed font-normal" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-              At Salvora, we believe beauty is more than a look — it is a feeling.
+              At Salon Zage, we believe beauty is more than a look — it is a feeling.
               Our professional team is dedicated to bringing out your natural beauty
               with personalized care and modern techniques, in a clean and relaxing environment.
             </>}</p>

@@ -14,7 +14,7 @@ export default function ContactHero() {
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/contact-hero.jpg")}
-          alt="Contact SALVORA Salon"
+          alt="Contact Salon Zage"
           fill
           priority
           sizes="100vw"
@@ -41,7 +41,7 @@ export default function ContactHero() {
 
           {/* Short Description */}
           <p className="text-sm sm:text-base text-stone-200 leading-relaxed font-normal max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-            Choose a SALVORA branch to view its contact details, opening hours, and location.
+            Choose a Salon Zage branch to view its contact details, opening hours, and location.
           </>}</p>
 
           {/* Breadcrumb Navigation */}

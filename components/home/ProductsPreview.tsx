@@ -17,7 +17,7 @@ interface ProductsPreviewProps {
 export default function ProductsPreview({
   products,
   whatsappNumber = "",
-  salonName = "Salvora",
+  salonName = "Salon Zage",
 }: ProductsPreviewProps) {
   const custom = useSectionCustomization("products-preview");
 
@@ -46,7 +46,7 @@ export default function ProductsPreview({
               For Your Routine
             </>}</h2>
             <p className="mt-3 text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-              Discover selected professional beauty products available from SALVORA.
+              Discover selected professional beauty products available from Salon Zage.
             </>}</p>
           </div>
 

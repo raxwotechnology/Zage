@@ -55,10 +55,17 @@ export default function QuickCall({
     <a
       href={`tel:${normalizedTel}`}
       onClick={handleClick}
-      aria-label={ariaLabel || `Call SALVORA at ${phone}`}
+      aria-label={ariaLabel || `Call Salon Zage at ${phone}`}
       className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold transition-all active:scale-[0.98] ${variantStyles[variant]} ${className}`}
     >
-      {showIcon && <PhoneIcon className="h-4 w-4 shrink-0" />}
+      {showIcon && (
+        <PhoneIcon
+          data-icon-color={variant === "primary" ? "white" : undefined}
+          className={`h-4 w-4 shrink-0 ${
+            variant === "primary" ? "!text-white !stroke-white text-white" : ""
+          }`}
+        />
+      )}
       <span>{label}</span>
     </a>
   );

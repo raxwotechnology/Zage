@@ -16,7 +16,7 @@ export default function SalvoraLogo({
     return (
       <Image
         src="/images/salvora-logo-light.png"
-        alt="SALVORA"
+        alt="Salon Zage"
         width={44}
         height={44}
         priority
@@ -36,7 +36,7 @@ export default function SalvoraLogo({
     <div className={`relative inline-flex items-center ${className}`}>
       <Image
         src={src}
-        alt="SALVORA"
+        alt="Salon Zage"
         width={320}
         height={128}
         priority

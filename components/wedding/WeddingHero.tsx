@@ -20,7 +20,7 @@ export default function WeddingHero({ bookingUrl = "" }: WeddingHeroProps) {
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/wedding-hero.jpg")}
-          alt="Salvora Salon Bridal & Wedding Beauty Services"
+          alt="Salon Zage Bridal & Wedding Beauty Services"
           fill
           priority
           sizes="100vw"

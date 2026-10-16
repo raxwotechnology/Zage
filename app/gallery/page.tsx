@@ -14,9 +14,9 @@ import SalonSettings, { normalizePageVisibility } from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Gallery | salvora",
+  title: "Gallery | Salon Zage",
   description:
-    "Explore our gallery of real salon moments, treatments, styling and client transformations at salvora.",
+    "Explore our gallery of real salon moments, treatments, styling and client transformations at Salon Zage.",
 };
 
 async function getGalleryData(): Promise<{

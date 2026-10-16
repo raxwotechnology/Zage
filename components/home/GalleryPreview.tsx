@@ -75,7 +75,7 @@ export default function GalleryPreview() {
         >
           <Image
             src={item.image}
-            alt={item.altText || item.title || "Salvora Salon look"}
+            alt={item.altText || item.title || "Salon Zage look"}
             fill
             sizes={sizes}
             className="object-cover"

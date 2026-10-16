@@ -28,7 +28,7 @@ export default function FloatingWhatsApp() {
   const { selectedBranchWhatsapp, selectedBranchId } = useBranchContext();
   const [branches, setBranches] = useState<BranchItem[]>([]);
   const [settingsWhatsapp, setSettingsWhatsapp] = useState<string>("");
-  const [salonName, setSalonName] = useState<string>("SALVORA");
+  const [salonName, setSalonName] = useState<string>("Salon Zage");
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -277,7 +277,7 @@ export default function FloatingWhatsApp() {
               <span className="h-2 w-2 rounded-full bg-[#25D366] animate-pulse" />
               <span>Replies directly on WhatsApp</span>
             </span>
-            <span className="text-[10px] text-stone-500 font-medium">SALVORA</span>
+            <span className="text-[10px] text-stone-500 font-medium">Salon Zage</span>
           </div>
         </div>
       )}
@@ -299,7 +299,7 @@ export default function FloatingWhatsApp() {
         <button
           type="button"
           onClick={handleMainButtonClick}
-          aria-label={isOpen ? "Close WhatsApp branch selector" : "Chat with SALVORA on WhatsApp"}
+          aria-label={isOpen ? "Close WhatsApp branch selector" : "Chat with Salon Zage on WhatsApp"}
           aria-expanded={isOpen}
           className={`flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center rounded-full text-white shadow-lg shadow-emerald-900/30 transition-all duration-200 focus:outline-hidden cursor-pointer ${
             isOpen

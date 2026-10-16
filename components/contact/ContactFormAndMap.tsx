@@ -24,7 +24,7 @@ interface ContactFormAndMapProps {
 }
 
 export default function ContactFormAndMap({
-  salonName = "SALVORA Salon",
+  salonName = "Salon Zage",
   email = "info@salvora.lk",
 }: ContactFormAndMapProps) {
   const custom = useSectionCustomization("message");
@@ -67,7 +67,7 @@ export default function ContactFormAndMap({
 
     try {
       // Direct email dispatch to verified salon concierge email
-      const emailSubject = `[SALVORA Inquiry] ${formData.subject}: ${formData.name}`;
+      const emailSubject = `[Salon Zage Inquiry] ${formData.subject}: ${formData.name}`;
       const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${
         formData.phone || "Not provided"
       }\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}\n`;

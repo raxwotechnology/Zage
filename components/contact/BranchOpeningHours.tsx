@@ -275,7 +275,26 @@ export default function BranchOpeningHours({
     activeBranch?.address || fallbackSettings?.address || "";
 
   return (
-    <section className="bg-[#FAF8F5] py-14 sm:py-16 lg:py-20 border-b border-stone-200/60" data-customization-section="opening-hours">
+    <section
+      id="opening-hours-salon-zage"
+      className="bg-[#FAF8F5] py-14 sm:py-16 lg:py-20 border-b border-stone-200/60"
+      data-customization-section="opening-hours"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #opening-hours-salon-zage button[data-selected="true"] svg,
+            #opening-hours-salon-zage button[data-selected="true"] svg *,
+            #opening-hours-salon-zage [data-selected="true"] svg,
+            #opening-hours-salon-zage [data-selected="true"] svg *,
+            #opening-hours-salon-zage .branch-pill-selected svg,
+            #opening-hours-salon-zage .branch-pill-selected svg * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
@@ -307,15 +326,17 @@ export default function BranchOpeningHours({
                     key={b._id}
                     type="button"
                     onClick={() => handleSelectBranch(b)}
+                    data-selected={isSelected ? "true" : "false"}
                     className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                       isSelected
-                        ? "bg-[#03BF62] text-white border border-[#03BF62] shadow-md shadow-emerald-600/25"
+                        ? "branch-pill-selected bg-[#03BF62] text-white border border-[#03BF62] shadow-md shadow-emerald-600/25 [&_svg]:!text-white [&_svg]:!stroke-white"
                         : "bg-white text-stone-700 hover:bg-[#03BF62]/10 hover:text-[#03BF62] hover:border-[#03BF62]/30 border border-stone-200/90 shadow-2xs"
                     }`}
                   >
                     <StoreIcon
-                      className={`h-4 w-4 shrink-0 ${
-                        isSelected ? "text-white" : "text-[#03BF62]"
+                      data-icon-color={isSelected ? "white" : undefined}
+                      className={`h-4 w-4 shrink-0 transition-colors ${
+                        isSelected ? "!text-white !stroke-white text-white" : "text-[#03BF62]"
                       }`}
                     />
                     <span>{formattedTabName}</span>

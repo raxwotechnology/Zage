@@ -18,9 +18,9 @@ import SalonSettings from "@/models/SalonSettings";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "About Us | SALVORA",
+  title: "About Us | Salon Zage",
   description:
-    "Learn about SALVORA, our story, values, modern space, and our dedicated beauty experts across Sri Lanka.",
+    "Learn about Salon Zage, our story, values, modern space, and our dedicated beauty experts across Sri Lanka.",
 };
 
 async function getAboutData(): Promise<{
@@ -123,7 +123,7 @@ export default async function AboutPage() {
         <BookingCTA
           tag="✦ READY FOR A CHANGE"
           heading="Let's Bring Out Your Best Look"
-          description="Book your appointment and experience professional care at SALVORA."
+          description="Book your appointment and experience professional care at Salon Zage."
           bookingUrl={bookingUrl}
         />
       </main>

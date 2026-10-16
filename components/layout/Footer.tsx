@@ -88,7 +88,7 @@ export function summarizeBranchHours(
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
 
-  let salonName = "SALVORA";
+  let salonName = "Salon Zage";
   let instagramUrl = "https://instagram.com";
   let facebookUrl = "https://facebook.com";
   let tiktokUrl = "https://tiktok.com";
@@ -304,7 +304,7 @@ export default async function Footer() {
 
             <p className="text-xs leading-relaxed text-stone-300 max-w-xs" data-customization-role="footerText">
               Professional beauty care, modern treatments, and a relaxing salon
-              environment at Salvora.
+              environment at Salon Zage.
             </p>
 
             {/* Accent divider line */}
@@ -316,7 +316,7 @@ export default async function Footer() {
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora Instagram"
+                aria-label="Salon Zage Instagram"
                 className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
@@ -339,7 +339,7 @@ export default async function Footer() {
                 href={facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora Facebook"
+                aria-label="Salon Zage Facebook"
                 className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
@@ -354,7 +354,7 @@ export default async function Footer() {
                 href={tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora TikTok"
+                aria-label="Salon Zage TikTok"
                 className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
@@ -378,7 +378,7 @@ export default async function Footer() {
                 href={youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Salvora YouTube"
+                aria-label="Salon Zage YouTube"
                 className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 hover:border-white/25 hover:bg-white/[0.12] hover:scale-105 transition-all shadow-2xs"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
@@ -691,7 +691,7 @@ export default async function Footer() {
         {/* Bottom Bar - Ultra Compact */}
         <div className="mt-5 sm:mt-6 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-[11px] text-stone-500">
           <p data-customization-role="footerText">
-            © {currentYear} Salvora. A Product of{" "}
+            © {currentYear} Salon Zage. A Product of{" "}
             <a
               href="https://raxwo.net/"
               target="_blank"

@@ -23,11 +23,11 @@ import { normalizeWhatsAppNumber } from "@/lib/phone";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Products Chosen For You | SALVORA Salon Beauty Essentials",
+  title: "Products Chosen For You | Salon Zage Beauty Essentials",
   description:
-    "Discover our handpicked collection of professional salon and beauty retail products. 100% genuine hair care, skin care, nail care, and styling essentials recommended by Salvora.",
+    "Discover our handpicked collection of professional salon and beauty retail products. 100% genuine hair care, skin care, nail care, and styling essentials recommended by Salon Zage.",
   openGraph: {
-    title: "Products Chosen For You | SALVORA Salon Essentials",
+    title: "Products Chosen For You | Salon Zage Essentials",
     description:
       "Handpicked professional salon and beauty retail products recommended by beauty experts.",
     type: "website",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 export default async function ProductsPage() {
   let products: PublicRetailProduct[] = [];
-  let salonName = "Salvora";
+  let salonName = "Salon Zage";
   let whatsappNumber = "";
   let isVisible = true;
   let featureSections = {
@@ -159,7 +159,7 @@ export default async function ProductsPage() {
           <ProductFeatureSection
             eyebrow="MOST POPULAR"
             title="Customer Favorites"
-            description="Discover some of the most popular beauty products at SALVORA."
+            description="Discover some of the most popular beauty products at Salon Zage."
             products={mostPopularProducts}
             whatsappNumber={whatsappNumber}
             salonName={salonName}
@@ -172,7 +172,7 @@ export default async function ProductsPage() {
           <ProductFeatureSection
             eyebrow="FAST MOVING"
             title="Selling Fast"
-            description="Popular beauty essentials currently moving quickly at SALVORA."
+            description="Popular beauty essentials currently moving quickly at Salon Zage."
             products={fastMovingProducts}
             whatsappNumber={whatsappNumber}
             salonName={salonName}
@@ -185,7 +185,7 @@ export default async function ProductsPage() {
           <ProductFeatureSection
             eyebrow="SPECIAL SAVINGS"
             title="Discount Products"
-            description="Explore selected SALVORA products currently available at special prices."
+            description="Explore selected Salon Zage products currently available at special prices."
             products={discountProducts}
             whatsappNumber={whatsappNumber}
             salonName={salonName}

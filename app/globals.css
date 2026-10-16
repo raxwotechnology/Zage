@@ -172,6 +172,116 @@ svg[data-icon-color="white"],
   color: #ffffff !important;
 }
 
+/* Hardcoded white logo on hover for feature cards across sections - cannot be overridden by admin */
+#why-choose-salvora .group:hover svg,
+#why-choose-salvora .group:hover svg *,
+#why-choose-salvora .why-choose-icon-box:hover svg,
+#why-choose-salvora .why-choose-icon-box:hover svg *,
+#why-choose-salvora svg:hover,
+#why-choose-salvora svg:hover *,
+#why-buy-salvora .group:hover svg,
+#why-buy-salvora .group:hover svg *,
+#why-buy-salvora .why-buy-icon-box:hover svg,
+#why-buy-salvora .why-buy-icon-box:hover svg *,
+#why-buy-salvora svg:hover,
+#why-buy-salvora svg:hover *,
+#why-offers-salvora .group:hover svg,
+#why-offers-salvora .group:hover svg *,
+#why-offers-salvora .why-offers-icon-box:hover svg,
+#why-offers-salvora .why-offers-icon-box:hover svg *,
+#why-offers-salvora svg:hover,
+#why-offers-salvora svg:hover *,
+#values .group:hover svg,
+#values .group:hover svg *,
+#values .our-values-icon-box:hover svg,
+#values .our-values-icon-box:hover svg *,
+#values svg:hover,
+#values svg:hover *,
+#why-wedding-salvora .group:hover svg,
+#why-wedding-salvora .group:hover svg *,
+#why-wedding-salvora .why-wedding-icon-box:hover svg,
+#why-wedding-salvora .why-wedding-icon-box:hover svg *,
+#why-wedding-salvora svg:hover,
+#why-wedding-salvora svg:hover *,
+#trust-section-salvora .group:hover svg,
+#trust-section-salvora .group:hover svg *,
+#trust-section-salvora .trust-icon-box:hover svg,
+#trust-section-salvora .trust-icon-box:hover svg *,
+#trust-section-salvora svg:hover,
+#trust-section-salvora svg:hover *,
+#contact-faq-salvora [data-faq-open="true"] svg,
+#contact-faq-salvora [data-faq-open="true"] svg *,
+#contact-faq-salvora .faq-icon-box[data-icon-color="white"] svg,
+#contact-faq-salvora .faq-icon-box[data-icon-color="white"] svg *,
+#contact-faq-salvora button:hover .faq-icon-box svg,
+#contact-faq-salvora button:hover .faq-icon-box svg *,
+#contact-faq-salvora .faq-icon-box:hover svg,
+#contact-faq-salvora .faq-icon-box:hover svg *,
+#contact-faq-salvora .group\/faq:hover .faq-icon-box svg,
+#contact-faq-salvora .group\/faq:hover .faq-icon-box svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+#contact-faq-salvora [data-faq-open="true"],
+#contact-faq-salvora .faq-icon-box[data-icon-color="white"],
+#contact-faq-salvora button:hover .faq-icon-box,
+#contact-faq-salvora .faq-icon-box:hover,
+#contact-faq-salvora .group\/faq:hover .faq-icon-box {
+  background-color: #03BF62 !important;
+}
+
+/* Contact Page Selected Branch Tab Icon - Hardcoded white, immune to admin customization */
+#branch-contact-salvora [data-selected="true"] svg,
+#branch-contact-salvora [data-selected="true"] svg *,
+#branch-contact-salvora button[data-selected="true"] svg,
+#branch-contact-salvora button[data-selected="true"] svg *,
+#branch-contact-salvora .branch-pill-selected svg,
+#branch-contact-salvora .branch-pill-selected svg *,
+#branch-contact-salvora .quick-call-btn svg,
+#branch-contact-salvora .quick-call-btn svg *,
+#branch-contact-salvora a[href^="tel:"] svg,
+#branch-contact-salvora a[href^="tel:"] svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+#branch-contact-salvora .whatsapp-contact-btn svg,
+#branch-contact-salvora .whatsapp-contact-btn svg *,
+#branch-contact-salvora a[href*="wa.me"] svg,
+#branch-contact-salvora a[href*="wa.me"] svg * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+/* Contact Page Opening Hours Selected Branch Tab Icon - Hardcoded white */
+#opening-hours-salvora [data-selected="true"] svg,
+#opening-hours-salvora [data-selected="true"] svg *,
+#opening-hours-salvora button[data-selected="true"] svg,
+#opening-hours-salvora button[data-selected="true"] svg *,
+#opening-hours-salvora .branch-pill-selected svg,
+#opening-hours-salvora .branch-pill-selected svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Home Page Contact Us (Branches) Directions & WhatsApp Button Icons - Hardcoded white */
+#home-branches-salvora .branch-directions-btn svg,
+#home-branches-salvora .branch-directions-btn svg *,
+#home-branches-salvora a[href*="google.com/maps"] svg,
+#home-branches-salvora a[href*="google.com/maps"] svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+#home-branches-salvora .branch-whatsapp-btn svg,
+#home-branches-salvora .branch-whatsapp-btn svg *,
+#home-branches-salvora a[href*="wa.me"] svg,
+#home-branches-salvora a[href*="wa.me"] svg * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
 /* Admin Dashboard Theme-Aware Hover Glow */
 .admin-glow-card {
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;

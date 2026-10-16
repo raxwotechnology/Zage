@@ -153,7 +153,7 @@ export default function GoogleReviewsGrid() {
   };
 
   const currentBranch = branches.find((b) => b._id === selectedBranchId) || data?.branch;
-  const currentBranchName = currentBranch?.name || "SALVORA";
+  const currentBranchName = currentBranch?.name || "Salon Zage";
 
   // Initial loading skeleton
   if (loading) {

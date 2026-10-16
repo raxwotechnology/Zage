@@ -40,7 +40,26 @@ export default function WhyChooseWedding() {
   const custom = useSectionCustomization("why-wedding");
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-stone-200/60" data-customization-section="why-wedding">
+    <section
+      id="why-wedding-salon-zage"
+      className="py-16 sm:py-24 bg-white border-b border-stone-200/60"
+      data-customization-section="why-wedding"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #why-wedding-salon-zage .group:hover svg,
+            #why-wedding-salon-zage .group:hover svg *,
+            #why-wedding-salon-zage .why-wedding-icon-box:hover svg,
+            #why-wedding-salon-zage .why-wedding-icon-box:hover svg *,
+            #why-wedding-salon-zage svg:hover,
+            #why-wedding-salon-zage svg:hover * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
@@ -70,8 +89,8 @@ export default function WhyChooseWedding() {
                 key={index}
                 className="group rounded-2xl border border-stone-200/80 bg-white p-6 shadow-xs transition-all duration-300 hover:border-[#03BF62]/40 hover:shadow-md hover:-translate-y-0.5"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 group-hover:bg-[#03BF62] group-hover:text-white transition-colors duration-200">
-                  <Icon className="h-6 w-6" />
+                <div className="why-wedding-icon-box flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 group-hover:bg-[#03BF62] group-hover:!text-white group-hover:border-[#03BF62] hover:bg-[#03BF62] hover:!text-white hover:border-[#03BF62] group-hover:[&_svg]:!text-white group-hover:[&_svg]:!stroke-white hover:[&_svg]:!text-white hover:[&_svg]:!stroke-white transition-all duration-200">
+                  <Icon className="h-6 w-6 transition-colors duration-200 group-hover:!text-white group-hover:!stroke-white hover:!text-white hover:!stroke-white" />
                 </div>
 
                 <h3 className="mt-5 text-base sm:text-lg font-bold text-stone-900 group-hover:text-[#03BF62] transition-colors">

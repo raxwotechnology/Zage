@@ -139,7 +139,7 @@ function HomeBranchCard({ branch }: { branch: HomeBranchCardData }) {
   const cleanedWa = normalizeWhatsAppNumber(rawNumber);
   const whatsappLink = cleanedWa
     ? `https://wa.me/${cleanedWa}?text=${encodeURIComponent(
-        `Hello SALVORA, I would like to get in touch with your ${branch.name}.`
+        `Hello Salon Zage, I would like to get in touch with your ${branch.name}.`
       )}`
     : null;
 
@@ -275,9 +275,9 @@ function HomeBranchCard({ branch }: { branch: HomeBranchCardData }) {
                 metadata: { source: "home-branch-card", label: branch.name },
               });
             }}
-            className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-[#03BF62] py-2 px-3 text-xs sm:text-sm font-semibold text-white hover:bg-[#029e51] transition-colors shadow-2xs shadow-stone-900/15"
+            className="branch-directions-btn flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-[#03BF62] py-2 px-3 text-xs sm:text-sm font-semibold text-white hover:bg-[#029e51] transition-colors shadow-2xs shadow-stone-900/15 [&_svg]:!text-white [&_svg]:!stroke-white"
           >
-            <CompassIcon className="h-3.5 w-3.5" />
+            <CompassIcon data-icon-color="white" className="h-3.5 w-3.5 !text-white !stroke-white text-white shrink-0" />
             <span>Directions</span>
           </a>
 
@@ -295,9 +295,9 @@ function HomeBranchCard({ branch }: { branch: HomeBranchCardData }) {
                   metadata: { source: "home-branch-card", label: branch.name },
                 });
               }}
-              className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-[#25D366] text-white hover:bg-[#20BD5A] transition-colors shadow-2xs"
+              className="branch-whatsapp-btn flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-[#25D366] text-white hover:bg-[#20BD5A] transition-colors shadow-2xs [&_svg]:!text-white [&_svg]:!fill-white"
             >
-              <WhatsAppIcon className="h-4.5 w-4.5 fill-current" />
+              <WhatsAppIcon data-icon-color="white" className="h-4.5 w-4.5 fill-current !text-white !fill-white text-white" />
             </a>
           )}
         </div>
@@ -317,14 +317,14 @@ export default function BranchesPreview({ branches }: BranchesPreviewProps) {
           <div className="inline-flex items-center gap-2 mb-2">
             <span className="h-1.5 w-1.5 rounded-full bg-[#03BF62]" />
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>
-              VISIT SALVORA
+              VISIT SALON ZAGE
             </>}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-stone-900 leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
             Contact Us
           </>}</h2>
           <p className="mt-3 text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl mx-auto" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-            Find the SALVORA branch nearest to you and get in touch with our team.
+            Find the Salon Zage branch nearest to you and get in touch with our team.
           </>}</p>
 
           <div className="mt-8 p-8 rounded-2xl bg-[#FAF8F5] border border-stone-200 max-w-md mx-auto">
@@ -348,20 +348,44 @@ export default function BranchesPreview({ branches }: BranchesPreviewProps) {
   const displayedBranches = branches.slice(0, 3);
 
   return (
-    <section className="bg-white py-14 sm:py-20 border-t border-stone-200/60" data-customization-section="branches">
+    <section
+      id="home-branches-salon-zage"
+      className="bg-white py-14 sm:py-20 border-t border-stone-200/60"
+      data-customization-section="branches"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #home-branches-salon-zage .branch-directions-btn svg,
+            #home-branches-salon-zage .branch-directions-btn svg *,
+            #home-branches-salon-zage a[href*="google.com/maps"] svg,
+            #home-branches-salon-zage a[href*="google.com/maps"] svg * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+            #home-branches-salon-zage .branch-whatsapp-btn svg,
+            #home-branches-salon-zage .branch-whatsapp-btn svg *,
+            #home-branches-salon-zage a[href*="wa.me"] svg,
+            #home-branches-salon-zage a[href*="wa.me"] svg * {
+              color: #ffffff !important;
+              fill: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 sm:mb-12">
           <div>
             <div className="inline-flex items-center gap-2 mb-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#03BF62]" />
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow">{custom.text("eyebrow", "VISIT SALVORA")}</span>
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow">{custom.text("eyebrow", "VISIT SALON ZAGE")}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-stone-900 leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
               Contact Us
             </>}</h2>
             <p className="mt-3 text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-              Find the SALVORA branch nearest to you and get in touch with our team.
+              Find the Salon Zage branch nearest to you and get in touch with our team.
             </>}</p>
           </div>
 

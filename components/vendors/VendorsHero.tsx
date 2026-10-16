@@ -10,7 +10,7 @@ interface VendorsHeroProps {
   salonName?: string;
 }
 
-export default function VendorsHero({ salonName = "Salvora" }: VendorsHeroProps) {
+export default function VendorsHero({ salonName = "Salon Zage" }: VendorsHeroProps) {
   const custom = useSectionCustomization("hero");
 
   return (

@@ -25,7 +25,7 @@ export default function ContactFaq({ address = "" }: ContactFaqProps) {
     {
       question: "What services do you offer?",
       answer:
-        "SALVORA provides a complete suite of salon treatments including hair cuts, styling, advanced hair spa treatments, coloring, facial therapies, and bridal beauty services.",
+        "Salon Zage provides a complete suite of salon treatments including hair cuts, styling, advanced hair spa treatments, coloring, facial therapies, and bridal beauty services.",
     },
     {
       question: "Where is the salon located?",
@@ -34,7 +34,7 @@ export default function ContactFaq({ address = "" }: ContactFaqProps) {
         : "Please reach out to our salon concierge team via phone or email for detailed location guidance.",
     },
     {
-      question: "How can I contact SALVORA?",
+      question: "How can I contact Salon Zage?",
       answer:
         "You can reach out to our team by phone, email, WhatsApp, or through the message form on this page. We are always happy to answer your questions and assist with your visit.",
     },
@@ -45,7 +45,42 @@ export default function ContactFaq({ address = "" }: ContactFaqProps) {
   };
 
   return (
-    <section className="bg-white py-16 sm:py-20 lg:py-24 border-b border-stone-100" data-customization-section="quick-information">
+    <section
+      id="contact-faq-salon-zage"
+      className="bg-white py-16 sm:py-20 lg:py-24 border-b border-stone-100"
+      data-customization-section="quick-information"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #contact-faq-salon-zage [data-faq-open="true"],
+            #contact-faq-salon-zage .faq-icon-box[data-icon-color="white"] {
+              background-color: #03BF62 !important;
+            }
+            #contact-faq-salon-zage [data-faq-open="true"] svg,
+            #contact-faq-salon-zage [data-faq-open="true"] svg *,
+            #contact-faq-salon-zage .faq-icon-box[data-icon-color="white"] svg,
+            #contact-faq-salon-zage .faq-icon-box[data-icon-color="white"] svg * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+            #contact-faq-salon-zage button:hover .faq-icon-box,
+            #contact-faq-salon-zage .faq-icon-box:hover,
+            #contact-faq-salon-zage .group\\/faq:hover .faq-icon-box {
+              background-color: #03BF62 !important;
+            }
+            #contact-faq-salon-zage button:hover .faq-icon-box svg,
+            #contact-faq-salon-zage button:hover .faq-icon-box svg *,
+            #contact-faq-salon-zage .faq-icon-box:hover svg,
+            #contact-faq-salon-zage .faq-icon-box:hover svg *,
+            #contact-faq-salon-zage .group\\/faq:hover .faq-icon-box svg,
+            #contact-faq-salon-zage .group\\/faq:hover .faq-icon-box svg * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Modern Salon Interior Image (Matches Mockup) */}
@@ -53,7 +88,7 @@ export default function ContactFaq({ address = "" }: ContactFaqProps) {
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-stone-100 shadow-md group">
               <Image
                 src="/images/contact-faq.jpg"
-                alt="SALVORA Salon Styling Space and Interior"
+                alt="Salon Zage Styling Space and Interior"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -102,22 +137,24 @@ export default function ContactFaq({ address = "" }: ContactFaqProps) {
                       type="button"
                       onClick={() => toggleFaq(index)}
                       aria-expanded={isOpen}
-                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left gap-4 cursor-pointer"
+                      className="group/faq w-full flex items-center justify-between p-4 sm:p-5 text-left gap-4 cursor-pointer"
                     >
-                      <span className="text-xs sm:text-sm font-bold text-stone-900">
+                      <span className="text-xs sm:text-sm font-bold text-stone-900 group-hover/faq:text-[#03BF62] transition-colors">
                         {faq.question}
                       </span>
                       <div
-                        className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors shrink-0 ${
+                        data-faq-open={isOpen ? "true" : "false"}
+                        data-icon-color={isOpen ? "white" : undefined}
+                        className={`faq-icon-box flex h-7 w-7 items-center justify-center rounded-full transition-all shrink-0 ${
                           isOpen
                             ? "bg-[#03BF62] text-white"
-                            : "bg-[#03BF62]/10 text-[#03BF62]"
+                            : "bg-[#03BF62]/10 text-[#03BF62] group-hover/faq:bg-[#03BF62] group-hover/faq:!text-white hover:bg-[#03BF62] hover:!text-white group-hover/faq:[&_svg]:!text-white group-hover/faq:[&_svg]:!stroke-white hover:[&_svg]:!text-white hover:[&_svg]:!stroke-white"
                         }`}
                       >
                         {isOpen ? (
-                          <MinusIcon className="h-4 w-4" />
+                          <MinusIcon className="h-4 w-4 transition-colors duration-200 group-hover/faq:!text-white group-hover/faq:!stroke-white hover:!text-white hover:!stroke-white" data-icon-color="white" />
                         ) : (
-                          <PlusIcon className="h-4 w-4" />
+                          <PlusIcon className="h-4 w-4 transition-colors duration-200 group-hover/faq:!text-white group-hover/faq:!stroke-white hover:!text-white hover:!stroke-white" />
                         )}
                       </div>
                     </button>

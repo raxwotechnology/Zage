@@ -41,10 +41,10 @@ export default function AboutPreview() {
 
           {/* Right Column: Balanced About Content */}
           <div className="lg:col-span-6 space-y-5">
-            {/* Tag: About Salvora */}
+            {/* Tag: About Salon Zage */}
             <div className="inline-flex items-center gap-2">
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>
-                ✦ About Salvora
+                ✦ About Salon Zage
               </>}</span>
             </div>
 
@@ -56,7 +56,7 @@ export default function AboutPreview() {
 
             {/* Introduction Paragraph */}
             <p className="text-base sm:text-lg text-stone-600 leading-relaxed font-normal" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-              At Salvora, we believe beauty is more than a look — it&apos;s a feeling.
+              At Salon Zage, we believe beauty is more than a look — it&apos;s a feeling.
               Our professional team is dedicated to bringing out your natural beauty
               with personalized care and modern techniques.
             </>}</p>

@@ -24,7 +24,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Beauty Redefined",
           "highlightedText": "For You",
           "eyebrow": "Professional Beauty & Wellness",
-          "description": "Experience professional care, modern treatments and a relaxing salon environment at Salvora.",
+          "description": "Experience professional care, modern treatments and a relaxing salon environment at Salon Zage.",
           "primaryButtonText": "Book Appointment",
           "secondaryButtonText": "View Services"
         },
@@ -45,8 +45,8 @@ export const publicPages: PageRegistration[] = [
         "label": "About Preview",
         "content": {
           "heading": "Where Beauty Meets Confidence",
-          "eyebrow": "✦ About Salvora",
-          "description": "At Salvora, we believe beauty is more than a look — it's a feeling. Our professional team is dedicated to bringing out your natural beauty with personalized care and modern techniques.",
+          "eyebrow": "✦ About Salon Zage",
+          "description": "At Salon Zage, we believe beauty is more than a look — it's a feeling. Our professional team is dedicated to bringing out your natural beauty with personalized care and modern techniques.",
           "primaryButtonText": "Discover Our Story"
         },
         "styles": [
@@ -97,7 +97,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "heading": "Find Your Perfect Bridal Package",
           "eyebrow": "WEDDING PACKAGES",
-          "description": "Explore selected SALVORA wedding packages designed for your special day.",
+          "description": "Explore selected Salon Zage wedding packages designed for your special day.",
           "primaryButtonText": "View All Wedding Packages"
         },
         "styles": [
@@ -114,7 +114,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "heading": "Beauty Essentials For Your Routine",
           "eyebrow": "OUR PRODUCTS",
-          "description": "Discover selected professional beauty products available from SALVORA.",
+          "description": "Discover selected professional beauty products available from Salon Zage.",
           "primaryButtonText": "View All Products"
         },
         "styles": [
@@ -131,7 +131,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "heading": "Latest Promotions",
           "eyebrow": "SPECIAL OFFERS",
-          "description": "Explore current beauty offers, product deals and wedding specials from SALVORA.",
+          "description": "Explore current beauty offers, product deals and wedding specials from Salon Zage.",
           "primaryButtonText": "View All Promotions"
         },
         "styles": [
@@ -144,10 +144,10 @@ export const publicPages: PageRegistration[] = [
       },
       {
         "key": "why-choose",
-        "label": "Why Choose SALVORA",
+        "label": "Why Choose Salon Zage",
         "content": {
-          "heading": "Why Choose Salvora",
-          "eyebrow": "✦ The Salvora Standard"
+          "heading": "Why Choose Salon Zage",
+          "eyebrow": "✦ The Salon Zage Standard"
         },
         "styles": [
           "backgroundColor",
@@ -224,8 +224,8 @@ export const publicPages: PageRegistration[] = [
         "label": "Branches Preview",
         "content": {
           "heading": "Contact Us",
-          "eyebrow": "VISIT SALVORA",
-          "description": "Find the SALVORA branch nearest to you and get in touch with our team.",
+          "eyebrow": "VISIT SALON ZAGE",
+          "description": "Find the Salon Zage branch nearest to you and get in touch with our team.",
           "primaryButtonText": "View All Branches"
         },
         "styles": [
@@ -260,7 +260,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "More Than a Salon",
           "highlightedText": "A Place for You",
           "subheading": "Care That Goes Beyond Beauty",
-          "eyebrow": "ABOUT SALVORA",
+          "eyebrow": "ABOUT SALON ZAGE",
           "description": "A little time for yourself, with thoughtful treatments and personal attention in a calming space.",
           "primaryButtonText": "Explore Our Services"
         },
@@ -280,7 +280,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "heading": "Where Beauty Meets Confidence",
           "eyebrow": "OUR STORY",
-          "description": "At Salvora, we believe beauty is more than a look — it is a feeling. Our professional team is dedicated to bringing out your natural beauty with personalized care and modern techniques, in a clean and relaxing environment.",
+          "description": "At Salon Zage, we believe beauty is more than a look — it is a feeling. Our professional team is dedicated to bringing out your natural beauty with personalized care and modern techniques, in a clean and relaxing environment.",
           "primaryButtonText": "Discover Our Story"
         },
         "styles": [
@@ -310,7 +310,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "heading": "A Modern Space Designed for You",
           "eyebrow": "OUR SALON",
-          "description": "Our salon is designed to give you a comfortable and relaxing experience. With modern equipment, a clean environment, and a friendly team, Salvora is the perfect place to take time for yourself and feel your best.",
+          "description": "Our salon is designed to give you a comfortable and relaxing experience. With modern equipment, a clean environment, and a friendly team, Salon Zage is the perfect place to take time for yourself and feel your best.",
           "primaryButtonText": "Visit Our Salon"
         },
         "styles": [
@@ -358,7 +358,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Let's Bring Out Your Best Look",
           "primaryButtonText": "Book Appointment",
           "eyebrow": "✦ READY FOR A CHANGE",
-          "description": "Book your appointment and experience professional care at SALVORA."
+          "description": "Book your appointment and experience professional care at Salon Zage."
         },
         "styles": [
           "backgroundColor",
@@ -431,10 +431,10 @@ export const publicPages: PageRegistration[] = [
       },
       {
         "key": "why-choose",
-        "label": "Why Choose SALVORA",
+        "label": "Why Choose Salon Zage",
         "content": {
-          "heading": "Why Choose Salvora?",
-          "eyebrow": "✦ WHY CHOOSE SALVORA"
+          "heading": "Why Choose Salon Zage?",
+          "eyebrow": "✦ WHY CHOOSE SALON ZAGE"
         },
         "styles": [
           "backgroundColor",
@@ -485,7 +485,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Products Chosen",
           "highlightedText": "For You",
           "eyebrow": "Our Products",
-          "description": "Premium salon and beauty products, carefully selected by Salvora experts to help you look and feel your best every day."
+          "description": "Premium salon and beauty products, carefully selected by Salon Zage experts to help you look and feel your best every day."
         },
         "styles": [
           "backgroundColor",
@@ -514,10 +514,10 @@ export const publicPages: PageRegistration[] = [
       },
       {
         "key": "why-buy",
-        "label": "Why Buy From SALVORA",
+        "label": "Why Buy From Salon Zage",
         "content": {
-          "heading": "Why Buy From Salvora?",
-          "eyebrow": "Why Choose Salvora"
+          "heading": "Why Buy From Salon Zage?",
+          "eyebrow": "Why Choose Salon Zage"
         },
         "styles": [
           "backgroundColor",
@@ -532,7 +532,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Find the Right Product for",
           "highlightedText": "Your Routine",
           "eyebrow": "Beauty Essentials",
-          "description": "Get personalized product recommendations from our professional Salvora team and discover what works best for you.",
+          "description": "Get personalized product recommendations from our professional Salon Zage team and discover what works best for you.",
           "primaryButtonText": "Enquire Now"
         },
         "styles": [
@@ -570,7 +570,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Promotions Crafted",
           "highlightedText": "For You",
           "eyebrow": "Our Offers",
-          "description": "Discover special beauty offers, seasonal savings, and exclusive Salvora salon deals designed to help you enjoy more for less."
+          "description": "Discover special beauty offers, seasonal savings, and exclusive Salon Zage salon deals designed to help you enjoy more for less."
         },
         "styles": [
           "backgroundColor",
@@ -602,7 +602,7 @@ export const publicPages: PageRegistration[] = [
         "label": "Why Customers Love Our Offers",
         "content": {
           "heading": "Why Customers Love Our Offers",
-          "eyebrow": "Why Choose Salvora"
+          "eyebrow": "Why Choose Salon Zage"
         },
         "styles": [
           "backgroundColor",
@@ -617,7 +617,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Don't Miss Your Next",
           "highlightedText": "Beauty Deal",
           "eyebrow": "Limited Time",
-          "description": "Book your preferred offer or contact our Salvora team to find the best promotion for your needs.",
+          "description": "Book your preferred offer or contact our Salon Zage team to find the best promotion for your needs.",
           "primaryButtonText": "See All Offers"
         },
         "styles": [
@@ -791,7 +791,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Let’s Make Your Event",
           "highlightedText": "Truly Special",
           "eyebrow": "Plan Your Special Day",
-          "description": "Connect with trusted Salvora vendors and start planning your wedding or special event with confidence.",
+          "description": "Connect with trusted Salon Zage vendors and start planning your wedding or special event with confidence.",
           "primaryButtonText": "Explore Vendors"
         },
         "styles": [
@@ -829,7 +829,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Moments of Beauty",
           "highlightedText": "Real Transformations",
           "eyebrow": "OUR GALLERY",
-          "description": "Explore our gallery of real salon moments, treatments, styling and client transformations at Salvora."
+          "description": "Explore our gallery of real salon moments, treatments, styling and client transformations at Salon Zage."
         },
         "styles": [
           "backgroundColor",
@@ -863,7 +863,7 @@ export const publicPages: PageRegistration[] = [
           "heading": "Let's Create Your Next Look",
           "primaryButtonText": "Book Appointment",
           "eyebrow": "✦ READY FOR A CHANGE",
-          "description": "Book your appointment and experience professional care at Salvora."
+          "description": "Book your appointment and experience professional care at Salon Zage."
         },
         "styles": [
           "backgroundColor",
@@ -897,7 +897,7 @@ export const publicPages: PageRegistration[] = [
         "label": "Hero",
         "content": {
           "heading": "What Our Clients",
-          "highlightedText": "Say About Salvora",
+          "highlightedText": "Say About Salon Zage",
           "eyebrow": "CLIENT REVIEWS",
           "description": "Read real feedback from clients who have experienced our salon services."
         },
@@ -917,7 +917,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "heading": "Client Feedback & Reviews",
           "eyebrow": "OUR CLIENTS",
-          "description": "See what our valued guests say about their experience at SALVORA .",
+          "description": "See what our valued guests say about their experience at Salon Zage.",
           "primaryButtonText": "Write a Review",
           "secondaryButtonText": "View on Google"
         },
@@ -949,7 +949,7 @@ export const publicPages: PageRegistration[] = [
         "key": "booking-cta",
         "label": "Booking CTA",
         "content": {
-          "heading": "Experience SALVORA for Yourself",
+          "heading": "Experience Salon Zage for Yourself",
           "primaryButtonText": "Book Appointment",
           "eyebrow": "✦ READY FOR YOUR VISIT",
           "description": "Choose your preferred service and continue to our salon booking system."
@@ -987,7 +987,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "heading": "Contact Information",
           "eyebrow": "GET IN TOUCH",
-          "description": "Choose a SALVORA branch to view its contact details, opening hours, and location."
+          "description": "Choose a Salon Zage branch to view its contact details, opening hours, and location."
         },
         "styles": [
           "backgroundColor",
@@ -1092,7 +1092,7 @@ export const publicPages: PageRegistration[] = [
         "label": "Hero",
         "content": {
           "heading": "Privacy Policy",
-          "description": "Learn how SALVORA handles information when you use our website and interact with our online services."
+          "description": "Learn how Salon Zage handles information when you use our website and interact with our online services."
         },
         "styles": [
           "backgroundColor",
@@ -1133,7 +1133,7 @@ export const publicPages: PageRegistration[] = [
         "content": {
           "eyebrow": "LEGAL",
           "heading": "Terms & Conditions",
-          "description": "Please read these terms carefully before using the SALVORA website and its services."
+          "description": "Please read these terms carefully before using the Salon Zage website and its services."
         },
         "styles": [
           "backgroundColor",

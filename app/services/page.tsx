@@ -21,9 +21,9 @@ import { ServiceCardData } from "@/components/ui/ServiceCard";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Our Services | salvora",
+  title: "Our Services | Salon Zage",
   description:
-    "Explore professional salon treatments created to help you look and feel your best at salvora.",
+    "Explore professional salon treatments created to help you look and feel your best at Salon Zage.",
 };
 
 async function getServices(): Promise<ServiceCardData[]> {
@@ -100,10 +100,10 @@ export default async function ServicesPage() {
         {/* 4. Adaptive Services Grid */}
         <ServicesGrid services={services} bookingUrl={bookingUrl} />
 
-        {/* 5. Why Choose Salvora / Service Benefits */}
+        {/* 5. Why Choose Salon Zage / Service Benefits */}
         <WhyChooseUs
-          tag="✦ WHY CHOOSE SALVORA"
-          heading="Why Choose Salvora?"
+          tag="✦ WHY CHOOSE SALON ZAGE"
+          heading="Why Choose Salon Zage?"
           features={serviceBenefits}
         />
 

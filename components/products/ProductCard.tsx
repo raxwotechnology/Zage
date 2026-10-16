@@ -39,7 +39,7 @@ interface ProductCardProps {
 export default function ProductCard({
   product,
   whatsappNumber = "",
-  salonName = "Salvora",
+  salonName = "Salon Zage",
 }: ProductCardProps) {
   const router = useRouter();
   const { selectedBranchWhatsapp } = useBranchContext();

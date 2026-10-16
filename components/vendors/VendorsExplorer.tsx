@@ -51,7 +51,7 @@ function formatWhatsAppLink(phoneStr: string, vendorName: string): string {
     cleaned = "94" + cleaned.slice(1);
   }
   const msg = encodeURIComponent(
-    `Hello ${vendorName}, I found your business through the SALVORA website and would like more information.`
+    `Hello ${vendorName}, I found your business through the Salon Zage website and would like more information.`
   );
   return `https://wa.me/${cleaned}?text=${msg}`;
 }
@@ -337,7 +337,7 @@ export default function VendorsExplorer({
           {branches.length > 1 && (
             <div className="flex flex-col items-center space-y-2.5 pt-2">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-stone-400">
-                FILTER BY SALVORA LOCATION
+                FILTER BY SALON ZAGE LOCATION
               </span>
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <button

@@ -10,7 +10,7 @@ interface PromotionsHeroProps {
   salonName?: string;
 }
 
-export default function PromotionsHero({ salonName = "Salvora" }: PromotionsHeroProps) {
+export default function PromotionsHero({ salonName = "Salon Zage" }: PromotionsHeroProps) {
   const custom = useSectionCustomization("hero");
 
   return (

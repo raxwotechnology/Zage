@@ -14,7 +14,7 @@ export default function ReviewsHero() {
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/reviews-hero.jpg")}
-          alt="Salvora Salon Client Reviews"
+          alt="Salon Zage Client Reviews"
           fill
           priority
           sizes="100vw"
@@ -38,7 +38,7 @@ export default function ReviewsHero() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
             What Our Clients{" "}</>}
             <span className="block bg-gradient-to-r from-[#03BF62] via-[#21C81E] to-[#03BF62] bg-clip-text text-transparent" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>
-              Say About Salvora
+              Say About Salon Zage
             </>}</span>
           </h1>
 

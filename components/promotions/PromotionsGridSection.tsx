@@ -83,7 +83,7 @@ export default function PromotionsGridSection({
           {initialPromotions.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-stone-300 bg-white p-12 text-center max-w-lg mx-auto">
               <p className="text-base font-semibold text-stone-800">
-                There are no active promotions right now. Check back soon for new SALVORA offers.
+                There are no active promotions right now. Check back soon for new Salon Zage offers.
               </p>
             </div>
           ) : filteredPromotions.length === 0 ? (

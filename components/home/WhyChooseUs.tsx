@@ -43,12 +43,31 @@ const DEFAULT_FEATURES: FeatureItem[] = [
 ];
 
 export default function WhyChooseUs({
-  tag = "✦ The Salvora Standard",
-  heading = "Why Choose Salvora",
+  tag = "✦ The Salon Zage Standard",
+  heading = "Why Choose Salon Zage",
   features = DEFAULT_FEATURES,
 }: WhyChooseUsProps = {}) {
   return (
-    <section className="bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 border-t border-stone-200/60" data-customization-section="why-choose">
+    <section
+      id="why-choose-salon-zage"
+      className="bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 border-t border-stone-200/60"
+      data-customization-section="why-choose"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #why-choose-salon-zage .group:hover svg,
+            #why-choose-salon-zage .group:hover svg *,
+            #why-choose-salon-zage .why-choose-icon-box:hover svg,
+            #why-choose-salon-zage .why-choose-icon-box:hover svg *,
+            #why-choose-salon-zage svg:hover,
+            #why-choose-salon-zage svg:hover * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Centered Heading */}
         <div className="text-center max-w-xl mx-auto mb-14">
@@ -71,8 +90,8 @@ export default function WhyChooseUs({
               >
                 <div>
                   {/* Large Icon Box with Enhanced Contrast */}
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 shadow-2xs transition-all duration-300 group-hover:bg-[#03BF62] group-hover:text-white group-hover:border-[#03BF62] mb-5">
-                    <Icon className="h-7 w-7" />
+                  <div className="why-choose-icon-box flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 shadow-2xs transition-all duration-300 group-hover:bg-[#03BF62] group-hover:!text-white group-hover:border-[#03BF62] hover:bg-[#03BF62] hover:!text-white hover:border-[#03BF62] group-hover:[&_svg]:!text-white group-hover:[&_svg]:!stroke-white hover:[&_svg]:!text-white hover:[&_svg]:!stroke-white mb-5">
+                    <Icon className="h-7 w-7 transition-colors duration-300 group-hover:!text-white group-hover:!stroke-white hover:!text-white hover:!stroke-white" />
                   </div>
 
                   {/* Title */}

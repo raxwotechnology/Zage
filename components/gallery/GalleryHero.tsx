@@ -14,7 +14,7 @@ export default function GalleryHero() {
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/gallery-hero.jpg")}
-          alt="Salvora Salon Transformations Gallery"
+          alt="Salon Zage Transformations Gallery"
           fill
           priority
           sizes="100vw"
@@ -45,7 +45,7 @@ export default function GalleryHero() {
           {/* Short Description */}
           <p className="text-sm sm:text-base text-stone-200 leading-relaxed font-normal max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
             Explore our gallery of real salon moments, treatments, styling and
-            client transformations at Salvora.
+            client transformations at Salon Zage.
           </>}</p>
 
           {/* Breadcrumb Navigation */}

@@ -13,7 +13,7 @@ interface WhyLoveOurOffersProps {
   salonName?: string;
 }
 
-export default function WhyLoveOurOffers({ salonName = "Salvora" }: WhyLoveOurOffersProps) {
+export default function WhyLoveOurOffers({ salonName = "Salon Zage" }: WhyLoveOurOffersProps) {
   const custom = useSectionCustomization("why-offers");
 
   const highlights = [
@@ -40,7 +40,26 @@ export default function WhyLoveOurOffers({ salonName = "Salvora" }: WhyLoveOurOf
   ];
 
   return (
-    <section className="bg-white py-16 sm:py-20 border-t border-stone-100" data-customization-section="why-offers">
+    <section
+      id="why-offers-salon-zage"
+      className="bg-white py-16 sm:py-20 border-t border-stone-100"
+      data-customization-section="why-offers"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #why-offers-salon-zage .group:hover svg,
+            #why-offers-salon-zage .group:hover svg *,
+            #why-offers-salon-zage .why-offers-icon-box:hover svg,
+            #why-offers-salon-zage .why-offers-icon-box:hover svg *,
+            #why-offers-salon-zage svg:hover,
+            #why-offers-salon-zage svg:hover * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
@@ -63,8 +82,8 @@ export default function WhyLoveOurOffers({ salonName = "Salvora" }: WhyLoveOurOf
                 key={idx}
                 className="group rounded-2xl border border-stone-200/80 bg-white p-6 shadow-2xs hover:shadow-md hover:border-[#03BF62]/30 transition-all duration-200"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 group-hover:bg-[#03BF62] group-hover:text-white transition-colors duration-200">
-                  <Icon className="h-6 w-6" />
+                <div className="why-offers-icon-box flex h-12 w-12 items-center justify-center rounded-xl bg-[#03BF62]/10 text-[#03BF62] border border-[#03BF62]/20 group-hover:bg-[#03BF62] group-hover:!text-white group-hover:border-[#03BF62] hover:bg-[#03BF62] hover:!text-white hover:border-[#03BF62] group-hover:[&_svg]:!text-white group-hover:[&_svg]:!stroke-white hover:[&_svg]:!text-white hover:[&_svg]:!stroke-white transition-all duration-200">
+                  <Icon className="h-6 w-6 transition-colors duration-200 group-hover:!text-white group-hover:!stroke-white hover:!text-white hover:!stroke-white" />
                 </div>
 
                 <h3 className="mt-5 text-base font-bold text-stone-900 tracking-tight">

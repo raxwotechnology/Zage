@@ -22,9 +22,9 @@ export const dynamic = "force-dynamic";
 const LAST_UPDATED_DATE = "13 October 2026";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | SALVORA",
+  title: "Privacy Policy | Salon Zage",
   description:
-    "Read the SALVORA Privacy Policy and learn how information is handled when you use our website and online services.",
+    "Read the Salon Zage Privacy Policy and learn how information is handled when you use our website and online services.",
 };
 
 interface PrivacyContactInfo {
@@ -48,8 +48,10 @@ async function getPrivacyContactInfo(): Promise<PrivacyContactInfo> {
     ]);
 
     const branchName = mainBranch?.name
-      ? `SALVORA ${mainBranch.name.replace(/^salvora\s*/i, "")}`
-      : settings?.salonName || "SALVORA";
+      ? (mainBranch.name.toLowerCase().startsWith("salon zage")
+          ? mainBranch.name
+          : `Salon Zage ${mainBranch.name.replace(/^salvora\s*/i, "").replace(/^salon zage\s*/i, "")}`.trim())
+      : settings?.salonName || "Salon Zage";
 
     const address = mainBranch?.address || settings?.address || "";
     const phone = mainBranch?.phone || settings?.phone || "";
@@ -63,7 +65,7 @@ async function getPrivacyContactInfo(): Promise<PrivacyContactInfo> {
     };
   } catch {
     return {
-      branchName: "SALVORA",
+      branchName: "Salon Zage",
       address: "",
       phone: "",
       email: "",
@@ -92,7 +94,7 @@ const TOC_ITEMS = [
   { id: "childrens-privacy", label: "18. Children's Privacy" },
   { id: "privacy-choices", label: "19. Privacy Choices & Requests" },
   { id: "changes", label: "20. Changes to This Policy" },
-  { id: "contact-salvora", label: "21. Contact SALVORA" },
+  { id: "contact-salon-zage", label: "21. Contact Salon Zage" },
 ];
 
 export default async function PrivacyPolicyPage() {
@@ -126,7 +128,7 @@ export default async function PrivacyPolicyPage() {
 
             {/* Description */}
             <p className="text-sm sm:text-base text-stone-300 leading-relaxed font-normal max-w-2xl" data-customization-role="description"><CustomizationText sectionKey="hero" field="description">
-              Learn how SALVORA handles information when you use our website and interact
+              Learn how Salon Zage handles information when you use our website and interact
               with our online services.
             </CustomizationText></p>
 
@@ -213,7 +215,7 @@ export default async function PrivacyPolicyPage() {
                     <li className="flex items-start gap-2.5">
                       <CheckCircleIcon className="h-4 w-4 text-[#03BF62] shrink-0 mt-0.5" />
                       <span>
-                        Contact SALVORA if you have questions about information you submitted.
+                        Contact Salon Zage if you have questions about information you submitted.
                       </span>
                     </li>
                   </ul>
@@ -228,11 +230,11 @@ export default async function PrivacyPolicyPage() {
                     <span>Introduction</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    SALVORA operates this public salon website to share information about our beauty services, salon branches, products, promotions, wedding offerings, and featured partners. This Privacy Policy describes how information may be handled when visitors:
+                    This website is operated by Zage Pvt Ltd under the Salon Zage brand. Salon Zage operates this public salon website to share information about our beauty services, salon branches, products, promotions, wedding offerings, and featured partners. This Privacy Policy describes how information may be handled when visitors:
                   </p>
                   <ul className="list-disc list-inside space-y-1.5 text-sm sm:text-base text-stone-600 pl-2">
                     <li>Browse pages across the website</li>
-                    <li>Contact SALVORA using our enquiry options</li>
+                    <li>Contact Salon Zage using our enquiry options</li>
                     <li>Interact with salon branch information and schedules</li>
                     <li>Click appointment booking, login, or registration links</li>
                     <li>Use WhatsApp, telephone, or email contact links</li>
@@ -264,7 +266,7 @@ export default async function PrivacyPolicyPage() {
                     <li>Message</li>
                   </ul>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    When you submit the Contact page form, the website prepares your message and opens your device&apos;s default email application (`mailto:`) so that you can transmit your enquiry directly to SALVORA for a response. The public website does not store Contact form submissions in a website database prior to you sending the email from your email client.
+                    When you submit the Contact page form, the website prepares your message and opens your device&apos;s default email application (`mailto:`) so that you can transmit your enquiry directly to Salon Zage for a response. The public website does not store Contact form submissions in a website database prior to you sending the email from your email client.
                   </p>
                 </section>
 
@@ -279,7 +281,7 @@ export default async function PrivacyPolicyPage() {
                     <span>Information Collected Automatically</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    SALVORA uses lightweight first-party analytics to understand how visitors use the website and to improve our online experience. When you browse or interact with website elements, the system may record non-personal interaction events in our database, including:
+                    Salon Zage uses lightweight first-party analytics to understand how visitors use the website and to improve our online experience. When you browse or interact with website elements, the system may record non-personal interaction events in our database, including:
                   </p>
                   <ul className="list-disc list-inside space-y-1.5 text-sm sm:text-base text-stone-600 pl-2">
                     <li>Page path visited (`PAGE_VIEW`)</li>
@@ -312,7 +314,7 @@ export default async function PrivacyPolicyPage() {
                     The website displays salon branch details including physical addresses, telephone numbers, WhatsApp contact numbers, email addresses, weekly opening hours, and embedded Google Maps or direction links. You can select a branch on the website to view location-specific details.
                   </p>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    SALVORA does not request or receive your device&apos;s exact GPS location through this website. When you view embedded maps or click links to open Google Maps or directions, you interact directly with Google&apos;s mapping services.
+                    Salon Zage does not request or receive your device&apos;s exact GPS location through this website. When you view embedded maps or click links to open Google Maps or directions, you interact directly with Google&apos;s mapping services.
                   </p>
                 </section>
 
@@ -345,10 +347,10 @@ export default async function PrivacyPolicyPage() {
                     <span>WhatsApp</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    Certain buttons on the website—including the floating WhatsApp button, branch contact buttons, and product or promotion enquiry buttons—open WhatsApp (`wa.me`) using the relevant SALVORA branch contact number and an optional pre-filled enquiry message.
+                    Certain buttons on the website—including the floating WhatsApp button, branch contact buttons, and product or promotion enquiry buttons—open WhatsApp (`wa.me`) using the relevant Salon Zage branch contact number and an optional pre-filled enquiry message.
                   </p>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    When you continue to WhatsApp and send a message, that communication takes place through the WhatsApp platform. SALVORA does not control WhatsApp&apos;s platform operations, and your use of WhatsApp is governed by WhatsApp&apos;s own privacy policy and terms.
+                    When you continue to WhatsApp and send a message, that communication takes place through the WhatsApp platform. Salon Zage does not control WhatsApp&apos;s platform operations, and your use of WhatsApp is governed by WhatsApp&apos;s own privacy policy and terms.
                   </p>
                 </section>
 
@@ -363,7 +365,7 @@ export default async function PrivacyPolicyPage() {
                     <span>External Booking System</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    The SALVORA website links to an external salon management and appointment booking system. When you click <strong>Book Appointment</strong>, <strong>Login</strong>, or <strong>Register</strong>, you may leave this public website and be directed to that external connected system.
+                    The Salon Zage website links to an external salon management and appointment booking system. When you click <strong>Book Appointment</strong>, <strong>Login</strong>, or <strong>Register</strong>, you may leave this public website and be directed to that external connected system.
                   </p>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
                     This public website does not store customer booking credentials or client login accounts. Any personal details, account registration information, or appointment records you submit within the external booking platform are handled under that system&apos;s applicable data handling and privacy rules.
@@ -399,10 +401,10 @@ export default async function PrivacyPolicyPage() {
                     <span>Wedding Services and Vendors</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    Our Wedding page displays SALVORA bridal beauty services and packages, while our Vendors page showcases third-party wedding and event service providers (such as photographers, florists, venues, and transport providers).
+                    Our Wedding page displays Salon Zage bridal beauty services and packages, while our Vendors page showcases third-party wedding and event service providers (such as photographers, florists, venues, and transport providers).
                   </p>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    If you choose to visit a third-party vendor&apos;s website, social media profile, WhatsApp link, telephone number, or email address, your interaction is directly with that independent provider and is governed by the third party&apos;s own privacy practices. SALVORA is not responsible for the privacy practices of third-party vendors.
+                    If you choose to visit a third-party vendor&apos;s website, social media profile, WhatsApp link, telephone number, or email address, your interaction is directly with that independent provider and is governed by the third party&apos;s own privacy practices. Salon Zage is not responsible for the privacy practices of third-party vendors.
                   </p>
                 </section>
 
@@ -417,7 +419,7 @@ export default async function PrivacyPolicyPage() {
                     <span>Images and Cloudinary</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    Visual media and photographs displayed across the SALVORA website—such as gallery photos, service imagery, product images, and branch or team visuals—may be hosted and delivered through Cloudinary&apos;s content delivery infrastructure when you load pages on the website.
+                    Visual media and photographs displayed across the Salon Zage website—such as gallery photos, service imagery, product images, and branch or team visuals—may be hosted and delivered through Cloudinary&apos;s content delivery infrastructure when you load pages on the website.
                   </p>
                 </section>
 
@@ -432,7 +434,7 @@ export default async function PrivacyPolicyPage() {
                     <span>Admin Portal</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    Authorized SALVORA administrators use a restricted Admin Portal to manage website content, branch details, services, gallery items, products, promotions, and settings. Administrative sign-in sessions use essential authentication cookies solely for authorized administrators.
+                    Authorized Salon Zage administrators use a restricted Admin Portal to manage website content, branch details, services, gallery items, products, promotions, and settings. Administrative sign-in sessions use essential authentication cookies solely for authorized administrators.
                   </p>
                 </section>
 
@@ -462,7 +464,7 @@ export default async function PrivacyPolicyPage() {
                     <span>How Information Is Used</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    Information handled through the SALVORA website is used only for operational purposes supported by the application, including to:
+                    Information handled through the Salon Zage website is used only for operational purposes supported by the application, including to:
                   </p>
                   <ul className="list-disc list-inside space-y-1.5 text-sm sm:text-base text-stone-600 pl-2">
                     <li>Respond to visitor enquiries and communications</li>
@@ -485,7 +487,7 @@ export default async function PrivacyPolicyPage() {
                     <span>Sharing of Information</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    SALVORA does not sell personal information to advertisers. Information may interact with technical infrastructure and service providers strictly as necessary to operate the website and its administrative features, including:
+                    Zage Pvt Ltd does not sell personal information to advertisers. Information may interact with technical infrastructure and service providers strictly as necessary to operate the website and its administrative features, including:
                   </p>
                   <ul className="list-disc list-inside space-y-1.5 text-sm sm:text-base text-stone-600 pl-2">
                     <li>Database hosting (MongoDB) for storing website content and first-party interaction events</li>
@@ -507,7 +509,7 @@ export default async function PrivacyPolicyPage() {
                     <span>Data Security</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    SALVORA uses reasonable technical and administrative measures designed to protect website and administrative information against unauthorized access, alteration, or misuse. However, no internet transmission or electronic storage method can be guaranteed to be completely secure at all times.
+                    Zage Pvt Ltd uses reasonable technical and administrative measures designed to protect website and administrative information against unauthorized access, alteration, or misuse. However, no internet transmission or electronic storage method can be guaranteed to be completely secure at all times.
                   </p>
                 </section>
 
@@ -537,7 +539,7 @@ export default async function PrivacyPolicyPage() {
                     <span>Third-Party Links</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    This website contains links to external platforms and third-party services, including Google Maps, WhatsApp, the external booking system, salon social media profiles, and partner vendor websites or social channels. SALVORA is not responsible for the content, security, or privacy practices of any third-party websites or services.
+                    This website contains links to external platforms and third-party services, including Google Maps, WhatsApp, the external booking system, salon social media profiles, and partner vendor websites or social channels. Salon Zage is not responsible for the content, security, or privacy practices of any third-party websites or services.
                   </p>
                 </section>
 
@@ -567,7 +569,7 @@ export default async function PrivacyPolicyPage() {
                     <span>Privacy Choices &amp; Contact Requests</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    You may contact SALVORA if you have questions about information you have submitted through this website or if you wish to follow up on a previous communication sent to our team.
+                    You may contact Salon Zage if you have questions about information you have submitted through this website or if you wish to follow up on a previous communication sent to our team.
                   </p>
                 </section>
 
@@ -582,22 +584,22 @@ export default async function PrivacyPolicyPage() {
                     <span>Changes to This Policy</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    SALVORA may update this Privacy Policy from time to time when website features, integrations, or operational practices change. When material updates are made, the Last Updated date displayed on this page will be revised accordingly.
+                    Zage Pvt Ltd may update this Privacy Policy from time to time when website features, integrations, or operational practices change. When material updates are made, the Last Updated date displayed on this page will be revised accordingly.
                   </p>
                 </section>
 
                 <hr className="border-stone-100" />
 
-                {/* 21. Contact SALVORA */}
-                <section id="contact-salvora" className="scroll-mt-24 space-y-4">
+                {/* 21. Contact Salon Zage */}
+                <section id="contact-salon-zage" className="scroll-mt-24 space-y-4">
                   <h2 className="text-lg sm:text-xl font-bold text-stone-900 tracking-tight flex items-center gap-2.5" data-customization-role="sectionHeading">
                     <span className="text-xs font-bold text-[#03BF62] bg-[#03BF62]/10 border border-[#03BF62]/20 px-2 py-0.5 rounded-md">
                       21
                     </span>
-                    <span>Contact SALVORA</span>
+                    <span>Contact Salon Zage</span>
                   </h2>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed" data-customization-role="description">
-                    If you have any questions regarding this Privacy Policy or how information is handled on our website, please reach out to SALVORA:
+                    If you have any questions regarding this Privacy Policy or how information is handled on our website, please reach out to Salon Zage:
                   </p>
 
                   {/* Dynamic Main Branch / Global Contact Card */}

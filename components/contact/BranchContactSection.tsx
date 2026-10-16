@@ -201,7 +201,7 @@ export default function BranchContactSection({
     if (!cleaned) return null;
 
     const msg = encodeURIComponent(
-      "Hello SALVORA, I would like to know more about your salon services."
+      "Hello Salon Zage, I would like to know more about your salon services."
     );
     return `https://wa.me/${cleaned}?text=${msg}`;
   }, [selectedBranch, fallbackSettings]);
@@ -237,7 +237,37 @@ export default function BranchContactSection({
   const branchAddress = selectedBranch ? selectedBranch.address : fallbackSettings?.address || "";
 
   return (
-    <section className="bg-white py-12 sm:py-16 lg:py-20 border-b border-stone-100" data-customization-section="branch-contact">
+    <section
+      id="branch-contact-salon-zage"
+      className="bg-white py-12 sm:py-16 lg:py-20 border-b border-stone-100"
+      data-customization-section="branch-contact"
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #branch-contact-salon-zage button[data-selected="true"] svg,
+            #branch-contact-salon-zage button[data-selected="true"] svg *,
+            #branch-contact-salon-zage [data-selected="true"] svg,
+            #branch-contact-salon-zage [data-selected="true"] svg *,
+            #branch-contact-salon-zage .branch-pill-selected svg,
+            #branch-contact-salon-zage .branch-pill-selected svg *,
+            #branch-contact-salon-zage .quick-call-btn svg,
+            #branch-contact-salon-zage .quick-call-btn svg *,
+            #branch-contact-salon-zage a[href^="tel:"] svg,
+            #branch-contact-salon-zage a[href^="tel:"] svg * {
+              color: #ffffff !important;
+              stroke: #ffffff !important;
+            }
+            #branch-contact-salon-zage .whatsapp-contact-btn svg,
+            #branch-contact-salon-zage .whatsapp-contact-btn svg *,
+            #branch-contact-salon-zage a[href*="wa.me"] svg,
+            #branch-contact-salon-zage a[href*="wa.me"] svg * {
+              color: #ffffff !important;
+              fill: #ffffff !important;
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* ========================================================== */}
         {/* BRANCH SELECTOR TABS (WHEN BRANCH RECORDS EXIST)           */}
@@ -262,15 +292,17 @@ export default function BranchContactSection({
                     key={b._id}
                     type="button"
                     onClick={() => handleSelectBranch(b._id)}
+                    data-selected={isSelected ? "true" : "false"}
                     className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 shrink-0 cursor-pointer ${
                       isSelected
-                        ? "bg-[#03BF62] text-white shadow-md shadow-emerald-600/30 scale-102"
+                        ? "branch-pill-selected bg-[#03BF62] text-white shadow-md shadow-emerald-600/30 scale-102 [&_svg]:!text-white [&_svg]:!stroke-white"
                         : "bg-stone-100 text-stone-700 hover:bg-stone-200/80 hover:text-stone-900 border border-stone-200/60"
                     }`}
                   >
                     <MapPinIcon
-                      className={`h-4 w-4 ${
-                        isSelected ? "text-white" : "text-[#03BF62]"
+                      data-icon-color={isSelected ? "white" : undefined}
+                      className={`h-4 w-4 transition-colors ${
+                        isSelected ? "!text-white !stroke-white text-white" : "text-[#03BF62]"
                       }`}
                     />
                     <span>{b.name}</span>
@@ -435,6 +467,7 @@ export default function BranchContactSection({
                   phone={branchPhone}
                   label="Quick Call"
                   variant="primary"
+                  className="quick-call-btn [&_svg]:!text-white [&_svg]:!stroke-white"
                   ariaLabel={`Call ${branchName} at ${branchPhone}`}
                   branchId={selectedBranch?._id}
                   source="contact-page"
@@ -459,9 +492,12 @@ export default function BranchContactSection({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Chat with ${branchName} on WhatsApp`}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-sm shadow-emerald-700/20 hover:bg-[#20BD5A] transition-all active:scale-[0.98]"
+                  className="whatsapp-contact-btn inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-sm shadow-emerald-700/20 hover:bg-[#20BD5A] transition-all active:scale-[0.98] [&_svg]:!text-white [&_svg]:!fill-white"
                 >
-                  <WhatsAppIcon className="h-4 w-4 shrink-0 fill-current" />
+                  <WhatsAppIcon
+                    data-icon-color="white"
+                    className="h-4 w-4 shrink-0 fill-current !text-white !fill-white text-white"
+                  />
                   <span>WhatsApp</span>
                 </a>
               )}
