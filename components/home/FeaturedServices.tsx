@@ -254,10 +254,10 @@ export default function FeaturedServices({ bookingUrl: propBookingUrl }: Feature
                     {bookingUrl ? (
                       <a
                         href={bookingUrl}
-                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-stone-900 py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-[#03BF62] hover:shadow-md active:scale-[0.98]"
+                        className="card-cta-btn group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-stone-900 py-3 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-[#03BF62] hover:shadow-md active:scale-[0.98]"
                       >
                         <span>Book Appointment</span>
-                        <ArrowRightIcon className="h-4 w-4" />
+                        <ArrowRightIcon className="card-cta-arrow h-4 w-4 transition-colors group-hover/btn:text-white" />
                       </a>
                     ) : (
                       <button

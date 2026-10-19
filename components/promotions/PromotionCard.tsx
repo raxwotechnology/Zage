@@ -2,11 +2,17 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRightIcon, CalendarIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, CalendarIcon, MapPinIcon, StarIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics-client";
 import { PromotionType, CtaType } from "@/lib/promotion-constants";
 import { useBranchContext } from "@/components/context/BranchContext";
 import { normalizeWhatsAppNumber } from "@/lib/phone";
+
+export interface PublicPromotionBranch {
+  _id: string;
+  name: string;
+  slug?: string;
+}
 
 export interface PublicPromotion {
   _id: string;
@@ -27,6 +33,7 @@ export interface PublicPromotion {
   ctaCustomUrl?: string;
   isFeatured?: boolean;
   branchWhatsapp?: string;
+  branches?: PublicPromotionBranch[];
 }
 
 interface PromotionCardProps {
@@ -34,6 +41,8 @@ interface PromotionCardProps {
   whatsappNumber?: string;
   bookingUrl?: string;
   salonName?: string;
+  showFeaturedBadge?: boolean;
+  showBranches?: boolean;
 }
 
 export default function PromotionCard({
@@ -41,9 +50,30 @@ export default function PromotionCard({
   whatsappNumber = "",
   bookingUrl,
   salonName = "Salon Zage",
+  showFeaturedBadge = false,
+  showBranches = false,
 }: PromotionCardProps) {
   const router = useRouter();
   const { selectedBranchWhatsapp } = useBranchContext();
+
+  const getBranchDisplay = () => {
+    if (!showBranches || !Array.isArray(promotion.branches) || promotion.branches.length === 0) {
+      return null;
+    }
+    const validNames = promotion.branches
+      .map((b) => (typeof b === "string" ? b : b?.name))
+      .filter((name): name is string => typeof name === "string" && name.trim().length > 0)
+      .map((name) => name.trim());
+
+    if (validNames.length === 0) return null;
+
+    if (validNames.length <= 3) {
+      return validNames.join(", ");
+    }
+    return `${validNames.slice(0, 2).join(", ")} +${validNames.length - 2} more`;
+  };
+
+  const branchDisplayText = getBranchDisplay();
 
   const getValidityDisplay = () => {
     if (promotion.validDaysText) return promotion.validDaysText;
@@ -149,11 +179,22 @@ export default function PromotionCard({
             loading="lazy"
           />
 
-          {/* Floating Pill Badge (Top-Left) */}
-          <div className="absolute top-3 left-3">
-            <span className="rounded-full bg-[#03BF62] px-3 py-1 text-xs font-bold text-white shadow-md shadow-[#03BF62]/25">
-              {promotion.badgeText}
-            </span>
+          {/* Badges Container (Top-Left: Discount/BadgeText, Top-Right: Most Popular) */}
+          <div className="absolute top-3 inset-x-3 z-10 flex items-start justify-between gap-2 pointer-events-none">
+            {promotion.badgeText ? (
+              <span className="pointer-events-auto rounded-full bg-[#03BF62] px-2.5 sm:px-3 py-1 text-xs font-bold text-white shadow-md shadow-[#03BF62]/25 max-w-[55%] truncate">
+                {promotion.badgeText}
+              </span>
+            ) : (
+              <span />
+            )}
+
+            {showFeaturedBadge && promotion.isFeatured && (
+              <span className="pointer-events-auto inline-flex items-center gap-1 sm:gap-1.5 rounded-full bg-[#03BF62] px-2.5 sm:px-3 py-1 text-xs font-bold text-white shadow-md shadow-[#03BF62]/25 shrink-0">
+                <StarIcon className="h-3 w-3 text-white shrink-0" filled />
+                <span>Most Popular</span>
+              </span>
+            )}
           </div>
         </div>
 
@@ -172,6 +213,17 @@ export default function PromotionCard({
             <CalendarIcon className="h-3.5 w-3.5 text-stone-400 shrink-0" />
             <span>{getValidityDisplay()}</span>
           </div>
+
+          {/* Available Branches Row */}
+          {branchDisplayText && (
+            <div className="pt-1.5 flex items-start gap-1.5 text-xs text-stone-600">
+              <MapPinIcon className="h-3.5 w-3.5 text-stone-400 shrink-0 mt-0.5" />
+              <p className="line-clamp-2 leading-relaxed">
+                <span className="font-medium text-stone-500">Available at: </span>
+                <span className="font-semibold text-stone-700">{branchDisplayText}</span>
+              </p>
+            </div>
+          )}
 
           {/* Pricing Row (Matches Mockup: Now LKR X,XXX / LKR Y,YYY) */}
           {(promotion.promotionalPrice || promotion.originalPrice) && (
@@ -197,11 +249,11 @@ export default function PromotionCard({
         <button
           type="button"
           onClick={handleCtaClick}
-          className="w-full rounded-xl py-2.5 px-4 text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 bg-[#ECEBEF] text-stone-800 hover:bg-[#03BF62] hover:text-white transition-all shadow-2xs active:scale-[0.98] cursor-pointer"
+          className="card-cta-btn group/btn w-full rounded-xl py-2.5 px-4 text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 bg-[#ECEBEF] text-stone-800 hover:bg-[#03BF62] hover:text-white transition-all shadow-2xs active:scale-[0.98] cursor-pointer"
           aria-label={`Claim offer: ${promotion.title}`}
         >
           <span>{getCtaLabel()}</span>
-          <ArrowRightIcon className="h-3.5 w-3.5" />
+          <ArrowRightIcon className="card-cta-arrow h-3.5 w-3.5 transition-colors group-hover/btn:text-white" />
         </button>
       </div>
     </div>

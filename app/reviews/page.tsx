@@ -18,25 +18,29 @@ export const metadata: Metadata = {
     "Read real Google client reviews and feedback from guests who have experienced salon services at Salon Zage.",
 };
 
-async function getBookingUrl(): Promise<string> {
+async function getReviewsPageData(): Promise<{ bookingUrl: string; headerLogo: string; salonName: string }> {
   try {
     await connectDB();
     const settings = await SalonSettings.findOne().lean();
-    return settings?.externalSystem?.bookingUrl || "";
+    return {
+      bookingUrl: settings?.externalSystem?.bookingUrl || "",
+      headerLogo: settings?.logo || "",
+      salonName: settings?.salonName || "Salon Zage",
+    };
   } catch (error) {
-    console.error("Failed to load booking URL for Reviews page:", error);
-    return "";
+    console.error("Failed to load settings for Reviews page:", error);
+    return { bookingUrl: "", headerLogo: "", salonName: "Salon Zage" };
   }
 }
 
 export default async function ReviewsPage() {
-  const bookingUrl = await getBookingUrl();
+  const { bookingUrl, headerLogo, salonName } = await getReviewsPageData();
 
   return (
     <PageCustomization scope="public" pageKey="reviews">
     <div className="min-h-screen flex flex-col bg-white text-stone-900 selection:bg-[#03BF62]/30 selection:text-stone-900">
       {/* 1. Navbar */}
-      <Navbar />
+      <Navbar initialLogoUrl={headerLogo} initialSalonName={salonName} />
 
       <main className="flex-1">
         {/* 2. Reviews Hero */}

@@ -30,6 +30,7 @@ async function getSalonContact() {
       email: settings?.email || "info@salvora.lk",
       phone: settings?.phone || "+94 11 234 5678",
       address: settings?.address || "Salon Diyora, Welivita, New Kandy Rd, Malabe",
+      headerLogo: settings?.logo || "",
     };
   } catch {
     return {
@@ -37,6 +38,7 @@ async function getSalonContact() {
       email: "info@salvora.lk",
       phone: "+94 11 234 5678",
       address: "Salon Diyora, Welivita, New Kandy Rd, Malabe",
+      headerLogo: "",
     };
   }
 }
@@ -48,7 +50,7 @@ export default async function TermsPage() {
     <PageCustomization scope="public" pageKey="terms">
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-[#03BF62]/30 selection:text-stone-900">
       {/* Main Navigation */}
-      <Navbar />
+      <Navbar initialLogoUrl={contact.headerLogo} initialSalonName={contact.salonName} />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-[#0C0A14] text-white py-14 sm:py-16 lg:py-20 border-b border-white/10" data-customization-section="hero">

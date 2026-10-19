@@ -14,6 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 import { BranchProvider } from "@/components/context/BranchContext";
+import { WebsiteSettingsProvider } from "@/components/context/WebsiteSettingsContext";
+import { getSalonSettings } from "@/lib/salon-settings";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ScrollProgressButton from "@/components/ui/ScrollProgressButton";
 import PageViewTracker from "@/components/analytics/PageViewTracker";
@@ -24,23 +26,27 @@ export const metadata: Metadata = {
     "Experience professional beauty and hair care services designed to help you look and feel your best. Premium styling, treatments, and bridal care.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSalonSettings();
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${customizationFontVariables} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <BranchProvider>
-          <PageViewTracker />
-          {children}
-          <FloatingWhatsApp />
-          <ScrollProgressButton />
-        </BranchProvider>
+        <WebsiteSettingsProvider initialSettings={settings}>
+          <BranchProvider>
+            <PageViewTracker />
+            {children}
+            <FloatingWhatsApp />
+            <ScrollProgressButton />
+          </BranchProvider>
+        </WebsiteSettingsProvider>
       </body>
     </html>
   );

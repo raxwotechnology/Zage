@@ -32,6 +32,8 @@ interface PrivacyContactInfo {
   address: string;
   phone: string;
   email: string;
+  headerLogo: string;
+  salonName: string;
 }
 
 async function getPrivacyContactInfo(): Promise<PrivacyContactInfo> {
@@ -43,7 +45,7 @@ async function getPrivacyContactInfo(): Promise<PrivacyContactInfo> {
         .select("name address phone email isMain")
         .lean(),
       SalonSettings.findOne()
-        .select("salonName address phone email")
+        .select("salonName address phone email logo")
         .lean(),
     ]);
 
@@ -62,6 +64,8 @@ async function getPrivacyContactInfo(): Promise<PrivacyContactInfo> {
       address,
       phone,
       email,
+      headerLogo: settings?.logo || "",
+      salonName: settings?.salonName || "Salon Zage",
     };
   } catch {
     return {
@@ -69,6 +73,8 @@ async function getPrivacyContactInfo(): Promise<PrivacyContactInfo> {
       address: "",
       phone: "",
       email: "",
+      headerLogo: "",
+      salonName: "Salon Zage",
     };
   }
 }
@@ -104,7 +110,7 @@ export default async function PrivacyPolicyPage() {
     <PageCustomization scope="public" pageKey="privacy">
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-[#03BF62]/30 selection:text-stone-900">
       {/* Main Navigation */}
-      <Navbar />
+      <Navbar initialLogoUrl={contact.headerLogo} initialSalonName={contact.salonName} />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-[#0C0A14] text-white py-14 sm:py-16 lg:py-20 border-b border-white/10" data-customization-section="hero">

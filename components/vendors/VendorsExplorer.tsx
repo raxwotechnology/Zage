@@ -14,7 +14,9 @@ import {
   MapPinIcon,
   StarIcon,
   StoreIcon,
+  XIcon,
 } from "@/components/ui/icons";
+import { FilterSearchButton, FilterSearchInput } from "@/components/ui/FilterSearch";
 
 export interface PublicBranchInfo {
   _id: string;
@@ -64,11 +66,13 @@ export default function VendorsExplorer({
 
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedBranchId, setSelectedBranchId] = useState<string>("all");
+  const [isVendorSearchOpen, setIsVendorSearchOpen] = useState(false);
+  const [vendorSearchQuery, setVendorSearchQuery] = useState("");
 
   // Filtering
   const filteredVendors = useMemo(() => {
     return initialVendors.filter((vendor) => {
-      // Category filter
+      // 1. Category filter
       if (
         selectedCategory !== "All" &&
         vendor.category.toLowerCase() !== selectedCategory.toLowerCase()
@@ -76,7 +80,7 @@ export default function VendorsExplorer({
         return false;
       }
 
-      // Branch filter
+      // 2. Branch filter
       if (selectedBranchId !== "all") {
         // If vendor has specific branches assigned, must match selected branch
         if (vendor.branchIds && vendor.branchIds.length > 0) {
@@ -88,9 +92,39 @@ export default function VendorsExplorer({
         // If unassigned / general, vendor is available across all branches
       }
 
+      // 3. Search query filter
+      if (vendorSearchQuery.trim()) {
+        const q = vendorSearchQuery.trim().toLowerCase();
+        const matchesName = (vendor.name || "").toLowerCase().includes(q);
+        const matchesCategory = (vendor.category || "").toLowerCase().includes(q);
+        const matchesDesc = (vendor.description || "").toLowerCase().includes(q);
+        const matchesBranch =
+          Array.isArray(vendor.branchIds) &&
+          vendor.branchIds.some((b) => (b.name || "").toLowerCase().includes(q));
+        const matchesWebsite = (vendor.website || "").toLowerCase().includes(q);
+        const matchesInstagram = (vendor.instagram || "").toLowerCase().includes(q);
+        const matchesFacebook = (vendor.facebook || "").toLowerCase().includes(q);
+        const matchesPhone = (vendor.phone || "").toLowerCase().includes(q);
+        const matchesWhatsapp = (vendor.whatsapp || "").toLowerCase().includes(q);
+
+        if (
+          !matchesName &&
+          !matchesCategory &&
+          !matchesDesc &&
+          !matchesBranch &&
+          !matchesWebsite &&
+          !matchesInstagram &&
+          !matchesFacebook &&
+          !matchesPhone &&
+          !matchesWhatsapp
+        ) {
+          return false;
+        }
+      }
+
       return true;
     });
-  }, [initialVendors, selectedCategory, selectedBranchId]);
+  }, [initialVendors, selectedCategory, selectedBranchId, vendorSearchQuery]);
 
   // Featured vendors (within filtered results)
   const featuredVendors = useMemo(() => {
@@ -307,7 +341,7 @@ export default function VendorsExplorer({
         {/* FILTERS TOOLBAR                                                */}
         {/* ============================================================== */}
         <div className="space-y-6">
-          {/* 1. Category Filter Pills */}
+          {/* 1. Category Filter Pills (BROWSE BY SPECIALTY) */}
           <div className="flex flex-col items-center space-y-3">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#03BF62]">
               BROWSE BY SPECIALTY
@@ -333,74 +367,125 @@ export default function VendorsExplorer({
             </div>
           </div>
 
-          {/* 2. Branch Filter Pills (if multiple active branches) */}
+          {/* 2. Branch Filter Pills (FILTER BY SALON ZAGE LOCATION) + Search Button */}
           {branches.length > 1 && (
             <div className="flex flex-col items-center space-y-2.5 pt-2">
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-stone-400">
                 FILTER BY SALON ZAGE LOCATION
               </span>
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelectedBranchId("all")}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                    selectedBranchId === "all"
-                      ? "bg-stone-900 text-white shadow-xs"
-                      : "bg-stone-100 text-stone-600 hover:bg-stone-200"
-                  }`}
-                >
-                  <span>All Locations</span>
-                </button>
+              <div className="relative w-full flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-0">
+                {/* Centered Location Pills */}
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedBranchId("all")}
+                    className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+                      selectedBranchId === "all"
+                        ? "bg-stone-900 text-white shadow-xs"
+                        : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                    }`}
+                  >
+                    <span>All Locations</span>
+                  </button>
 
-                {branches.map((b) => {
-                  const isSelected = selectedBranchId === b._id;
-                  return (
-                    <button
-                      key={b._id}
-                      type="button"
-                      onClick={() => setSelectedBranchId(b._id)}
-                      className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                        isSelected
-                          ? "bg-stone-900 text-white shadow-xs"
-                          : "bg-stone-100 text-stone-600 hover:bg-stone-200"
-                      }`}
-                    >
-                      <MapPinIcon className="h-3 w-3 text-stone-400" />
-                      <span>{b.name}</span>
-                    </button>
-                  );
-                })}
+                  {branches.map((b) => {
+                    const isSelected = selectedBranchId === b._id;
+                    return (
+                      <button
+                        key={b._id}
+                        type="button"
+                        onClick={() => setSelectedBranchId(b._id)}
+                        className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+                          isSelected
+                            ? "bg-stone-900 text-white shadow-xs"
+                            : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                        }`}
+                      >
+                        <MapPinIcon className="h-3 w-3 text-stone-400" />
+                        <span>{b.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Search Button: Positioned on the Right Side of Location Row */}
+                <div className="sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 shrink-0">
+                  <FilterSearchButton
+                    isOpen={isVendorSearchOpen}
+                    onToggle={() => setIsVendorSearchOpen((prev) => !prev)}
+                    hasQuery={Boolean(vendorSearchQuery.trim())}
+                    ariaLabel="Search vendors"
+                  />
+                </div>
               </div>
             </div>
           )}
+
+          {/* Fallback if branches <= 1: Render Search button so search is still available */}
+          {branches.length <= 1 && (
+            <div className="flex justify-center sm:justify-end pt-2">
+              <FilterSearchButton
+                isOpen={isVendorSearchOpen}
+                onToggle={() => setIsVendorSearchOpen((prev) => !prev)}
+                hasQuery={Boolean(vendorSearchQuery.trim())}
+                ariaLabel="Search vendors"
+              />
+            </div>
+          )}
+
+          {/* Search Bar: directly under Location filter row */}
+          <FilterSearchInput
+            isOpen={isVendorSearchOpen}
+            query={vendorSearchQuery}
+            onQueryChange={setVendorSearchQuery}
+            placeholder="Search vendors..."
+            ariaLabel="Search vendors"
+            containerClassName="w-full max-w-[700px] mx-auto pt-2 animate-in fade-in slide-in-from-top-2 duration-200"
+          />
         </div>
 
         {/* ============================================================== */}
         {/* EMPTY STATE                                                    */}
         {/* ============================================================== */}
         {filteredVendors.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-stone-300 bg-stone-50/50 p-12 text-center max-w-lg mx-auto">
+          <div className="rounded-3xl border border-dashed border-stone-300 bg-stone-50/50 p-12 text-center max-w-lg mx-auto shadow-2xs">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03BF62]/10 text-[#03BF62] mb-4">
               <StoreIcon className="h-7 w-7" />
             </div>
             <h3 className="text-lg font-bold text-stone-900">
-              No Partners Found
+              {vendorSearchQuery.trim()
+                ? "No vendors found for your search."
+                : "No Partners Found"}
             </h3>
             <p className="mt-2 text-xs sm:text-sm text-stone-500 leading-relaxed">
-              No vendors are currently listed under {selectedCategory}
-              {selectedBranchId !== "all" ? " for this location" : ""}. Check back soon as we continuously partner with leading wedding and event providers!
+              {vendorSearchQuery.trim()
+                ? `We couldn't find any vendors matching "${vendorSearchQuery.trim()}". Try checking for spelling or adjusting your filters.`
+                : `No vendors are currently listed under ${selectedCategory}${selectedBranchId !== "all" ? " for this location" : ""}. Check back soon as we continuously partner with leading wedding and event providers!`}
             </p>
-            {(selectedCategory !== "All" || selectedBranchId !== "all") && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedCategory("All");
-                  setSelectedBranchId("all");
-                }}
-                className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-[#029e51] transition-all cursor-pointer"
-              >
-                Reset Filters
-              </button>
+            {(vendorSearchQuery.trim() || selectedCategory !== "All" || selectedBranchId !== "all") && (
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                {vendorSearchQuery.trim() && (
+                  <button
+                    type="button"
+                    onClick={() => setVendorSearchQuery("")}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 bg-white px-5 py-2 text-xs font-semibold text-stone-700 shadow-2xs transition hover:bg-stone-50 cursor-pointer"
+                  >
+                    <XIcon className="h-3.5 w-3.5" />
+                    <span>Clear Search</span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory("All");
+                    setSelectedBranchId("all");
+                    setVendorSearchQuery("");
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-[#029e51] transition-all cursor-pointer"
+                >
+                  Reset Filters
+                </button>
+              </div>
             )}
           </div>
         ) : (

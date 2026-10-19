@@ -68,6 +68,7 @@ export default async function WeddingPage() {
         price: p.price || 0,
         durationText: p.durationText || "",
         isFeatured: Boolean(p.isFeatured),
+        audience: (p as { audience?: "bride" | "groom" | "both" }).audience || "both",
       }));
     }
 

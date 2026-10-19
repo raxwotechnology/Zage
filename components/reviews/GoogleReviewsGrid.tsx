@@ -203,7 +203,7 @@ export default function GoogleReviewsGrid() {
         {/* BRANCH SELECTOR TABS                                           */}
         {/* ============================================================== */}
         {branches.length > 1 && (
-          <div className="flex flex-col items-center justify-center space-y-3">
+          <div id="reviews-branch-selector" className="flex flex-col items-center justify-center space-y-3">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#03BF62]">
               SELECT BRANCH LOCATION
             </span>
@@ -215,13 +215,24 @@ export default function GoogleReviewsGrid() {
                     key={b._id}
                     type="button"
                     onClick={() => handleSelectBranch(b._id)}
+                    data-selected={isSelected ? "true" : "false"}
                     className={`inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#03BF62] text-white shadow-md shadow-emerald-950/20"
                         : "bg-stone-100 text-stone-700 hover:bg-stone-200"
                     }`}
                   >
-                    <MapPinIcon className={`h-3.5 w-3.5 ${isSelected ? "text-emerald-100" : "text-stone-400"}`} />
+                    <MapPinIcon
+                      data-icon-color={isSelected ? "white" : undefined}
+                      style={
+                        isSelected
+                          ? { color: "#FFFFFF", stroke: "#FFFFFF" }
+                          : { color: "#03BF62", stroke: "#03BF62" }
+                      }
+                      className={`h-3.5 w-3.5 ${
+                        isSelected ? "text-white text-[#FFFFFF]" : "text-[#03BF62]"
+                      }`}
+                    />
                     <span>{b.name}</span>
                   </button>
                 );

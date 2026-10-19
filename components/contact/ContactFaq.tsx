@@ -7,16 +7,76 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { PlusIcon, MinusIcon } from "@/components/ui/icons";
 
+import type { BranchData } from "./BranchContactSection";
+
 interface ContactFaqProps {
   address?: string;
+  branches?: BranchData[];
+  salonName?: string;
 }
 
-export default function ContactFaq({ address = "" }: ContactFaqProps) {
+export default function ContactFaq({
+  address = "",
+  branches = [],
+  salonName = "Salon Zage",
+}: ContactFaqProps) {
   const custom = useSectionCustomization("quick-information");
 
   const [openIndex, setOpenIndex] = useState<number | null>(0); // First open by default
 
-  const faqs = [
+  const renderLocationAnswer = () => {
+    const activeBranches = (branches || []).filter(
+      (b) => b && (b.address?.trim() || b.name?.trim())
+    );
+
+    if (activeBranches.length >= 2) {
+      return (
+        <div className="space-y-3">
+          <p>
+            {salonName || "Salon Zage"} has multiple locations:
+          </p>
+          <ul className="space-y-3 list-none pl-0">
+            {activeBranches.map((branch, idx) => (
+              <li key={branch._id || idx} className="flex items-start gap-2.5">
+                <span className="text-[#03BF62] font-bold text-base leading-tight select-none shrink-0 mt-0.5">•</span>
+                <div className="space-y-0.5">
+                  <div className="font-semibold text-stone-900">
+                    {branch.name}
+                  </div>
+                  {branch.address && (
+                    <div className="text-stone-600 font-normal leading-relaxed text-xs sm:text-sm">
+                      {branch.address}
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p>
+            You can view each branch&apos;s exact pin location, interactive map, and Google Maps directions above.
+          </p>
+        </div>
+      );
+    }
+
+    const singleAddress = activeBranches[0]?.address?.trim() || address?.trim();
+
+    if (singleAddress) {
+      return (
+        <p>
+          Our salon is located at {singleAddress}. You can view the exact pin location, interactive map, and Google Maps directions above.
+        </p>
+      );
+    }
+
+    return (
+      <p>
+        Please reach out to our salon concierge team via phone or email for detailed location guidance.
+      </p>
+    );
+  };
+
+  const faqs: { question: string; answer: React.ReactNode }[] = [
     {
       question: "Do I need to book an appointment?",
       answer:
@@ -29,9 +89,7 @@ export default function ContactFaq({ address = "" }: ContactFaqProps) {
     },
     {
       question: "Where is the salon located?",
-      answer: address?.trim()
-        ? `Our salon is located at ${address}. You can find our exact pin location, interactive map, and Google Maps directions above.`
-        : "Please reach out to our salon concierge team via phone or email for detailed location guidance.",
+      answer: renderLocationAnswer(),
     },
     {
       question: "How can I contact Salon Zage?",
@@ -163,7 +221,9 @@ export default function ContactFaq({ address = "" }: ContactFaqProps) {
 
                     {isOpen && (
                       <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-0 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-[#03BF62]/15 mt-1">
-                        <p className="pt-2">{faq.answer}</p>
+                        <div className="pt-2">
+                          {typeof faq.answer === "string" ? <p>{faq.answer}</p> : faq.answer}
+                        </div>
                       </div>
                     )}
                   </div>

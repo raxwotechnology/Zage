@@ -97,9 +97,10 @@ export default function ServicesGrid({
   return (
     <section className="bg-white pb-20 sm:pb-24 lg:pb-28" data-customization-section="services-grid">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Audience Selector Tabs */}
+        {/* Top Filter Row: Gender/Audience Tabs (Centered) + Search Button (Right Side) */}
         {services.length > 0 && (
-          <div className="flex justify-center mb-6 sm:mb-8">
+          <div className="relative w-full flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-0 mb-6 sm:mb-8">
+            {/* Gender Selector: Visually Centered */}
             <div className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-stone-100 border border-stone-200/80 shadow-2xs">
               {[
                 { id: "all", label: "All" },
@@ -120,95 +121,90 @@ export default function ServicesGrid({
                 </button>
               ))}
             </div>
+
+            {/* Search Button: Positioned on the Right Side of the Gender Row */}
+            <div className="sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen((prev) => !prev)}
+                aria-label="Search services"
+                aria-expanded={isSearchOpen}
+                className="group inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border bg-[#03BF62] text-white border-[#03BF62] hover:bg-[#029E51] shadow-xs active:scale-[0.98]"
+              >
+                <SearchIcon
+                  data-icon-color="white"
+                  style={{ color: "#FFFFFF" }}
+                  className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-white shrink-0"
+                />
+                <span>Search</span>
+                {searchQuery.trim() && !isSearchOpen && (
+                  <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
+                )}
+              </button>
+            </div>
           </div>
         )}
 
-        {/* Category Filters Row with Search Button */}
-        {services.length > 0 && (
-          <div className="mb-10 sm:mb-12 space-y-4">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-              {/* Category Filter Pills */}
-              {availableCategories.length > 0 ? (
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 flex-1">
+        {/* Slide-down Search Bar: Directly Below Gender Row & Above Category Filters */}
+        {services.length > 0 && isSearchOpen && (
+          <div className="w-full max-w-[700px] mx-auto mb-6 sm:mb-8 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="relative flex items-center">
+              <SearchIcon className="absolute left-4 h-4 w-4 text-stone-400 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search services..."
+                aria-label="Search services"
+                autoFocus
+                className="w-full rounded-2xl border border-stone-200 bg-stone-50/70 pl-11 pr-11 py-3 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#03BF62] focus:bg-white focus:ring-2 focus:ring-[#03BF62]/20 shadow-2xs"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-3.5 flex h-6 w-6 items-center justify-center rounded-full bg-stone-200/70 text-stone-500 hover:bg-stone-300 hover:text-stone-800 transition-colors cursor-pointer"
+                >
+                  <XIcon className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Category Filters: One Single Line on Desktop, Horizontally Scrollable on Tablet/Mobile */}
+        {services.length > 0 && availableCategories.length > 0 && (
+          <div className="mb-10 sm:mb-12">
+            <div className="w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-1">
+              <div className="inline-flex items-center gap-2 xl:gap-2.5 flex-nowrap min-w-full justify-start lg:justify-center px-1">
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategory("all")}
+                  className={`px-3.5 sm:px-4 xl:px-4.5 py-2.5 xl:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border whitespace-nowrap flex-shrink-0 ${
+                    activeCategory === "all"
+                      ? "bg-stone-900 text-white border-stone-900 shadow-xs font-bold"
+                      : "bg-white text-stone-600 border-stone-200/90 hover:border-stone-300 hover:text-stone-900 hover:bg-stone-50"
+                  }`}
+                >
+                  All Services
+                </button>
+                {availableCategories.map((cat) => (
                   <button
+                    key={cat}
                     type="button"
-                    onClick={() => setSelectedCategory("all")}
-                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
-                      activeCategory === "all"
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-3.5 sm:px-4 xl:px-4.5 py-2.5 xl:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border whitespace-nowrap flex-shrink-0 ${
+                      activeCategory === cat
                         ? "bg-stone-900 text-white border-stone-900 shadow-xs font-bold"
                         : "bg-white text-stone-600 border-stone-200/90 hover:border-stone-300 hover:text-stone-900 hover:bg-stone-50"
                     }`}
                   >
-                    All Services
+                    {cat}
                   </button>
-                  {availableCategories.map((cat) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => setSelectedCategory(cat)}
-                      className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
-                        activeCategory === cat
-                          ? "bg-stone-900 text-white border-stone-900 shadow-xs font-bold"
-                          : "bg-white text-stone-600 border-stone-200/90 hover:border-stone-300 hover:text-stone-900 hover:bg-stone-50"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex-1" />
-              )}
-
-              {/* Search Toggle Button on the Right Side */}
-              <div className="shrink-0 self-center sm:self-auto">
-                <button
-                  type="button"
-                  onClick={() => setIsSearchOpen((prev) => !prev)}
-                  aria-label="Search services"
-                  aria-expanded={isSearchOpen}
-                  className="group inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border bg-[#03BF62] text-white border-[#03BF62] hover:bg-[#029E51] shadow-xs active:scale-[0.98]"
-                >
-                  <SearchIcon
-                    data-icon-color="white"
-                    style={{ color: "#FFFFFF" }}
-                    className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-white shrink-0"
-                  />
-                  <span>Search</span>
-                  {searchQuery.trim() && !isSearchOpen && (
-                    <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
-                  )}
-                </button>
+                ))}
               </div>
             </div>
-
-            {/* Smooth Slide-down Search Bar Directly Below Category Filters */}
-            {isSearchOpen && (
-              <div className="w-full max-w-xl mx-auto pt-2 animate-in fade-in slide-in-from-top-2 duration-200">
-                <div className="relative flex items-center">
-                  <SearchIcon className="absolute left-4 h-4 w-4 text-stone-400 pointer-events-none" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search services..."
-                    aria-label="Search services"
-                    autoFocus
-                    className="w-full rounded-2xl border border-stone-200 bg-stone-50/70 pl-11 pr-11 py-3 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 outline-none transition-all focus:border-[#03BF62] focus:bg-white focus:ring-2 focus:ring-[#03BF62]/20 shadow-2xs"
-                  />
-                  {searchQuery && (
-                    <button
-                      type="button"
-                      onClick={() => setSearchQuery("")}
-                      aria-label="Clear search"
-                      className="absolute right-3.5 flex h-6 w-6 items-center justify-center rounded-full bg-stone-200/70 text-stone-500 hover:bg-stone-300 hover:text-stone-800 transition-colors cursor-pointer"
-                    >
-                      <XIcon className="h-3.5 w-3.5" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         )}
 

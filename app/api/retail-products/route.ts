@@ -94,7 +94,7 @@ export async function GET(request: Request) {
     }
 
     const products = await RetailProduct.find(query)
-      .populate("branchIds", "_id name slug")
+      .populate("branchIds", "_id name slug whatsappNumber")
       .sort({ displayOrder: 1, createdAt: -1 })
       .lean();
 

@@ -14,6 +14,7 @@ export interface WeddingPackageCardData {
   price: number;
   durationText: string;
   isFeatured?: boolean;
+  audience?: "bride" | "groom" | "both";
 }
 
 interface WeddingPackageCardProps {

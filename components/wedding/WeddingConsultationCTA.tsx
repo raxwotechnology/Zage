@@ -16,7 +16,7 @@ export default function WeddingConsultationCTA({
   const custom = useSectionCustomization("consultation-cta");
 
   return (
-    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-20 sm:py-24 lg:py-28" data-customization-section="consultation-cta">
+    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-14 sm:py-20 lg:py-28" data-customization-section="consultation-cta">
       {/* Background Banner with Dark Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -24,9 +24,27 @@ export default function WeddingConsultationCTA({
           alt="Wedding Consultation"
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-70 sm:opacity-85" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          className={`${custom.bgSettings?.size === "contain" ? "object-contain" : "object-cover"} ${
+            custom.bgSettings?.mobilePosition
+              ? custom.bgSettings.mobilePosition === "left"
+                ? "object-left"
+                : custom.bgSettings.mobilePosition === "right"
+                ? "object-right"
+                : "object-center"
+              : "object-[80%_center]"
+          } ${
+            custom.bgSettings?.position
+              ? custom.bgSettings.position === "left"
+                ? "sm:object-left"
+                : custom.bgSettings.position === "right"
+                ? "sm:object-right"
+                : "sm:object-center"
+              : "sm:object-center"
+          } opacity-70 sm:opacity-85`}
+          data-customization-role="backgroundImage"
+          unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14]/95 via-[#0C0A14]/75 to-[#0C0A14]/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/85 to-[#0C0A14]/30" />
         <div
           data-customization-role="imageOverlay"
           className="absolute inset-0 pointer-events-none"

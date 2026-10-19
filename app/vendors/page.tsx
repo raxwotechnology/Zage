@@ -75,7 +75,11 @@ async function getVendorsData(): Promise<{
       slug: b.slug,
     }));
 
-    return { vendors, branches, isVisible };
+    return {
+      vendors,
+      branches,
+      isVisible,
+    };
   } catch (error) {
     console.error("Failed to load vendors on server:", error);
     return { vendors: [], branches: [], isVisible: true };

@@ -136,6 +136,16 @@ export async function PATCH(
       updateData.displayOrder = Math.max(0, Number(updateData.displayOrder) || 0);
     }
 
+    if (body.audience !== undefined) {
+      if (!["bride", "groom", "both"].includes(body.audience)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid audience. Must be bride, groom, or both" },
+          { status: 400 }
+        );
+      }
+      updateData.audience = body.audience;
+    }
+
     const updatedPackage = await WeddingPackage.findByIdAndUpdate(
       id,
       { $set: updateData },

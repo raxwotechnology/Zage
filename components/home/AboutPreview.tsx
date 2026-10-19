@@ -28,7 +28,7 @@ export default function AboutPreview() {
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
           {/* Left Column: Salon Interior Photo */}
           <div className="lg:col-span-6 relative">
-            <div className="relative aspect-[16/11] w-full overflow-hidden rounded-3xl bg-stone-200 shadow-md shadow-stone-900/5 group">
+            <div className="relative aspect-[4/3] sm:aspect-[16/11] w-full overflow-hidden rounded-3xl bg-stone-200 shadow-md shadow-stone-900/5 group">
               <Image
                 src={custom.sectionImage("/images/about-salon.jpg")}
                 alt="Salon modern interior and styling stations"

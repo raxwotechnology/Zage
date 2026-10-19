@@ -14,7 +14,7 @@ export default function ProductsHero({ salonName = "Salon Zage" }: ProductsHeroP
   const custom = useSectionCustomization("hero");
 
   return (
-    <section className="relative overflow-hidden bg-[#0A0812] text-white py-16 sm:py-24 border-b border-white/10" data-customization-section="hero">
+    <section className="relative overflow-hidden bg-[#0A0812] text-white py-14 sm:py-20 lg:py-24 border-b border-white/10" data-customization-section="hero">
       {/* Background Graphic / Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -23,7 +23,25 @@ export default function ProductsHero({ salonName = "Salon Zage" }: ProductsHeroP
           fill
           priority
           sizes="100vw"
-          className="object-cover object-right sm:object-right opacity-80 sm:opacity-90" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          className={`${custom.bgSettings?.size === "contain" ? "object-contain" : "object-cover"} ${
+            custom.bgSettings?.mobilePosition
+              ? custom.bgSettings.mobilePosition === "left"
+                ? "object-left"
+                : custom.bgSettings.mobilePosition === "right"
+                ? "object-right"
+                : "object-center"
+              : "object-[75%_center]"
+          } ${
+            custom.bgSettings?.position
+              ? custom.bgSettings.position === "left"
+                ? "sm:object-left"
+                : custom.bgSettings.position === "right"
+                ? "sm:object-right"
+                : "sm:object-center"
+              : "sm:object-right"
+          } opacity-80 sm:opacity-90`}
+          data-customization-role="backgroundImage"
+          unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
         {/* Controlled gradient overlay for crisp text readability while showcasing the product atmosphere */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A0812] via-[#0A0812]/85 to-[#0A0812]/30 sm:via-[#0A0812]/75 sm:to-transparent" />

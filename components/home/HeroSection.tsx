@@ -31,11 +31,30 @@ export default function HeroSection({
           alt="Salon Zage professional styling and beauty care"
           fill
           priority
-          className="object-cover object-right-top opacity-90 sm:opacity-95 lg:opacity-100" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          sizes="100vw"
+          className={`${custom.bgSettings?.size === "contain" ? "object-contain" : "object-cover"} ${
+            custom.bgSettings?.mobilePosition
+              ? custom.bgSettings.mobilePosition === "left"
+                ? "object-left"
+                : custom.bgSettings.mobilePosition === "right"
+                ? "object-right"
+                : "object-center"
+              : "object-[70%_25%]"
+          } ${
+            custom.bgSettings?.position
+              ? custom.bgSettings.position === "left"
+                ? "sm:object-left"
+                : custom.bgSettings.position === "right"
+                ? "sm:object-right"
+                : "sm:object-center"
+              : "sm:object-right-top"
+          } opacity-90 sm:opacity-95 lg:opacity-100`}
+          data-customization-role="backgroundImage"
+          unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
         {/* Controlled Gradient Overlay: strong text contrast on left, bright salon image on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/75 lg:via-[#0C0A14]/45 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A14]/90 via-transparent to-transparent/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/80 sm:via-[#0C0A14]/75 lg:via-[#0C0A14]/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A14]/90 via-[#0C0A14]/30 to-transparent sm:via-transparent sm:to-transparent/20" />
         <div
           data-customization-role="imageOverlay"
           className="absolute inset-0 pointer-events-none"
@@ -47,10 +66,20 @@ export default function HeroSection({
         <div className="max-w-2xl space-y-6">
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.12]" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
-            Beauty<br />
-            Redefined<br /></>}
-            <span className="text-[#03BF62]" data-customization-role="highlight">{custom.has("highlightedText") ? custom.text("highlightedText", "") : <>For You</>}</span>
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.12]" data-customization-role="heading">
+            {custom.has("heading") ? (
+              <>
+                {custom.text("heading", "")}{" "}
+              </>
+            ) : (
+              <>
+                Hair, Beauty &<br />
+                Grooming{" "}
+              </>
+            )}
+            <span className="text-[#03BF62]" data-customization-role="highlight">
+              {custom.has("highlightedText") ? custom.text("highlightedText", "") : <>For You</>}
+            </span>
           </h1>
 
           {/* Subtitle */}

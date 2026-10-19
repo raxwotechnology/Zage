@@ -56,6 +56,7 @@ interface WeddingPackage {
   isFeatured: boolean;
   isActive: boolean;
   displayOrder: number;
+  audience?: "bride" | "groom" | "both";
   createdAt?: string;
   updatedAt?: string;
 }
@@ -83,6 +84,7 @@ interface PackageFormState {
   imagePublicId: string;
   isFeatured: boolean;
   isActive: boolean;
+  audience: "bride" | "groom" | "both";
 }
 
 const emptyServiceForm: ServiceFormState = {
@@ -108,6 +110,7 @@ const emptyPackageForm: PackageFormState = {
   imagePublicId: "",
   isFeatured: false,
   isActive: true,
+  audience: "both",
 };
 
 export default function AdminWeddingPage() {
@@ -142,6 +145,7 @@ export default function AdminWeddingPage() {
   const [packageSearch, setPackageSearch] = useState("");
   const [packageStatusFilter, setPackageStatusFilter] = useState<"all" | "active" | "hidden">("all");
   const [packageFeaturedFilter, setPackageFeaturedFilter] = useState<"all" | "featured" | "standard">("all");
+  const [packageAudienceFilter, setPackageAudienceFilter] = useState<"all" | "bride" | "groom" | "both">("all");
   const [packageSortBy, setPackageSortBy] = useState<"order" | "newest" | "price-asc" | "price-desc">("order");
 
   // Shared state
@@ -301,6 +305,11 @@ export default function AdminWeddingPage() {
         if (packageFeaturedFilter === "featured" && !pkg.isFeatured) return false;
         if (packageFeaturedFilter === "standard" && pkg.isFeatured) return false;
 
+        if (packageAudienceFilter !== "all") {
+          const pAudience = pkg.audience ?? "both";
+          if (pAudience !== packageAudienceFilter) return false;
+        }
+
         if (packageSearch.trim()) {
           const q = packageSearch.toLowerCase().trim();
           const nameMatch = pkg.name.toLowerCase().includes(q);
@@ -316,7 +325,7 @@ export default function AdminWeddingPage() {
         if (packageSortBy === "price-desc") return (b.price || 0) - (a.price || 0);
         return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
       });
-  }, [packages, packageSearch, packageStatusFilter, packageFeaturedFilter, packageSortBy]);
+  }, [packages, packageSearch, packageStatusFilter, packageFeaturedFilter, packageAudienceFilter, packageSortBy]);
 
   // ==========================================
   // SERVICE HANDLERS
@@ -510,6 +519,7 @@ export default function AdminWeddingPage() {
       imagePublicId: pkg.imagePublicId || "",
       isFeatured: pkg.isFeatured,
       isActive: pkg.isActive,
+      audience: pkg.audience || "both",
     });
     setNewIncludedItem("");
     setIsPackageFormOpen(true);
@@ -589,6 +599,7 @@ export default function AdminWeddingPage() {
           imagePublicId: packageForm.imagePublicId,
           isFeatured: packageForm.isFeatured,
           isActive: packageForm.isActive,
+          audience: packageForm.audience || "both",
         }),
       });
 
@@ -1453,6 +1464,22 @@ export default function AdminWeddingPage() {
               </div>
 
               <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-stone-500 hidden md:inline">Audience</span>
+                <select
+                  value={packageAudienceFilter}
+                  onChange={(e) =>
+                    setPackageAudienceFilter(e.target.value as "all" | "bride" | "groom" | "both")
+                  }
+                  className="rounded-xl border border-stone-200 bg-stone-50/70 px-3.5 py-2 text-xs sm:text-sm font-medium text-stone-700 outline-none transition-all focus:border-[#7C3AED] focus:bg-white cursor-pointer"
+                >
+                  <option value="all">All Audiences</option>
+                  <option value="bride">Bride</option>
+                  <option value="groom">Groom</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold text-stone-500 hidden md:inline">Sort By</span>
                 <select
                   value={packageSortBy}
@@ -1509,6 +1536,7 @@ export default function AdminWeddingPage() {
                         setPackageSearch("");
                         setPackageStatusFilter("all");
                         setPackageFeaturedFilter("all");
+                        setPackageAudienceFilter("all");
                       }}
                       className="mt-3 text-xs font-semibold text-[#7C3AED] hover:underline"
                     >
@@ -1550,6 +1578,21 @@ export default function AdminWeddingPage() {
                                 Most Popular
                               </span>
                             )}
+                            <span
+                              className={`inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold border shadow-2xs ${
+                                (pkg.audience ?? "both") === "groom"
+                                  ? "bg-blue-50 text-blue-700 border-blue-200/80"
+                                  : (pkg.audience ?? "both") === "bride"
+                                  ? "bg-rose-50 text-rose-700 border-rose-200/80"
+                                  : "bg-emerald-50 text-emerald-700 border-emerald-200/80"
+                              }`}
+                            >
+                              {(pkg.audience ?? "both") === "groom"
+                                ? "Groom"
+                                : (pkg.audience ?? "both") === "bride"
+                                ? "Bride"
+                                : "Both"}
+                            </span>
                           </div>
 
                           <div className="absolute top-3 right-3 z-10 shadow-xs">
@@ -1760,6 +1803,38 @@ export default function AdminWeddingPage() {
                         placeholder="A complete bridal beauty experience for a truly memorable day."
                         className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white focus:ring-2 focus:ring-[#7C3AED]/20 resize-y"
                       />
+                    </div>
+
+                    {/* Package For (Audience) */}
+                    <div>
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                        PACKAGE FOR <span className="text-red-500">*</span>
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          { id: "bride", label: "Bride" },
+                          { id: "groom", label: "Groom" },
+                          { id: "both", label: "Both" },
+                        ].map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() =>
+                              setPackageForm((prev) => ({
+                                ...prev,
+                                audience: option.id as "bride" | "groom" | "both",
+                              }))
+                            }
+                            className={`rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold transition-all border cursor-pointer ${
+                              packageForm.audience === option.id
+                                ? "bg-[#7C3AED] text-white border-[#7C3AED] shadow-xs"
+                                : "bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100"
+                            }`}
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Included Items Section */}

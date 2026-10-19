@@ -57,7 +57,7 @@ export default async function HomePage() {
         .limit(3)
         .lean(),
       RetailProduct.find({ isActive: true })
-        .populate("branchIds", "_id name whatsappNumber")
+        .populate("branchIds", "_id name slug whatsappNumber")
         .sort({ isFeatured: -1, displayOrder: 1, createdAt: -1 })
         .limit(4)
         .lean(),
@@ -137,10 +137,28 @@ export default async function HomePage() {
     if (Array.isArray(dbProducts) && dbProducts.length > 0) {
       products = dbProducts.map((p) => {
         let bPhone = "";
+        const productBranches: { _id: string; name: string; slug?: string }[] = [];
         if (Array.isArray(p.branchIds) && p.branchIds.length > 0) {
-          const firstB = p.branchIds[0] as unknown as { whatsappNumber?: string };
-          if (firstB?.whatsappNumber) {
-            bPhone = firstB.whatsappNumber;
+          for (const b of p.branchIds) {
+            if (b && typeof b === "object" && "_id" in b && "name" in b) {
+              const bObj = b as {
+                _id: unknown;
+                name: string;
+                slug?: string;
+                whatsappNumber?: string;
+              };
+              productBranches.push({
+                _id: String(bObj._id),
+                name: bObj.name,
+                slug: bObj.slug,
+              });
+              if (!bPhone) {
+                const wa = normalizeWhatsAppNumber(bObj.whatsappNumber);
+                if (wa) {
+                  bPhone = wa;
+                }
+              }
+            }
           }
         }
         return {
@@ -152,13 +170,18 @@ export default async function HomePage() {
           image: p.image,
           description: p.description || undefined,
           shortDescription: p.shortDescription || undefined,
+          cardShortSummary: p.shortDescription || undefined,
           price: p.price,
           salePrice: p.salePrice || undefined,
           stockStatus: p.stockStatus,
           size: p.size || undefined,
           sku: p.sku || undefined,
           isFeatured: Boolean(p.isFeatured),
+          isMostPopular: Boolean(p.isMostPopular),
+          isFastMoving: Boolean(p.isFastMoving),
+          isDiscountProduct: Boolean(p.isDiscountProduct),
           branchWhatsapp: bPhone || undefined,
+          branches: productBranches,
         };
       });
     }

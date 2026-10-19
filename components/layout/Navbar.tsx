@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import SalvoraLogo from "@/components/ui/SalvoraLogo";
+import { useWebsiteSettings } from "@/components/context/WebsiteSettingsContext";
 import {
   MenuIcon,
   XIcon,
@@ -12,13 +14,13 @@ import {
 } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics-client";
 
-interface ExternalSystemLinks {
+export interface ExternalSystemLinks {
   loginUrl: string;
   registerUrl: string;
   bookingUrl: string;
 }
 
-interface PageVisibilityLinks {
+export interface PageVisibilityLinks {
   products: boolean;
   promotions: boolean;
   wedding: boolean;
@@ -26,40 +28,82 @@ interface PageVisibilityLinks {
   gallery: boolean;
 }
 
-export default function Navbar() {
+export interface NavbarProps {
+  initialLogoUrl?: string;
+  initialSalonName?: string;
+  initialExternalSystem?: Partial<ExternalSystemLinks>;
+  initialPageVisibility?: Partial<PageVisibilityLinks>;
+}
+
+export default function Navbar({
+  initialLogoUrl,
+  initialSalonName,
+  initialExternalSystem,
+  initialPageVisibility,
+}: NavbarProps = {}) {
   const pathname = usePathname();
+  const settingsContext = useWebsiteSettings();
+
+  const resolvedLogo = initialLogoUrl || settingsContext.headerLogo || "";
+  const resolvedSalonName = initialSalonName || settingsContext.salonName || "Salon Zage";
+  const resolvedExternal: ExternalSystemLinks = {
+    loginUrl: initialExternalSystem?.loginUrl || settingsContext.externalSystem?.loginUrl || "",
+    registerUrl: initialExternalSystem?.registerUrl || settingsContext.externalSystem?.registerUrl || "",
+    bookingUrl: initialExternalSystem?.bookingUrl || settingsContext.externalSystem?.bookingUrl || "",
+  };
+  const resolvedVisibility: PageVisibilityLinks = {
+    products:
+      initialPageVisibility?.products !== undefined
+        ? Boolean(initialPageVisibility.products)
+        : settingsContext.pageVisibility.products,
+    promotions:
+      initialPageVisibility?.promotions !== undefined
+        ? Boolean(initialPageVisibility.promotions)
+        : settingsContext.pageVisibility.promotions,
+    wedding:
+      initialPageVisibility?.wedding !== undefined
+        ? Boolean(initialPageVisibility.wedding)
+        : settingsContext.pageVisibility.wedding,
+    vendors:
+      initialPageVisibility?.vendors !== undefined
+        ? Boolean(initialPageVisibility.vendors)
+        : settingsContext.pageVisibility.vendors,
+    gallery:
+      initialPageVisibility?.gallery !== undefined
+        ? Boolean(initialPageVisibility.gallery)
+        : settingsContext.pageVisibility.gallery,
+  };
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [headerLogo, setHeaderLogo] = useState<string>("");
-  const [salonName, setSalonName] = useState<string>("Salon Zage");
-  const [externalSystem, setExternalSystem] = useState<ExternalSystemLinks>({
-    loginUrl: "",
-    registerUrl: "",
-    bookingUrl: "",
-  });
-  const [pageVisibility, setPageVisibility] = useState<PageVisibilityLinks>({
-    products: true,
-    promotions: true,
-    wedding: true,
-    vendors: true,
-    gallery: true,
-  });
 
-  // Fetch external system links and branding from Website Settings
+  const [overrideLogo, setOverrideLogo] = useState<string>("");
+  const [overrideSalonName, setOverrideSalonName] = useState<string>("");
+  const [overrideExternalSystem, setOverrideExternalSystem] = useState<ExternalSystemLinks | null>(null);
+  const [overridePageVisibility, setOverridePageVisibility] = useState<PageVisibilityLinks | null>(null);
+
+  const headerLogo = overrideLogo || resolvedLogo;
+  const salonName = overrideSalonName || resolvedSalonName;
+  const externalSystem = overrideExternalSystem || resolvedExternal;
+  const pageVisibility = overridePageVisibility || resolvedVisibility;
+
+  // Fetch client-side only if server branding was not provided
   useEffect(() => {
+    if (resolvedLogo) return;
+
     let isMounted = true;
     fetch("/api/settings")
       .then((res) => res.json())
       .then((data) => {
         if (isMounted && data?.success && data?.settings) {
           if (data.settings.headerLogo || data.settings.logo) {
-            setHeaderLogo(data.settings.headerLogo || data.settings.logo);
+            setOverrideLogo(data.settings.headerLogo || data.settings.logo);
           }
           if (data.settings.salonName) {
-            setSalonName(data.settings.salonName);
+            setOverrideSalonName(data.settings.salonName);
           }
           if (data.settings.externalSystem) {
-            setExternalSystem({
+            setOverrideExternalSystem({
               loginUrl: data.settings.externalSystem.loginUrl || "",
               registerUrl: data.settings.externalSystem.registerUrl || "",
               bookingUrl: data.settings.externalSystem.bookingUrl || "",
@@ -67,7 +111,7 @@ export default function Navbar() {
           }
           if (data.settings.pageVisibility) {
             const pv = data.settings.pageVisibility;
-            setPageVisibility({
+            setOverridePageVisibility({
               products: pv.products !== undefined ? Boolean(pv.products) : true,
               promotions: pv.promotions !== undefined ? Boolean(pv.promotions) : true,
               wedding: pv.wedding !== undefined ? Boolean(pv.wedding) : true,
@@ -82,7 +126,7 @@ export default function Navbar() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [resolvedLogo]);
 
   // Handle subtle scroll styling
   useEffect(() => {
@@ -126,11 +170,15 @@ export default function Navbar() {
           aria-label={`${salonName} Home`}
         >
           {headerLogo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={headerLogo}
               alt={salonName}
+              width={260}
+              height={56}
+              priority
+              sizes="(max-width: 640px) 180px, (max-width: 1024px) 220px, 260px"
               className="h-12 sm:h-13 lg:h-14 w-auto max-w-[260px] object-contain"
+              unoptimized={!headerLogo.startsWith("/") && !headerLogo.includes("res.cloudinary.com")}
             />
           ) : (
             <SalvoraLogo theme="light" className="h-12 sm:h-13 lg:h-14 w-auto object-contain" />

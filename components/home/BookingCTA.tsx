@@ -22,17 +22,36 @@ export default function BookingCTA({
   const custom = useSectionCustomization("booking-cta");
 
   return (
-    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-20 sm:py-24 lg:py-28" data-customization-section="booking-cta">
+    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-14 sm:py-20 lg:py-28" data-customization-section="booking-cta">
       {/* Background Salon Image - Enhanced Visibility */}
       <div className="absolute inset-0 z-0">
         <Image
           src={custom.image("/images/cta-salon.jpg")}
           alt="Salon Zage appointment styling"
           fill
-          className="object-cover object-center opacity-80 sm:opacity-90" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          sizes="100vw"
+          className={`${custom.bgSettings?.size === "contain" ? "object-contain" : "object-cover"} ${
+            custom.bgSettings?.mobilePosition
+              ? custom.bgSettings.mobilePosition === "left"
+                ? "object-left"
+                : custom.bgSettings.mobilePosition === "right"
+                ? "object-right"
+                : "object-center"
+              : "object-[75%_center]"
+          } ${
+            custom.bgSettings?.position
+              ? custom.bgSettings.position === "left"
+                ? "sm:object-left"
+                : custom.bgSettings.position === "right"
+                ? "sm:object-right"
+                : "sm:object-center"
+              : "sm:object-center"
+          } opacity-80 sm:opacity-90`}
+          data-customization-role="backgroundImage"
+          unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
         {/* Balanced overlay: deep protective tint on text side, transparent on image side */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14]/95 via-[#0C0A14]/75 to-[#0C0A14]/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14]/95 via-[#0C0A14]/80 to-[#0C0A14]/40 sm:via-[#0C0A14]/75 sm:to-[#0C0A14]/35" />
         <div
           data-customization-role="imageOverlay"
           className="absolute inset-0 pointer-events-none"

@@ -33,6 +33,7 @@ export const metadata: Metadata = {
 export default async function PromotionsPage() {
   let promotions: PublicPromotion[] = [];
   let salonName = "Salon Zage";
+  let headerLogo = "";
   let whatsappNumber = "";
   let bookingUrl = "";
   let isVisible = true;
@@ -46,7 +47,7 @@ export default async function PromotionsPage() {
         startDate: { $lte: now },
         endDate: { $gte: now },
       })
-        .populate("branchIds", "_id name whatsappNumber")
+        .populate("branchIds", "_id name slug whatsappNumber")
         .sort({ displayOrder: 1, createdAt: -1 })
         .lean(),
       Branch.find({ isActive: true })
@@ -59,6 +60,7 @@ export default async function PromotionsPage() {
     if (settings) {
       isVisible = normalizePageVisibility(settings.pageVisibility).promotions;
       if (settings.salonName) salonName = settings.salonName;
+      if (settings.logo) headerLogo = settings.logo;
       if (settings.externalSystem?.bookingUrl) {
         bookingUrl = settings.externalSystem.bookingUrl;
       }
@@ -87,17 +89,23 @@ export default async function PromotionsPage() {
     if (Array.isArray(dbPromotions) && dbPromotions.length > 0) {
       promotions = dbPromotions.map((p) => {
         let promoBranchWhatsapp = "";
-        if (Array.isArray(p.branchIds) && p.branchIds.length > 0) {
-          const relevantBranch = p.branchIds.find(
-            (b: unknown) =>
-              b &&
-              typeof b === "object" &&
-              "whatsappNumber" in b &&
-              normalizeWhatsAppNumber((b as { whatsappNumber?: string }).whatsappNumber)
-          ) as { whatsappNumber?: string } | undefined;
+        const promoBranches: { _id: string; name: string; slug?: string }[] = [];
 
-          if (relevantBranch?.whatsappNumber) {
-            promoBranchWhatsapp = normalizeWhatsAppNumber(relevantBranch.whatsappNumber);
+        if (Array.isArray(p.branchIds) && p.branchIds.length > 0) {
+          for (const b of p.branchIds) {
+            if (b && typeof b === "object" && "_id" in b && "name" in b) {
+              const bObj = b as { _id: unknown; name?: unknown; slug?: unknown; whatsappNumber?: unknown };
+              const bName = typeof bObj.name === "string" ? bObj.name.trim() : "";
+              const bId = bObj._id ? bObj._id.toString() : "";
+              const bSlug = typeof bObj.slug === "string" ? bObj.slug : undefined;
+              if (bName) {
+                promoBranches.push({ _id: bId, name: bName, slug: bSlug });
+              }
+              if (!promoBranchWhatsapp && bObj.whatsappNumber) {
+                const norm = normalizeWhatsAppNumber(String(bObj.whatsappNumber));
+                if (norm) promoBranchWhatsapp = norm;
+              }
+            }
           }
         }
 
@@ -120,6 +128,7 @@ export default async function PromotionsPage() {
           ctaCustomUrl: p.ctaCustomUrl,
           isFeatured: Boolean(p.isFeatured),
           branchWhatsapp: promoBranchWhatsapp || undefined,
+          branches: promoBranches,
         };
       });
     }
@@ -135,7 +144,7 @@ export default async function PromotionsPage() {
   return (
     <PageCustomization scope="public" pageKey="promotions">
     <div className="min-h-screen flex flex-col bg-[#FAF9FB] text-stone-900">
-      <Navbar />
+      <Navbar initialLogoUrl={headerLogo} initialSalonName={salonName} />
       <main className="flex-1">
         <PromotionsHero salonName={salonName} />
         <PromotionsGridSection

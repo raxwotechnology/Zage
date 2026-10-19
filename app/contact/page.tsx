@@ -145,7 +145,11 @@ export default async function ContactPage() {
         />
 
         {/* 5. Quick Information / FAQ */}
-        <ContactFaq address={primaryAddress} />
+        <ContactFaq
+          branches={branches}
+          address={primaryAddress}
+          salonName={fallbackSettings.salonName}
+        />
 
         {/* 6. Booking CTA */}
         <BookingCTA

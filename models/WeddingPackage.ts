@@ -11,6 +11,7 @@ export interface IWeddingPackage extends Document {
   isFeatured: boolean;
   isActive: boolean;
   displayOrder: number;
+  audience: "bride" | "groom" | "both";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -65,11 +66,26 @@ const WeddingPackageSchema = new Schema<IWeddingPackage>(
       default: 0,
       min: 0,
     },
+    audience: {
+      type: String,
+      enum: ["bride", "groom", "both"],
+      default: "both",
+      index: true,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+// Avoid caching stale schema during Next.js hot module reloading in dev
+if (
+  process.env.NODE_ENV !== "production" &&
+  mongoose.models &&
+  mongoose.models.WeddingPackage
+) {
+  delete mongoose.models.WeddingPackage;
+}
 
 const WeddingPackage: Model<IWeddingPackage> =
   mongoose.models.WeddingPackage ||

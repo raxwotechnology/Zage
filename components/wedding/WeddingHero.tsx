@@ -15,7 +15,7 @@ export default function WeddingHero({ bookingUrl = "" }: WeddingHeroProps) {
   const custom = useSectionCustomization("hero");
 
   return (
-    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-16 sm:py-20 lg:py-24" data-customization-section="hero">
+    <section className="relative overflow-hidden bg-[#0C0A14] text-white py-14 sm:py-20 lg:py-24" data-customization-section="hero">
       {/* Background Bridal Styling Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -24,10 +24,28 @@ export default function WeddingHero({ bookingUrl = "" }: WeddingHeroProps) {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-right-top sm:object-center opacity-70 sm:opacity-85" data-customization-role="backgroundImage" unoptimized={Boolean(custom.style.backgroundImage?.url)}
+          className={`${custom.bgSettings?.size === "contain" ? "object-contain" : "object-cover"} ${
+            custom.bgSettings?.mobilePosition
+              ? custom.bgSettings.mobilePosition === "left"
+                ? "object-left"
+                : custom.bgSettings.mobilePosition === "right"
+                ? "object-right"
+                : "object-center"
+              : "object-[72%_top]"
+          } ${
+            custom.bgSettings?.position
+              ? custom.bgSettings.position === "left"
+                ? "sm:object-left"
+                : custom.bgSettings.position === "right"
+                ? "sm:object-right"
+                : "sm:object-center"
+              : "sm:object-center"
+          } opacity-70 sm:opacity-85`}
+          data-customization-role="backgroundImage"
+          unoptimized={Boolean(custom.style.backgroundImage?.url)}
         />
         {/* Controlled gradient overlay for crisp text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/90 to-[#0C0A14]/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/90 to-[#0C0A14]/50 sm:to-[#0C0A14]/35" />
         <div
           data-customization-role="imageOverlay"
           className="absolute inset-0 pointer-events-none"

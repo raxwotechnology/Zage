@@ -278,6 +278,15 @@ svg[data-icon-color="white"],
   stroke: #ffffff !important;
 }
 
+/* Reviews Page Selected Branch Tab Location Icon - Hardcoded white #FFFFFF */
+#reviews-branch-selector [data-selected="true"] svg,
+#reviews-branch-selector [data-selected="true"] svg *,
+#reviews-branch-selector button[data-selected="true"] svg,
+#reviews-branch-selector button[data-selected="true"] svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
 /* Home Page Contact Us (Branches) Directions & WhatsApp Button Icons - Hardcoded white */
 #home-branches-salvora .branch-directions-btn svg,
 #home-branches-salvora .branch-directions-btn svg *,

@@ -98,7 +98,7 @@ export default async function ServicesPage() {
     <PageCustomization scope="public" pageKey="services">
     <div className="min-h-screen flex flex-col bg-white text-stone-900 selection:bg-[#03BF62]/30 selection:text-stone-900">
       {/* 1. Navbar */}
-      <Navbar />
+      <Navbar initialLogoUrl={settings?.logo || ""} initialSalonName={settings?.salonName} />
 
       <main className="flex-1">
         {/* 2. Services Hero */}

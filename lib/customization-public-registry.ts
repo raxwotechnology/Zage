@@ -21,7 +21,7 @@ export const publicPages: PageRegistration[] = [
         "key": "hero",
         "label": "Hero",
         "content": {
-          "heading": "Beauty Redefined",
+          "heading": "Hair, Beauty & Grooming",
           "highlightedText": "For You",
           "eyebrow": "Professional Beauty & Wellness",
           "description": "Experience professional care, modern treatments and a relaxing salon environment at Salon Zage.",

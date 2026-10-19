@@ -37,6 +37,7 @@ export const metadata: Metadata = {
 export default async function ProductsPage() {
   let products: PublicRetailProduct[] = [];
   let salonName = "Salon Zage";
+  let headerLogo = "";
   let whatsappNumber = "";
   let isVisible = true;
   let featureSections = {
@@ -49,7 +50,7 @@ export default async function ProductsPage() {
     await connectDB();
     const [dbProducts, branches, totalBranchCount, settings] = await Promise.all([
       RetailProduct.find({ isActive: true })
-        .populate("branchIds", "_id name whatsappNumber")
+        .populate("branchIds", "_id name slug whatsappNumber")
         .sort({ displayOrder: 1, createdAt: -1 })
         .lean(),
       Branch.find({ isActive: true })
@@ -64,6 +65,9 @@ export default async function ProductsPage() {
       featureSections = normalizeProductFeatureSections(settings.productFeatureSections);
       if (settings.salonName) {
         salonName = settings.salonName;
+      }
+      if (settings.logo) {
+        headerLogo = settings.logo;
       }
     }
 
@@ -90,17 +94,29 @@ export default async function ProductsPage() {
     if (Array.isArray(dbProducts) && dbProducts.length > 0) {
       products = dbProducts.map((p) => {
         let productBranchWhatsapp = "";
+        const productBranches: { _id: string; name: string; slug?: string }[] = [];
         if (Array.isArray(p.branchIds) && p.branchIds.length > 0) {
-          const relevantBranch = p.branchIds.find(
-            (b: unknown) =>
-              b &&
-              typeof b === "object" &&
-              "whatsappNumber" in b &&
-              normalizeWhatsAppNumber((b as { whatsappNumber?: string }).whatsappNumber)
-          ) as { whatsappNumber?: string } | undefined;
+          for (const b of p.branchIds) {
+            if (b && typeof b === "object" && "_id" in b && "name" in b) {
+              const bObj = b as {
+                _id: unknown;
+                name: string;
+                slug?: string;
+                whatsappNumber?: string;
+              };
+              productBranches.push({
+                _id: String(bObj._id),
+                name: bObj.name,
+                slug: bObj.slug,
+              });
 
-          if (relevantBranch?.whatsappNumber) {
-            productBranchWhatsapp = normalizeWhatsAppNumber(relevantBranch.whatsappNumber);
+              if (!productBranchWhatsapp) {
+                const wa = normalizeWhatsAppNumber(bObj.whatsappNumber);
+                if (wa) {
+                  productBranchWhatsapp = wa;
+                }
+              }
+            }
           }
         }
 
@@ -113,6 +129,7 @@ export default async function ProductsPage() {
           image: p.image,
           description: p.description,
           shortDescription: p.shortDescription,
+          cardShortSummary: p.shortDescription,
           price: p.price,
           salePrice: p.salePrice ?? undefined,
           stockStatus: p.stockStatus,
@@ -124,6 +141,7 @@ export default async function ProductsPage() {
           isDiscountProduct: Boolean(p.isDiscountProduct),
           audience: p.audience || "unisex",
           branchWhatsapp: productBranchWhatsapp || undefined,
+          branches: productBranches,
         };
       });
     }
@@ -143,7 +161,7 @@ export default async function ProductsPage() {
   return (
     <PageCustomization scope="public" pageKey="products">
     <div className="min-h-screen flex flex-col bg-[#FAF9FB] text-stone-900">
-      <Navbar />
+      <Navbar initialLogoUrl={headerLogo} initialSalonName={salonName} />
       <main className="flex-1">
         <ProductsHero salonName={salonName} />
 

@@ -290,7 +290,7 @@ export default function ContactFormAndMap({
           {/* RIGHT COLUMN: SALON INTERIOR IMAGE                         */}
           {/* ========================================================== */}
           <div className="md:col-span-6 flex flex-col">
-            <div className="relative w-full h-full min-h-[300px] sm:min-h-[380px] md:min-h-full rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm bg-stone-100">
+            <div className="relative w-full h-full aspect-[4/3] sm:aspect-[16/10] md:aspect-auto min-h-[260px] md:min-h-full rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm bg-stone-100">
               <Image
                 src={custom.sectionImage("/images/contact/contact-message-salon.webp")}
                 alt={`${salonName} Modern Salon Interior`}

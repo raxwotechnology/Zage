@@ -75,6 +75,7 @@ export async function POST(request: Request) {
       isFeatured,
       isActive,
       displayOrder,
+      audience,
     } = body;
 
     if (!name?.trim() || !description?.trim() || price === undefined || !durationText?.trim()) {
@@ -109,6 +110,10 @@ export async function POST(request: Request) {
     }
 
     const orderNum = displayOrder !== undefined ? Math.max(0, Number(displayOrder) || 0) : 0;
+    const audienceValue =
+      audience && ["bride", "groom", "both"].includes(audience)
+        ? audience
+        : "both";
 
     const newPackage = await WeddingPackage.create({
       name: name.trim(),
@@ -121,6 +126,7 @@ export async function POST(request: Request) {
       isFeatured: Boolean(isFeatured),
       isActive: isActive ?? true,
       displayOrder: orderNum,
+      audience: audienceValue,
     });
 
     return NextResponse.json(
