@@ -1,8 +1,6 @@
 "use client";
 
 import { useSectionCustomization } from "@/components/customization/CustomizationProvider";
-
-
 import React, { useState, useEffect } from "react";
 import { trackEvent } from "@/lib/analytics-client";
 import {
@@ -23,9 +21,18 @@ interface NormalizedGoogleReview {
   googleMapsUrl?: string;
 }
 
+export type GoogleReviewStatus =
+  | "ready"
+  | "empty"
+  | "disabled"
+  | "not_configured"
+  | "provider_error";
+
 interface GoogleReviewsData {
   success: boolean;
+  status?: GoogleReviewStatus;
   enabled: boolean;
+  configured?: boolean;
   rating: number | null;
   totalReviews?: number;
   reviewCount?: number;
@@ -69,7 +76,12 @@ export default function GoogleReviewsGrid() {
         const branchJson = await branchRes.json();
 
         let initialBranchId = "";
-        if (isMounted && branchJson?.success && Array.isArray(branchJson.branches) && branchJson.branches.length > 0) {
+        if (
+          isMounted &&
+          branchJson?.success &&
+          Array.isArray(branchJson.branches) &&
+          branchJson.branches.length > 0
+        ) {
           setBranches(branchJson.branches);
           initialBranchId = branchJson.branches[0]._id;
           setSelectedBranchId(initialBranchId);
@@ -84,7 +96,7 @@ export default function GoogleReviewsGrid() {
         const revJson = await revRes.json();
 
         if (isMounted) {
-          if (revJson?.success) {
+          if (revJson) {
             setData(revJson);
           } else {
             setData(null);
@@ -120,7 +132,7 @@ export default function GoogleReviewsGrid() {
       const res = await fetch(url);
       const json = await res.json();
 
-      if (json?.success) {
+      if (json) {
         setData(json);
       } else {
         setData(null);
@@ -152,13 +164,16 @@ export default function GoogleReviewsGrid() {
     return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
   };
 
-  const currentBranch = branches.find((b) => b._id === selectedBranchId) || data?.branch;
-  const currentBranchName = currentBranch?.name || "Salon Zage";
+  const selectedBranch = branches.find((b) => b._id === selectedBranchId);
+  const currentBranchName = selectedBranch?.name || data?.branch?.name || "Salon Zage";
 
   // Initial loading skeleton
   if (loading) {
     return (
-      <section className="bg-white py-16 sm:py-20 animate-pulse border-b border-stone-100" data-customization-section="reviews">
+      <section
+        className="bg-white py-16 sm:py-20 animate-pulse border-b border-stone-100"
+        data-customization-section="reviews"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-md mx-auto rounded-3xl border border-stone-200/80 bg-white p-8 shadow-xs text-center space-y-3">
             <div className="h-12 w-12 rounded-full bg-stone-200 mx-auto" />
@@ -192,18 +207,36 @@ export default function GoogleReviewsGrid() {
   const totalReviews = data?.totalReviews ?? data?.reviewCount ?? 0;
   const reviews = Array.isArray(data?.reviews) ? data.reviews : [];
   const businessUrl = data?.businessUrl ?? "";
-  const writeReviewUrl = data?.writeReviewUrl ? data.writeReviewUrl.trim() : null;
-  const hasReviews = Boolean(data?.enabled && reviews.length > 0);
-  const reviewsDisabled = data?.enabled === false;
+  const writeReviewUrl =
+    (data?.writeReviewUrl ? data.writeReviewUrl.trim() : null) ||
+    (selectedBranch?.googleReviewUrl ? selectedBranch.googleReviewUrl.trim() : null);
+
+  const status: GoogleReviewStatus =
+    data?.status ||
+    (reviews.length > 0
+      ? "ready"
+      : data?.enabled === false
+      ? "disabled"
+      : !data?.configured
+      ? "not_configured"
+      : "provider_error");
+
+  const hasReviews = status === "ready" && reviews.length > 0;
 
   return (
-    <section className="bg-white py-16 sm:py-20 border-b border-stone-100" data-customization-section="reviews">
+    <section
+      className="bg-white py-16 sm:py-20 border-b border-stone-100"
+      data-customization-section="reviews"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* ============================================================== */}
         {/* BRANCH SELECTOR TABS                                           */}
         {/* ============================================================== */}
         {branches.length > 1 && (
-          <div id="reviews-branch-selector" className="flex flex-col items-center justify-center space-y-3">
+          <div
+            id="reviews-branch-selector"
+            className="flex flex-col items-center justify-center space-y-3"
+          >
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#03BF62]">
               SELECT BRANCH LOCATION
             </span>
@@ -254,7 +287,7 @@ export default function GoogleReviewsGrid() {
             {/* ============================================================== */}
             {/* GOOGLE RATING SUMMARY FOR SELECTED BRANCH                      */}
             {/* ============================================================== */}
-            {data?.enabled && typeof rating === "number" && rating > 0 && (
+            {hasReviews && typeof rating === "number" && rating > 0 && (
               <div className="flex justify-center">
                 <div className="inline-flex flex-col sm:flex-row items-center gap-5 sm:gap-6 rounded-3xl border border-stone-200/90 bg-white px-8 py-6 sm:px-10 sm:py-7 shadow-xs hover:shadow-md transition-shadow text-center sm:text-left">
                   {/* Google Brand Logo */}
@@ -300,16 +333,39 @@ export default function GoogleReviewsGrid() {
                 <div>
                   <div className="inline-flex items-center gap-2 mb-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#03BF62]" />
-                    <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#03BF62]" data-customization-role="eyebrow">{custom.has("eyebrow") ? custom.text("eyebrow", "") : <>
-                      OUR CLIENTS
-                    </>}</span>
+                    <span
+                      className="text-xs font-semibold uppercase tracking-[0.25em] text-[#03BF62]"
+                      data-customization-role="eyebrow"
+                    >
+                      {custom.has("eyebrow") ? (
+                        custom.text("eyebrow", "")
+                      ) : (
+                        <>OUR CLIENTS</>
+                      )}
+                    </span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900" data-customization-role="heading">{custom.has("heading") ? custom.text("heading", "") : <>
-                    Client Feedback &amp; Reviews
-                  </>}</h2>
-                  <p className="mt-2 text-xs sm:text-sm text-stone-600 max-w-xl" data-customization-role="description">{custom.has("description") ? custom.text("description", "") : <>
-                    See what our valued guests say about their experience at {currentBranchName}.
-                  </>}</p>
+                  <h2
+                    className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900"
+                    data-customization-role="heading"
+                  >
+                    {custom.has("heading") ? (
+                      custom.text("heading", "")
+                    ) : (
+                      <>Client Feedback &amp; Reviews</>
+                    )}
+                  </h2>
+                  <p
+                    className="mt-2 text-xs sm:text-sm text-stone-600 max-w-xl"
+                    data-customization-role="description"
+                  >
+                    {custom.has("description") ? (
+                      custom.text("description", "")
+                    ) : (
+                      <>
+                        See what our valued guests say about their experience at {currentBranchName}.
+                      </>
+                    )}
+                  </p>
                 </div>
 
                 {/* Actions: Write a Review per Branch + View on Google */}
@@ -329,10 +385,17 @@ export default function GoogleReviewsGrid() {
                       }}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#029e51] hover:shadow-md active:scale-[0.98]" data-customization-role="primaryButton"
+                      className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#029e51] hover:shadow-md active:scale-[0.98]"
+                      data-customization-role="primaryButton"
                     >
                       <StarIcon className="h-3.5 w-3.5 fill-amber-300 text-amber-300" />
-                      <span data-customization-role="buttonText">{custom.has("primaryButtonText") ? custom.text("primaryButtonText", "") : <>Write a Review</>}</span>
+                      <span data-customization-role="buttonText">
+                        {custom.has("primaryButtonText") ? (
+                          custom.text("primaryButtonText", "")
+                        ) : (
+                          <>Write a Review</>
+                        )}
+                      </span>
                       <ExternalLinkIcon className="h-3.5 w-3.5 text-white/80" />
                     </a>
                   )}
@@ -342,30 +405,45 @@ export default function GoogleReviewsGrid() {
                       href={businessUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[#03BF62]/30 bg-white px-5 py-2.5 text-xs font-semibold text-[#03BF62] shadow-2xs transition-all hover:bg-[#03BF62]/10 hover:border-[#03BF62] active:scale-[0.98]" data-customization-role="secondaryButton"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#03BF62]/30 bg-white px-5 py-2.5 text-xs font-semibold text-[#03BF62] shadow-2xs transition-all hover:bg-[#03BF62]/10 hover:border-[#03BF62] active:scale-[0.98]"
+                      data-customization-role="secondaryButton"
                     >
-                      <span data-customization-role="buttonText">{custom.has("secondaryButtonText") ? custom.text("secondaryButtonText", "") : <>View on Google</>}</span>
+                      <span data-customization-role="buttonText">
+                        {custom.has("secondaryButtonText") ? (
+                          custom.text("secondaryButtonText", "")
+                        ) : (
+                          <>View on Google</>
+                        )}
+                      </span>
                       <ArrowRightIcon className="h-3.5 w-3.5" />
                     </a>
                   )}
                 </div>
               </div>
 
-              {/* Reviews Cards Grid OR Friendly Empty State */}
+              {/* Reviews Cards Grid OR Explicit Status Empty/Error State */}
               {!hasReviews ? (
                 <div className="rounded-3xl border border-dashed border-stone-300 bg-white p-10 sm:p-12 text-center max-w-lg mx-auto shadow-2xs">
                   <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03BF62]/10 text-[#03BF62] mb-4">
                     <MessageCircleIcon className="h-7 w-7" />
                   </div>
                   <h3 className="text-lg font-bold text-stone-900">
-                    {reviewsDisabled
+                    {status === "disabled"
                       ? "Reviews Unavailable"
-                      : `Reviews Updating for ${currentBranchName}`}
+                      : status === "not_configured"
+                      ? "Reviews Not Configured"
+                      : status === "provider_error"
+                      ? "Reviews Temporarily Unavailable"
+                      : `No Reviews Available`}
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-stone-500 leading-relaxed">
-                    {reviewsDisabled
-                      ? "Google Reviews are not currently available for this branch."
-                      : `Google reviews for ${currentBranchName} are currently updating or not configured yet.`}
+                    {status === "disabled"
+                      ? `Google Reviews are not currently available for ${currentBranchName}.`
+                      : status === "not_configured"
+                      ? `Google Reviews are not configured for ${currentBranchName}.`
+                      : status === "provider_error"
+                      ? "Reviews are temporarily unavailable. Please try again later."
+                      : `No Google reviews are currently available for ${currentBranchName}.`}
                   </p>
                   {writeReviewUrl && (
                     <div className="mt-5">
@@ -383,10 +461,17 @@ export default function GoogleReviewsGrid() {
                         }}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#029e51]" data-customization-role="primaryButton"
+                        className="inline-flex items-center gap-2 rounded-full bg-[#03BF62] px-5 py-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#029e51]"
+                        data-customization-role="primaryButton"
                       >
                         <StarIcon className="h-3.5 w-3.5 fill-amber-300 text-amber-300" />
-                        <span data-customization-role="buttonText">{custom.has("primaryButtonText") ? custom.text("primaryButtonText", "") : <>Write a Review</>}</span>
+                        <span data-customization-role="buttonText">
+                          {custom.has("primaryButtonText") ? (
+                            custom.text("primaryButtonText", "")
+                          ) : (
+                            <>Write a Review</>
+                          )}
+                        </span>
                         <ExternalLinkIcon className="h-3.5 w-3.5" />
                       </a>
                     </div>

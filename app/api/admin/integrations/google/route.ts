@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
 import { connectDB } from "@/lib/mongodb";
 import IntegrationSettings from "@/models/IntegrationSettings";
 import { encryptSecret } from "@/lib/integrations/secrets";
 import { verifyAdminPassword } from "@/lib/integrations/verify-password";
+import { isValidGooglePlacesApiKey } from "@/lib/integrations/config";
 
 // PATCH /api/admin/integrations/google - Save Google Places API key override
 export async function PATCH(request: Request) {
@@ -30,6 +32,17 @@ export async function PATCH(request: Request) {
 
     // If updating the API key, require password verification
     if (trimmedKey) {
+      if (!isValidGooglePlacesApiKey(trimmedKey)) {
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "Please enter a valid Google Places API key. Placeholder or dummy keys are not permitted.",
+          },
+          { status: 400 }
+        );
+      }
+
       if (!currentPassword) {
         return NextResponse.json(
           {
@@ -68,6 +81,14 @@ export async function PATCH(request: Request) {
     settingsDoc.updatedBy = user._id;
     await settingsDoc.save();
 
+    // Invalidate cached reviews so new API key takes effect immediately
+    try {
+      revalidatePath("/reviews");
+      revalidatePath("/api/google-reviews");
+    } catch {
+      // Ignore if called outside of Next.js server context
+    }
+
     return NextResponse.json({
       success: true,
       message: "Google Places API configuration updated successfully",
@@ -99,6 +120,14 @@ export async function DELETE() {
       {},
       { $unset: { googlePlaces: 1 }, $set: { updatedBy: user._id } }
     );
+
+    // Invalidate cached reviews so reversion takes effect immediately
+    try {
+      revalidatePath("/reviews");
+      revalidatePath("/api/google-reviews");
+    } catch {
+      // Ignore if called outside of Next.js server context
+    }
 
     return NextResponse.json({
       success: true,

@@ -2610,7 +2610,11 @@ export default function AdminSettingsPage() {
                       type="password"
                       value={googleApiKey}
                       onChange={(e) => setGoogleApiKey(e.target.value)}
-                      placeholder="Enter a new API key to replace the current key"
+                      placeholder={
+                        integrationsStatus?.googlePlaces.apiKeyConfigured
+                          ? "•••••••••••••••• (leave blank to keep current key)"
+                          : "Enter Google Places API key"
+                      }
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 pl-10 pr-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white placeholder:text-stone-400"
                     />
                   </div>

@@ -125,8 +125,42 @@ export async function getCloudinaryConfig(): Promise<ResolvedCloudinaryConfig> {
 }
 
 /**
+ * Validates whether a Google Places API key is genuine or a placeholder/dummy value.
+ * Values like 'dummy_key', 'your_key', 'your_api_key', 'changeme', 'placeholder',
+ * or strings shorter than 20 characters are considered invalid placeholders.
+ */
+export function isValidGooglePlacesApiKey(key?: string | null): boolean {
+  if (!key || typeof key !== "string") {
+    return false;
+  }
+  const trimmed = key.trim();
+  if (trimmed.length < 20) {
+    return false;
+  }
+  const lower = trimmed.toLowerCase();
+  const placeholderPatterns = [
+    "dummy",
+    "placeholder",
+    "changeme",
+    "your_key",
+    "your-key",
+    "your_api_key",
+    "your-api-key",
+    "replace",
+    "example",
+    "sample",
+    "insert",
+    "todo",
+  ];
+  return !placeholderPatterns.some((pattern) => lower.includes(pattern));
+}
+
+/**
  * Central resolver for Google Places API Key.
- * Fallback: Admin Override -> Environment Default -> Not Configured
+ * Priority:
+ * 1. Admin Override saved in IntegrationSettings
+ * 2. Environment variable fallback
+ * 3. Not Configured
  */
 export async function getGooglePlacesConfig(): Promise<ResolvedGooglePlacesConfig> {
   const doc = await getIntegrationSettingsDocument();
@@ -137,27 +171,39 @@ export async function getGooglePlacesConfig(): Promise<ResolvedGooglePlacesConfi
     ? safeDecryptSecret(dbGoogle?.encryptedApiKey)
     : null;
 
-  const hasAdminOverride = Boolean(hasDbSecret);
+  const validAdminKey = isValidGooglePlacesApiKey(decryptedDbSecret)
+    ? decryptedDbSecret!.trim()
+    : "";
 
-  const apiKey =
-    decryptedDbSecret ||
-    process.env.GOOGLE_PLACES_API_KEY?.trim() ||
-    "";
+  const envRawKey = process.env.GOOGLE_PLACES_API_KEY?.trim() || "";
+  const validEnvKey = isValidGooglePlacesApiKey(envRawKey) ? envRawKey : "";
 
-  let source: "admin" | "environment" | "none" = "none";
-  if (hasAdminOverride) {
-    source = "admin";
-  } else if (process.env.GOOGLE_PLACES_API_KEY?.trim()) {
-    source = "environment";
+  // Priority 1: Admin Override saved in IntegrationSettings
+  if (validAdminKey) {
+    return {
+      apiKey: validAdminKey,
+      hasAdminOverride: true,
+      source: "admin",
+      isConfigured: true,
+    };
   }
 
-  const isConfigured = Boolean(apiKey);
+  // Priority 2: Environment variable fallback
+  if (validEnvKey) {
+    return {
+      apiKey: validEnvKey,
+      hasAdminOverride: false,
+      source: "environment",
+      isConfigured: true,
+    };
+  }
 
+  // Priority 3: Not configured
   return {
-    apiKey,
-    hasAdminOverride,
-    source,
-    isConfigured,
+    apiKey: "",
+    hasAdminOverride: false,
+    source: "none",
+    isConfigured: false,
   };
 }
 
@@ -246,7 +292,7 @@ export async function getIntegrationsSafeStatus(): Promise<SafeIntegrationsStatu
       isConfigured: cld.isConfigured,
     },
     googlePlaces: {
-      apiKeyConfigured: Boolean(google.apiKey),
+      apiKeyConfigured: google.isConfigured,
       hasAdminOverride: google.hasAdminOverride,
       source: google.source,
       isConfigured: google.isConfigured,

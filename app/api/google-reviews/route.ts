@@ -14,8 +14,16 @@ export interface NormalizedGoogleReview {
   googleMapsUrl?: string;
 }
 
+export type GoogleReviewStatus =
+  | "ready"
+  | "empty"
+  | "disabled"
+  | "not_configured"
+  | "provider_error";
+
 export interface GoogleReviewsResponse {
   success: boolean;
+  status: GoogleReviewStatus;
   enabled: boolean;
   configured?: boolean;
   rating: number | null;
@@ -79,7 +87,8 @@ export async function GET(request: Request) {
       // Branch does not exist or is inactive
       if (!branchDoc || branchDoc.isActive === false) {
         return NextResponse.json<GoogleReviewsResponse>({
-          success: true,
+          success: false,
+          status: "not_configured",
           enabled: false,
           configured: false,
           rating: null,
@@ -96,7 +105,7 @@ export async function GET(request: Request) {
               }
             : null,
           message: branchDoc
-            ? "Google Reviews are not currently available for this branch."
+            ? `Google Reviews are not currently available for ${branchDoc.name}.`
             : "Branch not found",
         });
       }
@@ -111,12 +120,13 @@ export async function GET(request: Request) {
       const branchBusinessUrl =
         branchDoc.googleReviewUrl?.trim() || branchDoc.googleMapsUrl?.trim() || "";
 
-      // Branch has reviews disabled or missing Google Place ID
-      if (!branchDoc.reviewsEnabled || !branchDoc.googlePlaceId?.trim()) {
+      // Branch has reviews disabled
+      if (!branchDoc.reviewsEnabled) {
         return NextResponse.json<GoogleReviewsResponse>({
           success: true,
+          status: "disabled",
           enabled: false,
-          configured: false,
+          configured: Boolean(branchDoc.googlePlaceId?.trim()),
           rating: null,
           totalReviews: 0,
           reviewCount: 0,
@@ -124,18 +134,15 @@ export async function GET(request: Request) {
           businessUrl: branchBusinessUrl,
           writeReviewUrl: branchWriteReviewUrl,
           branch: branchInfo,
-          message: "Google Reviews are not currently available for this branch.",
+          message: `Google reviews are currently disabled for ${branchDoc.name}.`,
         });
       }
 
-      // Branch has reviews enabled and Google Place ID configured
-      const placeId = branchDoc.googlePlaceId.trim();
-      const googleConfig = await getGooglePlacesConfig();
-      const apiKey = googleConfig.apiKey;
-
-      if (!apiKey || !apiKey.trim()) {
+      // Branch has reviews enabled but missing Google Place ID
+      if (!branchDoc.googlePlaceId?.trim()) {
         return NextResponse.json<GoogleReviewsResponse>({
           success: true,
+          status: "not_configured",
           enabled: true,
           configured: false,
           rating: null,
@@ -145,7 +152,32 @@ export async function GET(request: Request) {
           businessUrl: branchBusinessUrl,
           writeReviewUrl: branchWriteReviewUrl,
           branch: branchInfo,
-          message: "Google Places API key is not configured",
+          message: `Google Reviews are not configured for ${branchDoc.name}.`,
+        });
+      }
+
+      // Branch has reviews enabled and Google Place ID configured
+      const placeId = branchDoc.googlePlaceId.trim();
+
+      // Resolve Google Places API key using shared resolver
+      // Priority: Admin Override (IntegrationSettings) -> Environment Variable -> None
+      const googleConfig = await getGooglePlacesConfig();
+      const apiKey = googleConfig.apiKey;
+
+      if (!googleConfig.isConfigured || !apiKey) {
+        return NextResponse.json<GoogleReviewsResponse>({
+          success: false,
+          status: "provider_error",
+          enabled: true,
+          configured: false,
+          rating: null,
+          totalReviews: 0,
+          reviewCount: 0,
+          reviews: [],
+          businessUrl: branchBusinessUrl,
+          writeReviewUrl: branchWriteReviewUrl,
+          branch: branchInfo,
+          message: "Google Reviews service is not configured.",
         });
       }
 
@@ -163,6 +195,7 @@ export async function GET(request: Request) {
         console.error("Google Places API HTTP error:", googleRes.status, googleRes.statusText);
         return NextResponse.json<GoogleReviewsResponse>({
           success: false,
+          status: "provider_error",
           enabled: true,
           configured: true,
           rating: null,
@@ -172,7 +205,7 @@ export async function GET(request: Request) {
           businessUrl: branchBusinessUrl,
           writeReviewUrl: branchWriteReviewUrl,
           branch: branchInfo,
-          message: "Google reviews are temporarily unavailable",
+          message: "Reviews are temporarily unavailable. Please try again later.",
         });
       }
 
@@ -186,6 +219,7 @@ export async function GET(request: Request) {
         );
         return NextResponse.json<GoogleReviewsResponse>({
           success: false,
+          status: "provider_error",
           enabled: true,
           configured: true,
           rating: null,
@@ -195,7 +229,7 @@ export async function GET(request: Request) {
           businessUrl: branchBusinessUrl,
           writeReviewUrl: branchWriteReviewUrl,
           branch: branchInfo,
-          message: "Google reviews are temporarily unavailable",
+          message: "Reviews are temporarily unavailable. Please try again later.",
         });
       }
 
@@ -222,8 +256,12 @@ export async function GET(request: Request) {
           googleMapsUrl: r.author_url || "",
         }));
 
+      const finalStatus: GoogleReviewStatus =
+        normalizedReviews.length > 0 ? "ready" : "empty";
+
       return NextResponse.json<GoogleReviewsResponse>({
         success: true,
+        status: finalStatus,
         enabled: true,
         configured: true,
         rating,
@@ -233,6 +271,10 @@ export async function GET(request: Request) {
         businessUrl: resolvedBusinessUrl,
         writeReviewUrl: branchWriteReviewUrl,
         branch: branchInfo,
+        message:
+          finalStatus === "empty"
+            ? `No Google reviews are currently available for ${branchDoc.name}.`
+            : undefined,
       });
     }
 
@@ -251,8 +293,10 @@ export async function GET(request: Request) {
     let businessUrl = "";
     let reviewsEnabled = false;
     let branchInfo: { _id: string; name: string; slug: string } | null = null;
+    let branchName = "Salon Zage";
 
     if (defaultBranch) {
+      branchName = defaultBranch.name;
       reviewsEnabled = Boolean(defaultBranch.reviewsEnabled);
       placeId = (defaultBranch.googlePlaceId || "").trim();
       businessUrl = (defaultBranch.googleReviewUrl || defaultBranch.googleMapsUrl || "").trim();
@@ -269,10 +313,11 @@ export async function GET(request: Request) {
       businessUrl = (globalGoogleSettings?.businessUrl || "").trim();
     }
 
-    if (!reviewsEnabled || !placeId) {
+    if (!reviewsEnabled) {
       return NextResponse.json<GoogleReviewsResponse>({
         success: true,
-        enabled: reviewsEnabled,
+        status: "disabled",
+        enabled: false,
         configured: Boolean(placeId),
         rating: null,
         totalReviews: 0,
@@ -281,9 +326,24 @@ export async function GET(request: Request) {
         businessUrl,
         writeReviewUrl: businessUrl || null,
         branch: branchInfo,
-        message: !reviewsEnabled
-          ? "Google Reviews are currently disabled"
-          : "Google Place ID is not configured",
+        message: `Google reviews are currently disabled for ${branchName}.`,
+      });
+    }
+
+    if (!placeId) {
+      return NextResponse.json<GoogleReviewsResponse>({
+        success: true,
+        status: "not_configured",
+        enabled: true,
+        configured: false,
+        rating: null,
+        totalReviews: 0,
+        reviewCount: 0,
+        reviews: [],
+        businessUrl,
+        writeReviewUrl: businessUrl || null,
+        branch: branchInfo,
+        message: `Google Reviews are not configured for ${branchName}.`,
       });
     }
 
@@ -291,9 +351,10 @@ export async function GET(request: Request) {
 
     const googleConfig = await getGooglePlacesConfig();
     const apiKey = googleConfig.apiKey;
-    if (!apiKey || !apiKey.trim()) {
+    if (!googleConfig.isConfigured || !apiKey) {
       return NextResponse.json<GoogleReviewsResponse>({
-        success: true,
+        success: false,
+        status: "provider_error",
         enabled: true,
         configured: false,
         rating: null,
@@ -302,7 +363,8 @@ export async function GET(request: Request) {
         reviews: [],
         businessUrl,
         writeReviewUrl,
-        message: "Google Places API key is not configured",
+        branch: branchInfo,
+        message: "Google Reviews service is not configured.",
       });
     }
 
@@ -320,6 +382,7 @@ export async function GET(request: Request) {
       console.error("Google Places API HTTP error:", googleRes.status, googleRes.statusText);
       return NextResponse.json<GoogleReviewsResponse>({
         success: false,
+        status: "provider_error",
         enabled: true,
         configured: true,
         rating: null,
@@ -328,7 +391,8 @@ export async function GET(request: Request) {
         reviews: [],
         businessUrl,
         writeReviewUrl,
-        message: "Google reviews are temporarily unavailable",
+        branch: branchInfo,
+        message: "Reviews are temporarily unavailable. Please try again later.",
       });
     }
 
@@ -342,6 +406,7 @@ export async function GET(request: Request) {
       );
       return NextResponse.json<GoogleReviewsResponse>({
         success: false,
+        status: "provider_error",
         enabled: true,
         configured: true,
         rating: null,
@@ -350,7 +415,8 @@ export async function GET(request: Request) {
         reviews: [],
         businessUrl,
         writeReviewUrl,
-        message: "Google reviews are temporarily unavailable",
+        branch: branchInfo,
+        message: "Reviews are temporarily unavailable. Please try again later.",
       });
     }
 
@@ -379,8 +445,12 @@ export async function GET(request: Request) {
         googleMapsUrl: r.author_url || "",
       }));
 
+    const finalStatus: GoogleReviewStatus =
+      normalizedReviews.length > 0 ? "ready" : "empty";
+
     return NextResponse.json<GoogleReviewsResponse>({
       success: true,
+      status: finalStatus,
       enabled: true,
       configured: true,
       rating,
@@ -390,12 +460,17 @@ export async function GET(request: Request) {
       businessUrl: resolvedBusinessUrl,
       writeReviewUrl: writeReviewUrl || resolvedBusinessUrl || null,
       branch: branchInfo,
+      message:
+        finalStatus === "empty"
+          ? `No Google reviews are currently available for ${branchName}.`
+          : undefined,
     });
   } catch (error) {
     console.error("GET /api/google-reviews internal error:", error);
     return NextResponse.json<GoogleReviewsResponse>(
       {
         success: false,
+        status: "provider_error",
         enabled: false,
         rating: null,
         totalReviews: 0,
@@ -403,7 +478,7 @@ export async function GET(request: Request) {
         reviews: [],
         businessUrl: "",
         writeReviewUrl: null,
-        message: "Google reviews are temporarily unavailable",
+        message: "Reviews are temporarily unavailable. Please try again later.",
       },
       { status: 200 }
     );
