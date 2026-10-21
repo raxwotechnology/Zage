@@ -72,6 +72,8 @@ export interface ISalonSettings extends Document {
   logoPublicId?: string;
   footerLogo?: string;
   footerLogoPublicId?: string;
+  favicon?: string;
+  faviconPublicId?: string;
   aboutDescription: string;
   phone: string;
   phoneSecondary: string;
@@ -128,6 +130,16 @@ const SalonSettingsSchema = new Schema<ISalonSettings>(
       trim: true,
     },
     footerLogoPublicId: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    favicon: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    faviconPublicId: {
       type: String,
       default: "",
       trim: true,

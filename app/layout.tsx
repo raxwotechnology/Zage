@@ -20,11 +20,34 @@ import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ScrollProgressButton from "@/components/ui/ScrollProgressButton";
 import PageViewTracker from "@/components/analytics/PageViewTracker";
 
-export const metadata: Metadata = {
-  title: "Salon Zage | Look Beautiful. Feel Confident.",
-  description:
-    "Experience professional beauty and hair care services designed to help you look and feel your best. Premium styling, treatments, and bridal care.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSalonSettings();
+
+  const title = settings?.salonName
+    ? `${settings.salonName} | Look Beautiful. Feel Confident.`
+    : "Salon Zage | Look Beautiful. Feel Confident.";
+
+  const icons: Metadata["icons"] = settings?.favicon
+    ? {
+        icon: [{ url: settings.favicon }],
+        shortcut: [settings.favicon],
+        apple: [{ url: settings.favicon }],
+      }
+    : {
+        icon: [
+          { url: "/icon.png", type: "image/png" },
+          { url: "/favicon.ico", sizes: "any" },
+        ],
+        apple: [{ url: "/apple-icon.png", type: "image/png" }],
+      };
+
+  return {
+    title,
+    description:
+      "Experience professional beauty and hair care services designed to help you look and feel your best. Premium styling, treatments, and bridal care.",
+    icons,
+  };
+}
 
 export default async function RootLayout({
   children,

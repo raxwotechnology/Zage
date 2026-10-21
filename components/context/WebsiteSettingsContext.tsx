@@ -7,6 +7,7 @@ export interface WebsiteSettingsData {
   salonName: string;
   headerLogo: string;
   footerLogo: string;
+  favicon?: string;
   externalSystem: {
     loginUrl: string;
     registerUrl: string;
@@ -19,6 +20,7 @@ const defaultWebsiteSettings: WebsiteSettingsData = {
   salonName: "Salon Zage",
   headerLogo: "",
   footerLogo: "",
+  favicon: "",
   externalSystem: {
     loginUrl: "",
     registerUrl: "",
@@ -46,6 +48,7 @@ export function WebsiteSettingsProvider({
     salonName: initialSettings?.salonName || defaultWebsiteSettings.salonName,
     headerLogo: initialSettings?.headerLogo || defaultWebsiteSettings.headerLogo,
     footerLogo: initialSettings?.footerLogo || defaultWebsiteSettings.footerLogo,
+    favicon: initialSettings?.favicon || defaultWebsiteSettings.favicon,
     externalSystem: {
       loginUrl: initialSettings?.externalSystem?.loginUrl || defaultWebsiteSettings.externalSystem.loginUrl,
       registerUrl: initialSettings?.externalSystem?.registerUrl || defaultWebsiteSettings.externalSystem.registerUrl,

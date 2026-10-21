@@ -83,6 +83,8 @@ export async function PUT(request: Request) {
       logoPublicId,
       footerLogo,
       footerLogoPublicId,
+      favicon,
+      faviconPublicId,
       aboutDescription,
       phone,
       phoneSecondary,
@@ -165,6 +167,41 @@ export async function PUT(request: Request) {
       }
     }
 
+    // Validate favicon URL if provided
+    if (favicon !== undefined && favicon !== null && typeof favicon === "string" && favicon.trim() !== "") {
+      const trimmedFavicon = favicon.trim();
+      const isHttps = trimmedFavicon.startsWith("https://");
+      const isLocal = trimmedFavicon.startsWith("/") && !trimmedFavicon.startsWith("//");
+      if (!isHttps && !isLocal) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Please enter a valid favicon icon URL (must begin with https:// or /)",
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Validate faviconPublicId if provided
+    if (
+      faviconPublicId !== undefined &&
+      faviconPublicId !== null &&
+      typeof faviconPublicId === "string" &&
+      faviconPublicId.trim() !== ""
+    ) {
+      const trimmedPublicId = faviconPublicId.trim();
+      if (!trimmedPublicId.startsWith(CLOUDINARY_FOLDERS.SALON)) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: `Favicon must belong to ${CLOUDINARY_FOLDERS.SALON}`,
+          },
+          { status: 400 }
+        );
+      }
+    }
+
     await connectDB();
     const settings = await getOrCreateSettings();
 
@@ -173,6 +210,9 @@ export async function PUT(request: Request) {
 
     const oldFooterPublicId = settings.footerLogoPublicId ? settings.footerLogoPublicId.trim() : "";
     let shouldDeleteOldFooterCloudinary = false;
+
+    const oldFaviconPublicId = settings.faviconPublicId ? settings.faviconPublicId.trim() : "";
+    let shouldDeleteOldFaviconCloudinary = false;
 
     if (salonName !== undefined) settings.salonName = salonName.trim();
 
@@ -223,6 +263,30 @@ export async function PUT(request: Request) {
       if (oldFooterPublicId && oldFooterPublicId.startsWith(CLOUDINARY_FOLDERS.SALON)) {
         settings.footerLogoPublicId = "";
         shouldDeleteOldFooterCloudinary = true;
+      }
+    }
+
+    // Update favicon and faviconPublicId (Browser Tab Icon / Favicon)
+    if (favicon !== undefined) {
+      const newFavicon = typeof favicon === "string" ? favicon.trim() : "";
+      settings.favicon = newFavicon;
+    }
+
+    if (faviconPublicId !== undefined) {
+      const newFaviconPublicId = typeof faviconPublicId === "string" ? faviconPublicId.trim() : "";
+      settings.faviconPublicId = newFaviconPublicId;
+
+      if (
+        oldFaviconPublicId &&
+        oldFaviconPublicId.startsWith(CLOUDINARY_FOLDERS.SALON) &&
+        oldFaviconPublicId !== newFaviconPublicId
+      ) {
+        shouldDeleteOldFaviconCloudinary = true;
+      }
+    } else if (favicon !== undefined && !favicon) {
+      if (oldFaviconPublicId && oldFaviconPublicId.startsWith(CLOUDINARY_FOLDERS.SALON)) {
+        settings.faviconPublicId = "";
+        shouldDeleteOldFaviconCloudinary = true;
       }
     }
 
@@ -413,6 +477,14 @@ export async function PUT(request: Request) {
         await deleteCloudinaryImage(oldFooterPublicId);
       } catch (cldErr) {
         console.error("Failed to delete previous salon footer logo from Cloudinary:", cldErr);
+      }
+    }
+
+    if (shouldDeleteOldFaviconCloudinary && oldFaviconPublicId) {
+      try {
+        await deleteCloudinaryImage(oldFaviconPublicId);
+      } catch (cldErr) {
+        console.error("Failed to delete previous salon favicon from Cloudinary:", cldErr);
       }
     }
 

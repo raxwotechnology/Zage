@@ -10,6 +10,7 @@ export interface PublicSalonSettings {
   salonName: string;
   headerLogo: string;
   footerLogo: string;
+  favicon?: string;
   externalSystem: {
     loginUrl: string;
     registerUrl: string;
@@ -32,6 +33,7 @@ export const getSalonSettings = cache(async (): Promise<PublicSalonSettings> => 
       salonName: settings?.salonName || "Salon Zage",
       headerLogo: settings?.logo || "",
       footerLogo: settings?.footerLogo || settings?.logo || "",
+      favicon: settings?.favicon || "",
       externalSystem: {
         loginUrl: settings?.externalSystem?.loginUrl || "",
         registerUrl: settings?.externalSystem?.registerUrl || "",
@@ -45,6 +47,7 @@ export const getSalonSettings = cache(async (): Promise<PublicSalonSettings> => 
       salonName: "Salon Zage",
       headerLogo: "",
       footerLogo: "",
+      favicon: "",
       externalSystem: {
         loginUrl: "",
         registerUrl: "",
