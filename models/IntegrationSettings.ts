@@ -10,11 +10,19 @@ export interface IGooglePlacesSettings {
   encryptedApiKey?: string;
 }
 
+export interface IAiProviderConfig {
+  encryptedApiKey?: string;
+  model?: string;
+  baseUrl?: string;
+}
+
 export interface IAiSettings {
   provider?: string;
   encryptedApiKey?: string;
   model?: string;
   baseUrl?: string;
+  openai?: IAiProviderConfig;
+  gemini?: IAiProviderConfig;
 }
 
 export interface IIntegrationSettings extends Document {
@@ -42,12 +50,23 @@ const GooglePlacesSettingsSchema = new Schema<IGooglePlacesSettings>(
   { _id: false }
 );
 
+const AiProviderConfigSchema = new Schema<IAiProviderConfig>(
+  {
+    encryptedApiKey: { type: String, trim: true },
+    model: { type: String, trim: true },
+    baseUrl: { type: String, trim: true },
+  },
+  { _id: false }
+);
+
 const AiSettingsSchema = new Schema<IAiSettings>(
   {
     provider: { type: String, trim: true, default: "openai" },
     encryptedApiKey: { type: String, trim: true },
     model: { type: String, trim: true, default: "gpt-4o-mini" },
     baseUrl: { type: String, trim: true },
+    openai: { type: AiProviderConfigSchema, default: () => ({}) },
+    gemini: { type: AiProviderConfigSchema, default: () => ({}) },
   },
   { _id: false }
 );
@@ -63,6 +82,14 @@ const IntegrationSettingsSchema = new Schema<IIntegrationSettings>(
     timestamps: true,
   }
 );
+
+if (
+  process.env.NODE_ENV !== "production" &&
+  mongoose.models &&
+  mongoose.models.IntegrationSettings
+) {
+  delete (mongoose.models as Record<string, unknown>).IntegrationSettings;
+}
 
 const IntegrationSettings: Model<IIntegrationSettings> =
   mongoose.models.IntegrationSettings ||

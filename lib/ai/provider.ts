@@ -35,8 +35,9 @@ export class AiProviderError extends Error {
  * Preserves compatibility with testing suites.
  */
 export function isAiConfigured(): boolean {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  return Boolean(apiKey && apiKey.length > 0);
+  const openAiKey = process.env.OPENAI_API_KEY?.trim();
+  const geminiKey = process.env.GEMINI_API_KEY?.trim();
+  return Boolean((openAiKey && openAiKey.length > 0) || (geminiKey && geminiKey.length > 0));
 }
 
 /**
@@ -53,11 +54,19 @@ export async function isAiConfiguredAsync(): Promise<boolean> {
  */
 export function getAiConfig(): AiConfigInfo {
   const provider = (process.env.AI_PROVIDER || "openai").toLowerCase();
-  const model = process.env.OPENAI_MODEL?.trim() || "gpt-4o-mini";
+  const model =
+    provider === "gemini"
+      ? process.env.GEMINI_MODEL?.trim() || "gemini-3.8-flash"
+      : process.env.OPENAI_MODEL?.trim() || "gpt-4o-mini";
+  const baseUrl =
+    provider === "gemini"
+      ? process.env.GEMINI_BASE_URL?.trim() || "https://generativelanguage.googleapis.com/v1beta/openai/"
+      : process.env.OPENAI_BASE_URL?.trim() || "https://api.openai.com/v1";
   return {
     configured: isAiConfigured(),
     provider,
     model,
+    baseUrl,
   };
 }
 
@@ -97,8 +106,14 @@ export async function generateAiChatCompletion(
     );
   }
 
-  const model = aiConfig.model || "gpt-4o-mini";
-  let baseUrl = aiConfig.baseUrl || "https://api.openai.com/v1";
+  const model =
+    aiConfig.model ||
+    (aiConfig.provider === "gemini" ? "gemini-3.8-flash" : "gpt-4o-mini");
+  let baseUrl =
+    aiConfig.baseUrl ||
+    (aiConfig.provider === "gemini"
+      ? "https://generativelanguage.googleapis.com/v1beta/openai/"
+      : "https://api.openai.com/v1");
   if (baseUrl.endsWith("/")) baseUrl = baseUrl.slice(0, -1);
 
   const timeoutMs = options.timeoutMs ?? 30000;
@@ -139,6 +154,9 @@ export async function generateAiChatCompletion(
         }
       } catch {
         // use fallback
+      }
+      if (apiKey && errorMessage.includes(apiKey)) {
+        errorMessage = errorMessage.split(apiKey).join("[REDACTED_API_KEY]");
       }
       throw new AiProviderError(
         `AI Provider error (${res.status}): ${errorMessage}`,

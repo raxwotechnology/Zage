@@ -158,6 +158,15 @@ const emptyBranchForm: MainBranchFormState = {
   openingHours: DEFAULT_BRANCH_HOURS,
 };
 
+export interface SafeAiProviderDetails {
+  model: string;
+  baseUrl: string;
+  apiKeyConfigured: boolean;
+  hasAdminOverride: boolean;
+  source: "admin" | "environment" | "none";
+  isConfigured: boolean;
+}
+
 export interface IntegrationSafeInfo {
   cloudinary: {
     cloudName: string;
@@ -181,6 +190,8 @@ export interface IntegrationSafeInfo {
     hasAdminOverride: boolean;
     source: "admin" | "environment" | "none";
     isConfigured: boolean;
+    openai?: SafeAiProviderDetails;
+    gemini?: SafeAiProviderDetails;
   };
 }
 
@@ -285,7 +296,7 @@ export default function AdminSettingsPage() {
   const [clearingGoogle, setClearingGoogle] = useState(false);
 
   // AI Provider form state
-  const [aiProvider, setAiProvider] = useState("openai");
+  const [aiProvider, setAiProvider] = useState<"openai" | "gemini">("openai");
   const [aiModel, setAiModel] = useState("gpt-4o-mini");
   const [aiBaseUrl, setAiBaseUrl] = useState("");
   const [aiApiKey, setAiApiKey] = useState("");
@@ -293,6 +304,7 @@ export default function AdminSettingsPage() {
   const [showAiPassword, setShowAiPassword] = useState(false);
   const [savingAi, setSavingAi] = useState(false);
   const [clearingAi, setClearingAi] = useState(false);
+  const [testingAi, setTestingAi] = useState(false);
 
   // Clear confirmation modal state
   const [confirmClearModal, setConfirmClearModal] = useState<{
@@ -394,9 +406,16 @@ export default function AdminSettingsPage() {
           setIntegrationsStatus(info);
           setCldCloudName(info.cloudinary.cloudName || "");
           setCldApiKey(info.cloudinary.apiKey || "");
-          setAiProvider(info.ai.provider || "openai");
-          setAiModel(info.ai.model || "gpt-4o-mini");
-          setAiBaseUrl(info.ai.baseUrl || "");
+          const activeProv: "openai" | "gemini" =
+            info.ai.provider === "gemini" ? "gemini" : "openai";
+          setAiProvider(activeProv);
+          setAiModel(info.ai.model || (activeProv === "gemini" ? "gemini-3.8-flash" : "gpt-4o-mini"));
+          setAiBaseUrl(
+            info.ai.baseUrl ||
+              (activeProv === "gemini"
+                ? "https://generativelanguage.googleapis.com/v1beta/openai/"
+                : "https://api.openai.com/v1")
+          );
         }
       }
     } catch (err) {
@@ -1019,6 +1038,54 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const handleAiProviderChange = (newProvider: "openai" | "gemini") => {
+    setAiProvider(newProvider);
+    setAiApiKey("");
+    setAiPassword("");
+
+    if (newProvider === "gemini") {
+      const geminiInfo = integrationsStatus?.ai?.gemini;
+      setAiModel(geminiInfo?.model || "gemini-3.8-flash");
+      setAiBaseUrl(
+        geminiInfo?.baseUrl ||
+          "https://generativelanguage.googleapis.com/v1beta/openai/"
+      );
+    } else {
+      const openaiInfo = integrationsStatus?.ai?.openai;
+      setAiModel(openaiInfo?.model || "gpt-4o-mini");
+      setAiBaseUrl(openaiInfo?.baseUrl || "https://api.openai.com/v1");
+    }
+  };
+
+  const handleTestAiConnection = async () => {
+    setTestingAi(true);
+    try {
+      const res = await fetch("/api/admin/integrations/ai/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          provider: aiProvider,
+          model: aiModel.trim() || undefined,
+          baseUrl: aiBaseUrl.trim() || undefined,
+          apiKey: aiApiKey.trim() || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        showNotification("success", data.message || "Connection test successful!");
+      } else {
+        showNotification("error", data.message || "Connection test failed.");
+      }
+    } catch (err) {
+      showNotification(
+        "error",
+        err instanceof Error ? err.message : "Network error during connection test."
+      );
+    } finally {
+      setTestingAi(false);
+    }
+  };
+
   const handleSaveAi = async (e: FormEvent) => {
     e.preventDefault();
     if (aiApiKey.trim() && !aiPassword.trim()) {
@@ -1062,7 +1129,11 @@ export default function AdminSettingsPage() {
         : setClearingAi;
     isClearing(true);
     try {
-      const res = await fetch(`/api/admin/integrations/${target}`, {
+      const url =
+        target === "ai"
+          ? `/api/admin/integrations/ai?provider=${aiProvider}`
+          : `/api/admin/integrations/${target}`;
+      const res = await fetch(url, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -2901,7 +2972,9 @@ export default function AdminSettingsPage() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
-                  {integrationsStatus?.ai.isConfigured ? (
+                  {(aiProvider === "gemini"
+                    ? (integrationsStatus?.ai?.gemini?.isConfigured ?? integrationsStatus?.ai.isConfigured)
+                    : (integrationsStatus?.ai?.openai?.isConfigured ?? integrationsStatus?.ai.isConfigured)) ? (
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                       <CheckCircleIcon className="h-3.5 w-3.5" />
                       Configured
@@ -2914,11 +2987,18 @@ export default function AdminSettingsPage() {
                   )}
 
                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-stone-100 text-stone-700 border border-stone-200">
+                    Active:{" "}
+                    <strong className="font-semibold text-stone-900 capitalize">
+                      {integrationsStatus?.ai.provider === "gemini" ? "Google Gemini" : "OpenAI"}
+                    </strong>
+                  </span>
+
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-stone-100 text-stone-700 border border-stone-200">
                     Source:{" "}
                     <strong className="font-semibold text-stone-900">
-                      {integrationsStatus?.ai.source === "admin"
+                      {((aiProvider === "gemini" ? integrationsStatus?.ai?.gemini?.source : integrationsStatus?.ai?.openai?.source) || integrationsStatus?.ai?.source) === "admin"
                         ? "Admin Override"
-                        : integrationsStatus?.ai.source === "environment"
+                        : ((aiProvider === "gemini" ? integrationsStatus?.ai?.gemini?.source : integrationsStatus?.ai?.openai?.source) || integrationsStatus?.ai?.source) === "environment"
                         ? "Environment Default"
                         : "None"}
                     </strong>
@@ -2934,10 +3014,11 @@ export default function AdminSettingsPage() {
                     </label>
                     <select
                       value={aiProvider}
-                      onChange={(e) => setAiProvider(e.target.value)}
+                      onChange={(e) => handleAiProviderChange(e.target.value as "openai" | "gemini")}
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     >
                       <option value="openai">OpenAI</option>
+                      <option value="gemini">Gemini</option>
                     </select>
                   </div>
 
@@ -2949,7 +3030,7 @@ export default function AdminSettingsPage() {
                       type="text"
                       value={aiModel}
                       onChange={(e) => setAiModel(e.target.value)}
-                      placeholder="e.g. gpt-4o-mini"
+                      placeholder={aiProvider === "gemini" ? "e.g. gemini-3.8-flash" : "e.g. gpt-4o-mini"}
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     />
                   </div>
@@ -2962,7 +3043,11 @@ export default function AdminSettingsPage() {
                       type="text"
                       value={aiBaseUrl}
                       onChange={(e) => setAiBaseUrl(e.target.value)}
-                      placeholder="https://api.openai.com/v1"
+                      placeholder={
+                        aiProvider === "gemini"
+                          ? "https://generativelanguage.googleapis.com/v1beta/openai/"
+                          : "https://api.openai.com/v1"
+                      }
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 px-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white"
                     />
                   </div>
@@ -2973,7 +3058,9 @@ export default function AdminSettingsPage() {
                     <label className="block text-xs font-semibold text-stone-700">
                       API Key
                     </label>
-                    {integrationsStatus?.ai.apiKeyConfigured && (
+                    {(aiProvider === "gemini"
+                      ? integrationsStatus?.ai?.gemini?.apiKeyConfigured
+                      : (integrationsStatus?.ai?.openai?.apiKeyConfigured ?? integrationsStatus?.ai?.apiKeyConfigured)) && (
                       <span className="text-[11px] font-medium text-emerald-600 inline-flex items-center gap-1">
                         <CheckCircleIcon className="h-3 w-3" />
                         API Key Configured
@@ -2986,12 +3073,18 @@ export default function AdminSettingsPage() {
                       type="password"
                       value={aiApiKey}
                       onChange={(e) => setAiApiKey(e.target.value)}
-                      placeholder="Enter a new AI API key to replace the current key"
+                      placeholder={
+                        aiProvider === "gemini"
+                          ? "Enter a new Gemini API key to replace the current key"
+                          : "Enter a new AI API key to replace the current key"
+                      }
                       className="w-full rounded-xl border border-stone-200 bg-stone-50/60 pl-10 pr-3.5 py-2.5 text-xs sm:text-sm text-stone-900 outline-none focus:border-[#7C3AED] focus:bg-white placeholder:text-stone-400"
                     />
                   </div>
                   <p className="mt-1 text-[11px] text-stone-400">
-                    Existing AI keys are never displayed. Leave empty to preserve your existing key.
+                    {aiProvider === "gemini"
+                      ? "Google Gemini API key from Google AI Studio. Leave empty to preserve your existing key."
+                      : "Existing AI keys are never displayed. Leave empty to preserve your existing key."}
                   </p>
                 </div>
 
@@ -3022,27 +3115,43 @@ export default function AdminSettingsPage() {
                 )}
 
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <button
-                    type="submit"
-                    disabled={savingAi}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-xs font-semibold text-white shadow-2xs transition cursor-pointer disabled:opacity-40"
-                  >
-                    {savingAi && (
-                      <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    )}
-                    <span>{savingAi ? "Saving..." : "Save AI Configuration"}</span>
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    <button
+                      type="submit"
+                      disabled={savingAi || testingAi}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-xs font-semibold text-white shadow-2xs transition cursor-pointer disabled:opacity-40"
+                    >
+                      {savingAi && (
+                        <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      )}
+                      <span>{savingAi ? "Saving..." : "Save AI Configuration"}</span>
+                    </button>
 
-                  {integrationsStatus?.ai.hasAdminOverride && (
+                    <button
+                      type="button"
+                      disabled={testingAi || savingAi}
+                      onClick={handleTestAiConnection}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-violet-200 bg-violet-50 hover:bg-violet-100 text-violet-700 text-xs font-semibold transition cursor-pointer disabled:opacity-40"
+                    >
+                      {testingAi ? (
+                        <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-violet-700 border-t-transparent" />
+                      ) : (
+                        <SparklesIcon className="h-3.5 w-3.5" />
+                      )}
+                      <span>{testingAi ? "Testing..." : "Test Connection"}</span>
+                    </button>
+                  </div>
+
+                  {((aiProvider === "gemini" ? integrationsStatus?.ai?.gemini?.hasAdminOverride : integrationsStatus?.ai?.openai?.hasAdminOverride) ?? integrationsStatus?.ai.hasAdminOverride) && (
                     <button
                       type="button"
                       disabled={clearingAi}
                       onClick={() =>
                         setConfirmClearModal({
                           target: "ai",
-                          title: "Clear AI Provider Override",
+                          title: `Clear ${aiProvider === "gemini" ? "Google Gemini" : "OpenAI"} Override`,
                           message:
-                            "Remove the saved override and return to the server environment configuration?",
+                            `Remove the saved ${aiProvider === "gemini" ? "Google Gemini" : "OpenAI"} override and return to the server environment configuration?`,
                         })
                       }
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold transition cursor-pointer"

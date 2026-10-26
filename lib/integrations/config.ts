@@ -28,6 +28,15 @@ export interface ResolvedAiConfig {
   isConfigured: boolean;
 }
 
+export interface SafeAiProviderDetails {
+  model: string;
+  baseUrl: string;
+  apiKeyConfigured: boolean;
+  hasAdminOverride: boolean;
+  source: "admin" | "environment" | "none";
+  isConfigured: boolean;
+}
+
 export interface SafeIntegrationsStatus {
   cloudinary: {
     cloudName: string;
@@ -51,6 +60,8 @@ export interface SafeIntegrationsStatus {
     hasAdminOverride: boolean;
     source: "admin" | "environment" | "none";
     isConfigured: boolean;
+    openai: SafeAiProviderDetails;
+    gemini: SafeAiProviderDetails;
   };
 }
 
@@ -209,59 +220,119 @@ export async function getGooglePlacesConfig(): Promise<ResolvedGooglePlacesConfi
 
 /**
  * Central resolver for AI Provider configuration.
- * Fallback: Admin Override -> Environment Default -> Not Configured
+ * Supports both OpenAI and Google Gemini with provider-specific key storage and environment fallback.
+ * Priority: Admin Override -> Environment Default -> Not Configured
  */
-export async function getAiConfig(): Promise<ResolvedAiConfig> {
+export async function getAiConfig(targetProvider?: "openai" | "gemini"): Promise<ResolvedAiConfig> {
   const doc = await getIntegrationSettingsDocument();
   const dbAi = doc?.ai;
 
-  const hasDbSecret = Boolean(dbAi?.encryptedApiKey);
+  const rawActiveProvider = dbAi?.provider?.trim().toLowerCase();
+  const envProvider = process.env.AI_PROVIDER?.trim().toLowerCase();
+  const activeProvider: "openai" | "gemini" =
+    rawActiveProvider === "gemini"
+      ? "gemini"
+      : rawActiveProvider === "openai"
+      ? "openai"
+      : envProvider === "gemini"
+      ? "gemini"
+      : "openai";
+
+  const provider = targetProvider || activeProvider;
+
+  if (provider === "gemini") {
+    const dbGemini = dbAi?.gemini;
+    const hasDbSecret = Boolean(dbGemini?.encryptedApiKey);
+    const decryptedDbSecret = hasDbSecret
+      ? safeDecryptSecret(dbGemini?.encryptedApiKey)
+      : null;
+
+    const hasAdminOverride = Boolean(
+      hasDbSecret ||
+      dbGemini?.model ||
+      dbGemini?.baseUrl ||
+      (activeProvider === "gemini" && dbAi?.provider === "gemini")
+    );
+
+    const model =
+      dbGemini?.model?.trim() ||
+      process.env.GEMINI_MODEL?.trim() ||
+      "gemini-3.8-flash";
+
+    const baseUrl =
+      dbGemini?.baseUrl?.trim() ||
+      process.env.GEMINI_BASE_URL?.trim() ||
+      "https://generativelanguage.googleapis.com/v1beta/openai/";
+
+    const envKey = process.env.GEMINI_API_KEY?.trim() || "";
+    const apiKey = decryptedDbSecret || envKey || "";
+
+    let source: "admin" | "environment" | "none" = "none";
+    if (decryptedDbSecret) {
+      source = "admin";
+    } else if (envKey) {
+      source = "environment";
+    } else if (hasAdminOverride) {
+      source = "admin";
+    }
+
+    const isConfigured = Boolean(apiKey);
+
+    return {
+      provider: "gemini",
+      model,
+      baseUrl,
+      apiKey,
+      hasAdminOverride,
+      source,
+      isConfigured,
+    };
+  }
+
+  // Otherwise OpenAI:
+  const dbOpenai = dbAi?.openai;
+  const hasDbSecret = Boolean(dbOpenai?.encryptedApiKey || dbAi?.encryptedApiKey);
   const decryptedDbSecret = hasDbSecret
-    ? safeDecryptSecret(dbAi?.encryptedApiKey)
+    ? safeDecryptSecret(dbOpenai?.encryptedApiKey || dbAi?.encryptedApiKey)
     : null;
 
   const hasAdminOverride = Boolean(
     hasDbSecret ||
+    dbOpenai?.model ||
+    dbOpenai?.baseUrl ||
     dbAi?.model ||
     dbAi?.baseUrl ||
-    (dbAi?.provider && dbAi?.provider !== "openai")
+    (activeProvider === "openai" && dbAi?.provider === "openai")
   );
 
-  const provider =
-    dbAi?.provider?.trim() ||
-    process.env.AI_PROVIDER?.trim() ||
-    "openai";
-
   const model =
+    dbOpenai?.model?.trim() ||
     dbAi?.model?.trim() ||
     process.env.OPENAI_MODEL?.trim() ||
     "gpt-4o-mini";
 
   const baseUrl =
+    dbOpenai?.baseUrl?.trim() ||
     dbAi?.baseUrl?.trim() ||
     process.env.OPENAI_BASE_URL?.trim() ||
     "https://api.openai.com/v1";
 
-  const apiKey =
-    decryptedDbSecret ||
-    process.env.OPENAI_API_KEY?.trim() ||
-    "";
+  const envKey = process.env.OPENAI_API_KEY?.trim() || "";
+  const apiKey = decryptedDbSecret || envKey || "";
 
   let source: "admin" | "environment" | "none" = "none";
-  if (hasAdminOverride) {
+  if (decryptedDbSecret) {
     source = "admin";
-  } else if (
-    process.env.OPENAI_API_KEY?.trim() ||
-    process.env.AI_PROVIDER?.trim() ||
-    process.env.OPENAI_MODEL?.trim()
-  ) {
+  } else if (envKey) {
     source = "environment";
+  } else if (hasAdminOverride) {
+    source = "admin";
   }
 
   const isConfigured = Boolean(apiKey);
 
   return {
-    provider,
+    provider: "openai",
     model,
     baseUrl,
     apiKey,
@@ -276,10 +347,12 @@ export async function getAiConfig(): Promise<ResolvedAiConfig> {
  * Strictly guarantees ZERO plaintext or encrypted secrets are returned.
  */
 export async function getIntegrationsSafeStatus(): Promise<SafeIntegrationsStatus> {
-  const [cld, google, ai] = await Promise.all([
+  const [cld, google, activeAi, openaiAi, geminiAi] = await Promise.all([
     getCloudinaryConfig(),
     getGooglePlacesConfig(),
     getAiConfig(),
+    getAiConfig("openai"),
+    getAiConfig("gemini"),
   ]);
 
   return {
@@ -298,13 +371,29 @@ export async function getIntegrationsSafeStatus(): Promise<SafeIntegrationsStatu
       isConfigured: google.isConfigured,
     },
     ai: {
-      provider: ai.provider,
-      model: ai.model,
-      baseUrl: ai.baseUrl,
-      apiKeyConfigured: Boolean(ai.apiKey),
-      hasAdminOverride: ai.hasAdminOverride,
-      source: ai.source,
-      isConfigured: ai.isConfigured,
+      provider: activeAi.provider,
+      model: activeAi.model,
+      baseUrl: activeAi.baseUrl,
+      apiKeyConfigured: Boolean(activeAi.apiKey),
+      hasAdminOverride: activeAi.hasAdminOverride,
+      source: activeAi.source,
+      isConfigured: activeAi.isConfigured,
+      openai: {
+        model: openaiAi.model,
+        baseUrl: openaiAi.baseUrl,
+        apiKeyConfigured: Boolean(openaiAi.apiKey),
+        hasAdminOverride: openaiAi.hasAdminOverride,
+        source: openaiAi.source,
+        isConfigured: openaiAi.isConfigured,
+      },
+      gemini: {
+        model: geminiAi.model,
+        baseUrl: geminiAi.baseUrl,
+        apiKeyConfigured: Boolean(geminiAi.apiKey),
+        hasAdminOverride: geminiAi.hasAdminOverride,
+        source: geminiAi.source,
+        isConfigured: geminiAi.isConfigured,
+      },
     },
   };
 }
